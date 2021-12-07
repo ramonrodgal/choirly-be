@@ -16,7 +16,7 @@ const notificationSchema = new Schema({
     default: Date.now(),
   },
   choir: {
-    type: mongoose.ObjectId,
+    type: String,
     required: true,
   },
   author: {

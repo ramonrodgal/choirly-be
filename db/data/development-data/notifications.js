@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 
 exports.seedNotification = [
   //Accepted to a choir
-
   {
     username: "josephCode",
     type: "accept",
