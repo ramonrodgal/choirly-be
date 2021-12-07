@@ -1,5 +1,5 @@
-const moongoose = require("mongoose");
-const { Schema } = moongoose;
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
 const eventSchema = new Schema({
   title: {
@@ -29,7 +29,7 @@ const eventSchema = new Schema({
   comments: [
     {
       comment_id: {
-        type: mongoose.ObjectId,
+        type: mongoose.Types.ObjectId,
         required: true,
       },
       author: {
