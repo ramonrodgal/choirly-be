@@ -30,23 +30,17 @@ const userSchema = new Schema({
     type: Number,
     required: true,
   },
-  social: [
-    {
+  social: {
       youtube: {
         type: String,
       },
-    },
-    {
       facebook: {
         type: String,
       },
-    },
-    {
       instagram: {
         type: String,
       },
-    },
-  ],
+  },
   voice: [
     {
       type: String,
