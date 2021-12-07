@@ -66,4 +66,5 @@ const choirSchema = new Schema({
   ],
 });
 
-module.exports = choirSchema;
+const Choir = mongoose.model('Choir', choirSchema); 
+module.exports = Choir;
