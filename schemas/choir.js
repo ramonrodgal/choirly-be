@@ -1,5 +1,5 @@
-const moongoose = require('mongoose');
-const { Schema } = moongoose;
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
 const choirSchema = new Schema({
   name: {
@@ -67,4 +67,5 @@ const choirSchema = new Schema({
 });
 
 const Choir = mongoose.model('Choir', choirSchema); 
+
 module.exports = Choir;
