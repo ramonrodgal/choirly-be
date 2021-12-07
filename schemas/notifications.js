@@ -1,5 +1,5 @@
-const moongoose = require("mongoose");
-const { Schema } = moongoose;
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
 const notificationSchema = new Schema({
   username: {
@@ -15,10 +15,6 @@ const notificationSchema = new Schema({
     required: true,
     default: Date.now(),
   },
-  message: {
-    type: String,
-    required: true,
-  },
   choir: {
     type: mongoose.ObjectId,
     required: true,
@@ -33,26 +29,6 @@ const notificationSchema = new Schema({
     type: Boolean,
     required: true,
   },
-  requests: [
-    {
-      choir: {
-        type: mongoose.objectId,
-        required: true,
-      },
-      user: {
-        type: mongoose.objectId,
-        required: true,
-      },
-      message: {
-        type: String,
-      },
-      date: {
-        type: Date,
-        required: true,
-        default: Date.now(),
-      },
-    },
-  ],
 });
 
 const Notification = mongoose.model("Notification", notificationSchema);

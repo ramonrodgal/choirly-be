@@ -2,11 +2,13 @@ const mongoose = require("mongoose");
 const User = require("../../schemas/users");
 const Choir = require("../../schemas/choir");
 const Event = require("../../schemas/event");
+const Notification = require("../../schemas/notifications");
 require("dotenv").config();
 
 const { seedUser } = require("../data/development-data/users");
 const { seedEvent } = require("../data/development-data/events");
 const { seedChoir } = require("../data/development-data/choir");
+const { seedNotification } = require("../data/development-data/notifications");
 
 mongoose
   .connect(process.env.DATABASE_URL)
@@ -26,6 +28,9 @@ const seedDB = async () => {
 
   await Event.deleteMany({});
   await Event.insertMany(seedEvent);
+
+  await Notification.deleteMany({});
+  await Notification.insertMany(seedNotification);
 };
 
 seedDB().then(() => {
