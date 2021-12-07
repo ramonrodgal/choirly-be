@@ -1,14 +1,16 @@
-const moongoose = require('mongoose');
+const moongoose = require("mongoose");
 const { Schema } = moongoose;
 
 const userSchema = new Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
   },
   username: {
     type: String,
     required: true,
+    unique: true,
   },
   avatar_url: {
     type: String,
@@ -56,5 +58,5 @@ const userSchema = new Schema({
     },
   ],
 });
-const Users = mongoose.model('User', userSchema);
+const Users = mongoose.model("User", userSchema);
 module.exports = Users;
