@@ -1,5 +1,4 @@
 const User = require("../schemas/user");
-const Notification = require("../schemas/notification");
 
 exports.fetchUsers = async () => {
   return await User.find();
@@ -57,12 +56,4 @@ exports.removeUserByUsername = async (username) => {
   await User.deleteOne({ username: username });
 
   return user;
-};
-
-exports.fetchNotificationsByUsername = async (username) => {
-  const user = await this.fetchUserByUsername(username);
-
-  const notifications = await Notification.find({ username: username });
-
-  return notifications;
 };
