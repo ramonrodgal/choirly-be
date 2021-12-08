@@ -143,20 +143,40 @@ describe("/api/choirs", () => {
 });
 
 describe("/api/choirs/:choir_id", () => {
-  test("status:200 responds with an single choir", async () => {
-    const choir_id = "61b0c478a1a352f4350523c6";
-    const {
-      body: { choir },
-    } = await request(app).get(`/api/choirs/${choir_id}`).expect(200);
+  describe("GET", () => {
+    test("status:200 responds with an single choir", async () => {
+      const choir_id = "61b0c478a1a352f4350523c6";
+      const {
+        body: { choir },
+      } = await request(app).get(`/api/choirs/${choir_id}`).expect(200);
 
-    expect(choir._id).toBe(choir_id);
+      expect(choir._id).toBe(choir_id);
+    });
+    test("status 404 responds with a message", async () => {
+      const choir_id = "not-valid-id";
+      const {
+        body: { msg },
+      } = await request(app).get(`/api/choirs/${choir_id}`).expect(404);
+
+      expect(msg).toBe("Choir not found");
+    });
   });
-  test("status 404 responds with a message", async () => {
-    const choir_id = "not-valid-id";
-    const {
-      body: { msg },
-    } = await request(app).get(`/api/choirs/${choir_id}`).expect(404);
+  describe("DELETE", () => {
+    test.skip("status:200 responds with a message", async () => {
+      const choir_id = "61b0efa3447feff5f7b3d183";
+      const {
+        body: { msg },
+      } = await request(app).delete(`/api/choirs/${choir_id}`).expect(200);
 
-    expect(msg).toBe("Choir not found");
+      expect(msg).toBe("Choir removed");
+    });
+    test.only("status:404 responds with a message for invalid id", async () => {
+      const choir_id = "61b0c478a1a352f4350523c6";
+      const {
+        body: { msg },
+      } = await request(app).delete(`/api/choirs/${choir_id}`).expect(404);
+
+      expect(msg).toBe("Choir not found" || "not found");
+    });
   });
 });
