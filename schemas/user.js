@@ -31,22 +31,22 @@ const userSchema = new Schema({
     required: true,
   },
   social: {
-      youtube: {
-        type: String,
-      },
-      facebook: {
-        type: String,
-      },
-      instagram: {
-        type: String,
-      },
+    youtube: {
+      type: String,
+    },
+    facebook: {
+      type: String,
+    },
+    instagram: {
+      type: String,
+    },
   },
   voice: [
     {
       type: String,
     },
   ],
-  Groups: [
+  groups: [
     {
       type: String,
     },
