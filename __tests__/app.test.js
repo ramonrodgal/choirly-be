@@ -34,7 +34,7 @@ describe("/api/users", () => {
     });
   });
   describe("POST", () => {
-    test.only("status:201 responds with the posted user", async () => {
+    test("status:201 responds with the posted user", async () => {
       const body = {
         email: "ramon@email.com",
         username: "ramonrodgal",
@@ -51,6 +51,19 @@ describe("/api/users", () => {
       expect(body.first_name).toBe(user.first_name);
       expect(body.last_name).toBe(user.last_name);
       expect(body.phone_number).toBe(user.phone_number);
+    });
+    test.only("status:400 responds with a message for invalid body fields", async () => {
+      const body = {
+        email: "ramon@email.com",
+        username: "ramonrodgal",
+        first_name: "ramon",
+        phone_number: 8989898989,
+      };
+      const {
+        body: { msg },
+      } = await request(app).post("/api/users").send(body).expect(400);
+
+      expect(msg).toBe("Bad Request. Invalid Body");
     });
   });
 });
