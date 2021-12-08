@@ -98,7 +98,7 @@ describe("/api/choirs", () => {
     });
   });
   describe("POST", () => {
-    test.only("status:200 responds with the posted choir", async () => {
+    test("status:200 responds with the posted choir", async () => {
       const body = {
         name: "Test Choir",
         location: "London",
@@ -113,6 +113,31 @@ describe("/api/choirs", () => {
       expect(choir.location).toBe(body.location);
       expect(choir.description).toBe(body.description);
       expect(choir.leader).toBe(body.leader);
+    });
+    test("status:400 responds with a message for invalid body fields", async () => {
+      const body = {
+        name: "Test Choir",
+        description: "We are a choir testing our voices",
+        leader: "fake-user",
+      };
+      const {
+        body: { msg },
+      } = await request(app).post("/api/choirs").send(body).expect(400);
+
+      expect(msg).toBe("Bad Request. Invalid Body");
+    });
+    test("status:400 responds with a message for invalid body data type", async () => {
+      const body = {
+        name: "Test Choir",
+        location: 4,
+        description: "We are a choir testing our voices",
+        leader: "fake-user",
+      };
+      const {
+        body: { msg },
+      } = await request(app).post("/api/choirs").send(body).expect(400);
+
+      expect(msg).toBe("Bad Request. Invalid Body");
     });
   });
 });
