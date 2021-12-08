@@ -110,6 +110,14 @@ describe("/api/users/:username", () => {
       expect(body.user.username).toBe(username);
       expect(body.msg).toBe("User removed");
     });
+    test.only("status:404 responds with a message for invalid username", async () => {
+      const username = "invalid-username";
+      const { body } = await request(app)
+        .delete(`/api/users/${username}`)
+        .expect(404);
+
+      expect(body.msg).toBe("User not found");
+    });
   });
 });
 
