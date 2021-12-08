@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const apiRouter = require("./routes/api.routes");
+const { handleCustomErrors } = require("./controllers/errors.controllers");
 
 const app = express();
 app.use(express.json());
@@ -21,5 +22,7 @@ app.use("/api", apiRouter);
 app.all("*", (req, res) => {
   res.status(404).send({ msg: "Invalid URL" });
 });
+
+app.use(handleCustomErrors);
 
 module.exports = app;
