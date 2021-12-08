@@ -282,3 +282,28 @@ describe("/api/notifications/:username/", () => {
     expect(msg).toBe("User not found");
   });
 });
+
+describe("/api/events", () => {
+  describe("GET", () => {
+    test.only("status:200 responds with an array of events", async () => {
+      const {
+        body: { events },
+      } = await request(app).get("/api/events").expect(200);
+      expect(events.length).toBe(3);
+
+      const eventTest = {
+        title: expect.any(String),
+        choir: expect.any(String),
+        type: expect.any(String),
+        date: expect.any(String),
+        location: expect.any(String),
+        duration: expect.any(Number),
+        details: expect.any(String),
+      };
+
+      events.forEach((event) => {
+        expect(event).toMatchObject(eventTest);
+      });
+    });
+  });
+});
