@@ -32,10 +32,6 @@ const eventSchema = new Schema({
   },
   comments: [
     {
-      comment_id: {
-        type: mongoose.Types.ObjectId,
-        required: true,
-      },
       author: {
         type: String,
         required: true,
