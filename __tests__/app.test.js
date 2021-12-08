@@ -34,3 +34,14 @@ describe("/api/users", () => {
     });
   });
 });
+
+describe.only("/api/users/:username", () => {
+  test("status:200 responds with a user object", async () => {
+    const username = "josephCode";
+    const {
+      body: { user },
+    } = await request(app).get(`/api/users/${username}`).expect(200);
+
+    expect(user.username).toEqual(username);
+  });
+});
