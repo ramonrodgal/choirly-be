@@ -7,11 +7,11 @@ const Event = require("../../schemas/event");
 const Notification = require("../../schemas/notification");
 const GroupMessage = require("../../schemas/groupMessage");
 
-const { seedUser } = require("../data/development-data/user");
+const { seedUser } = require("../data/development-data/users");
 const { seedEvent } = require("../data/development-data/events");
-const { seedChoir } = require("../data/development-data/choir");
-const { seedNotification } = require("../data/development-data/notification");
-const { seedMessage, seedGroupMessage } = require("../data/development-data/groupMessage");
+const { seedChoir } = require("../data/development-data/choirs");
+const { seedNotification } = require("../data/development-data/notifications");
+const { seedMessage, seedGroupMessage } = require("../data/development-data/groupMessages");
 
 mongoose
   .connect(process.env.DATABASE_URL)
