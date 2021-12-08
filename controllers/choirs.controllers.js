@@ -2,6 +2,7 @@ const {
   fetchChoirs,
   fetchChoirById,
   insertChoir,
+  removeChoirById,
 } = require("../models/choirs.models");
 
 exports.getChoirs = async (req, res, next) => {
@@ -31,6 +32,16 @@ exports.postChoir = async (req, res, next) => {
   try {
     const choir = await insertChoir(body);
     res.status(200).send({ choir });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.deleteChoirById = async (req, res, next) => {
+  const { choir_id } = req.params;
+  try {
+    const choir = await removeChoirById(choir_id);
+    res.status(200).send({ msg: "Choir removed", choir: choir });
   } catch (err) {
     next(err);
   }
