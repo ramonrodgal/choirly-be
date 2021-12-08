@@ -6,6 +6,10 @@ const eventSchema = new Schema({
     type: String,
     required: true,
   },
+  choir: {
+    type: String,
+    required: true,
+  },
   type: {
     type: String,
     required: true,
