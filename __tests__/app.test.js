@@ -65,7 +65,7 @@ describe("/api/users", () => {
 
       expect(msg).toBe("Bad Request. Invalid Body");
     });
-    test.only("status:400 responds with a message for invalid data type", async () => {
+    test("status:400 responds with a message for invalid data type", async () => {
       const body = {
         email: "ramon@email.com",
         username: "ramonrodgal",
@@ -82,21 +82,34 @@ describe("/api/users", () => {
 });
 
 describe("/api/users/:username", () => {
-  test("status:200 responds with a user object", async () => {
-    const username = "josephCode";
-    const {
-      body: { user },
-    } = await request(app).get(`/api/users/${username}`).expect(200);
+  describe("GET", () => {
+    test("status:200 responds with a user object", async () => {
+      const username = "josephCode";
+      const {
+        body: { user },
+      } = await request(app).get(`/api/users/${username}`).expect(200);
 
-    expect(user.username).toBe(username);
+      expect(user.username).toBe(username);
+    });
+    test("status:404 responds with a message", async () => {
+      const username = "notAUser";
+      const {
+        body: { msg },
+      } = await request(app).get(`/api/users/${username}`).expect(404);
+
+      expect(msg).toBe("User not found");
+    });
   });
-  test("status:404 responds with a message", async () => {
-    const username = "notAUser";
-    const {
-      body: { msg },
-    } = await request(app).get(`/api/users/${username}`).expect(404);
+  describe("DELETE", () => {
+    test("status:204 responds with the deleted user and a message", async () => {
+      const username = "moonglade";
+      const { body } = await request(app)
+        .delete(`/api/users/${username}`)
+        .expect(200);
 
-    expect(msg).toBe("User not found");
+      expect(body.user.username).toBe(username);
+      expect(body.msg).toBe("User removed");
+    });
   });
 });
 
