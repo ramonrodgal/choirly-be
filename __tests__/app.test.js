@@ -250,7 +250,7 @@ describe("/api/choirs/:choir_id", () => {
 
 describe("/api/users/:username/notifications", () => {
   describe("GET", () => {
-    test.only("status:200 responds with an array of notifications", async () => {
+    test("status:200 responds with an array of notifications", async () => {
       const username = "cakevealbladerunner";
       const {
         body: { notifications },
@@ -274,5 +274,15 @@ describe("/api/users/:username/notifications", () => {
         expect(notification).toMatchObject(notificationTest);
       });
     });
+  });
+  test.only("status:404 responds with a message for invalid username", async () => {
+    const username = "not a user";
+    const {
+      body: { msg },
+    } = await request(app)
+      .get(`/api/users/${username}/notifications`)
+      .expect(404);
+
+    expect(msg).toBe("User not found");
   });
 });
