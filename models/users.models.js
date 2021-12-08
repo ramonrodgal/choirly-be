@@ -1,3 +1,5 @@
+const User = require("../schemas/user");
+
 exports.fetchUsers = async () => {
-  console.log("inside model");
+  return await User.find();
 };
