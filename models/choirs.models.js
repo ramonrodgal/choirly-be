@@ -20,3 +20,8 @@ exports.fetchChoirById = async (choir_id) => {
   }
   return choir[0];
 };
+
+exports.insertChoir = async (body) => {
+  const choir = new Choir(body);
+  return await choir.save();
+};

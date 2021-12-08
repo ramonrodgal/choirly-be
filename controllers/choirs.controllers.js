@@ -1,4 +1,8 @@
-const { fetchChoirs, fetchChoirById } = require("../models/choirs.models");
+const {
+  fetchChoirs,
+  fetchChoirById,
+  insertChoir,
+} = require("../models/choirs.models");
 
 exports.getChoirs = async (req, res, next) => {
   const { location } = req.query;
@@ -15,6 +19,17 @@ exports.getChoirById = async (req, res, next) => {
   const { choir_id } = req.params;
   try {
     const choir = await fetchChoirById(choir_id);
+    res.status(200).send({ choir });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.postChoir = async (req, res, next) => {
+  const { body } = req;
+
+  try {
+    const choir = await insertChoir(body);
     res.status(200).send({ choir });
   } catch (err) {
     next(err);
