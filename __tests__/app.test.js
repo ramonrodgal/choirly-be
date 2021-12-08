@@ -73,6 +73,16 @@ describe("/api/choirs", () => {
       expect(choir).toMatchObject(choirTest);
     });
   });
+  test.only("status:200 responds with and array of choirs filtered by location", async () => {
+    const location = "manchester";
+    const {
+      body: { choirs },
+    } = await request(app).get(`/api/choirs?location=${location}`).expect(200);
+
+    choirs.forEach((choir) => {
+      expect(choir.location).toBe(location);
+    });
+  });
 });
 
 describe("/api/choirs/:choir_id", () => {
@@ -84,7 +94,7 @@ describe("/api/choirs/:choir_id", () => {
 
     expect(choir._id).toBe(choir_id);
   });
-  test.only("status 404 responds with a message", async () => {
+  test("status 404 responds with a message", async () => {
     const choir_id = "not-valid-id";
     const {
       body: { msg },
