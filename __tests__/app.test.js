@@ -171,12 +171,12 @@ describe("/api/choirs/:choir_id", () => {
       expect(msg).toBe("Choir removed");
     });
     test.only("status:404 responds with a message for invalid id", async () => {
-      const choir_id = "61b0c478a1a352f4350523c6";
+      const choir_id = "not-valid";
       const {
         body: { msg },
-      } = await request(app).delete(`/api/choirs/${choir_id}`).expect(404);
+      } = await request(app).delete(`/api/choirs/${choir_id}`).expect(400);
 
-      expect(msg).toBe("Choir not found" || "not found");
+      expect(msg).toBe("Bad request. Invalid choir id");
     });
   });
 });
