@@ -9,3 +9,28 @@ describe("not valid url", () => {
     expect(msg).toBe("Invalid URL");
   });
 });
+
+describe("/api/users", () => {
+  describe("GET", () => {
+    test("status:200 responds with an array of users", async () => {
+      const {
+        body: { users },
+      } = await request(app).get("/api/users").expect(200);
+
+      expect(users.length).toBe(5);
+
+      const userTest = {
+        _id: expect.any(String),
+        email: expect.any(String),
+        username: expect.any(String),
+        first_name: expect.any(String),
+        last_name: expect.any(String),
+        phone_number: expect.any(Number),
+      };
+
+      users.forEach((user) => {
+        expect(user).toMatchObject(userTest);
+      });
+    });
+  });
+});
