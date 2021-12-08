@@ -22,6 +22,30 @@ exports.fetchChoirById = async (choir_id) => {
 };
 
 exports.insertChoir = async (body) => {
+  const requiredFields = ["name", "location", "description", "leader"];
+  let allFields = true;
+  let allFieldTypes = true;
+
+  const fieldTypesReference = {
+    name: "string",
+    location: "string",
+    description: "string",
+    leader: "string",
+  };
+
+  for (let requiredField of requiredFields) {
+    if (!body.hasOwnProperty(requiredField)) {
+      allFields = false;
+    }
+    if (fieldTypesReference[requiredField] !== typeof body[requiredField]) {
+      allFieldTypes = false;
+    }
+  }
+
+  if (!allFields || !allFieldTypes) {
+    return Promise.reject({ status: 400, msg: "Bad Request. Invalid Body" });
+  }
+
   const choir = new Choir(body);
   return await choir.save();
 };
