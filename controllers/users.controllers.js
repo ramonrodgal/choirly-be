@@ -3,6 +3,7 @@ const {
   fetchUserByUsername,
   insertUser,
   removeUserByUsername,
+  fetchNotificationsByUsername,
 } = require("../models/users.models");
 
 exports.getUsers = async (req, res, next) => {
@@ -39,6 +40,16 @@ exports.deleteUserByUsername = async (req, res, next) => {
   try {
     const user = await removeUserByUsername(username);
     res.status(200).send({ msg: "User removed", user: user });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getNotificationsByUsername = async (req, res, next) => {
+  const { username } = req.params;
+  try {
+    const notifications = await fetchNotificationsByUsername(username);
+    res.status(200).send({ notifications });
   } catch (err) {
     next(err);
   }
