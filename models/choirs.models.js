@@ -1,3 +1,5 @@
+const ObjectId = require("mongoose").Types.ObjectId;
+
 const Choir = require("../schemas/choir");
 
 exports.fetchChoirs = async (location) => {
@@ -14,6 +16,12 @@ exports.fetchChoirs = async (location) => {
 };
 
 exports.fetchChoirById = async (choir_id) => {
+  if (!ObjectId.isValid(choir_id)) {
+    return Promise.reject({
+      status: 400,
+      msg: "Bad request. Invalid choir id",
+    });
+  }
   const choir = await Choir.find({ _id: choir_id });
   if (choir.length === 0) {
     return Promise.reject({ status: 404, msg: "Choir not found" });
@@ -51,10 +59,18 @@ exports.insertChoir = async (body) => {
 };
 
 exports.removeChoirById = async (choir_id) => {
+  if (!ObjectId.isValid(choir_id)) {
+    return Promise.reject({
+      status: 400,
+      msg: "Bad request. Invalid choir id",
+    });
+  }
   const choir = await Choir.find({ _id: choir_id });
+
   if (choir.length === 0) {
     return Promise.reject({ status: 404, msg: "Choir not found" });
   }
+
   await Choir.deleteOne({ _id: choir_id });
   return choir[0];
 };
