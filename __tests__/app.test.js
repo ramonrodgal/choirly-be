@@ -110,7 +110,7 @@ describe("/api/users/:username", () => {
       expect(body.user.username).toBe(username);
       expect(body.msg).toBe("User removed");
     });
-    test.only("status:404 responds with a message for invalid username", async () => {
+    test("status:404 responds with a message for invalid username", async () => {
       const username = "invalid-username";
       const { body } = await request(app)
         .delete(`/api/users/${username}`)
@@ -244,6 +244,35 @@ describe("/api/choirs/:choir_id", () => {
       } = await request(app).delete(`/api/choirs/${choir_id}`).expect(400);
 
       expect(msg).toBe("Bad request. Invalid choir id");
+    });
+  });
+});
+
+describe("/api/users/:username/notifications", () => {
+  describe("GET", () => {
+    test.only("status:200 responds with an array of notifications", async () => {
+      const username = "cakevealbladerunner";
+      const {
+        body: { notifications },
+      } = await request(app)
+        .get(`/api/users/${username}/notifications`)
+        .expect(200);
+
+      const notificationTest = {
+        _id: expect.any(String),
+        username: expect.any(String),
+        type: expect.any(String),
+        date: expect.any(String),
+        author: expect.any(String),
+        read: expect.any(Boolean),
+      };
+
+      expect(notifications.length).toBe(1);
+
+      notifications.forEach((notification) => {
+        expect(notification.username).toBe(username);
+        expect(notification).toMatchObject(notificationTest);
+      });
     });
   });
 });
