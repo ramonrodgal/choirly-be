@@ -2,7 +2,13 @@ const Choir = require("../schemas/choir");
 
 exports.fetchChoirs = async (location) => {
   if (location) {
-    return await Choir.find({ location: location });
+    const choirs = await Choir.find({ location: location });
+    if (choirs.length === 0) {
+      return Promise.reject({
+        status: 404,
+        msg: "Choirs not found, invalid location",
+      });
+    }
   }
   return await Choir.find();
 };
