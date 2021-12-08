@@ -1,5 +1,3 @@
-const mongoose = require("mongoose");
-
 exports.seedNotification = [
   //Accepted to a choir
   {
