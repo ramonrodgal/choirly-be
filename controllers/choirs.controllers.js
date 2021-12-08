@@ -1,8 +1,10 @@
 const { fetchChoirs, fetchChoirById } = require("../models/choirs.models");
 
 exports.getChoirs = async (req, res, next) => {
+  const { location } = req.query;
+
   try {
-    const choirs = await fetchChoirs();
+    const choirs = await fetchChoirs(location);
     res.status(200).send({ choirs });
   } catch (err) {
     next(err);

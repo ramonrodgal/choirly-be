@@ -1,6 +1,9 @@
 const Choir = require("../schemas/choir");
 
-exports.fetchChoirs = async () => {
+exports.fetchChoirs = async (location) => {
+  if (location) {
+    return await Choir.find({ location: location });
+  }
   return await Choir.find();
 };
 
