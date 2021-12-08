@@ -53,3 +53,43 @@ describe("/api/users/:username", () => {
     expect(msg).toBe("User not found");
   });
 });
+
+describe("/api/choirs", () => {
+  test("status:200 responds with an array of choirs", async () => {
+    const {
+      body: { choirs },
+    } = await request(app).get("/api/choirs").expect(200);
+    expect(choirs.length).toBe(3);
+
+    const choirTest = {
+      _id: expect.any(String),
+      name: expect.any(String),
+      location: expect.any(String),
+      description: expect.any(String),
+      leaader: expect.any(String),
+    };
+
+    choirs.forEach((choir) => {
+      expect(choir).toMatchObject(choirTest);
+    });
+  });
+});
+
+describe("/api/choirs/:choir_id", () => {
+  test("status:200 responds with an single choir", async () => {
+    const choir_id = "61b0c478a1a352f4350523c6";
+    const {
+      body: { choir },
+    } = await request(app).get(`/api/choirs/${choir_id}`).expect(200);
+
+    expect(choir._id).toBe(choir_id);
+  });
+  test.only("status 404 responds with a message", async () => {
+    const choir_id = "not-valid-id";
+    const {
+      body: { msg },
+    } = await request(app).get(`/api/choirs/${choir_id}`).expect(404);
+
+    expect(msg).toBe("Choir not found");
+  });
+});
