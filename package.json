@@ -4,10 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js",
-    "seed": "node ./db/seeds/run-seed.js",
-    "prepare": "husky install"
+    "test": "jest --watch",
+    "start": "node listen.js",
+    "seed": "node ./db/seeds/run-seed.js"
   },
   "keywords": [],
   "author": "",
