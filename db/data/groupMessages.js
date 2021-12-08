@@ -44,7 +44,7 @@ exports.seedGroupMessage = [
         body: "Thank you mum, baby and dad are all well see you all soon",
       },
       {
-        author: "cakevealbladerunner",
+        author: "korus76",
         body: "Congratulations!!!",
       },
     ],

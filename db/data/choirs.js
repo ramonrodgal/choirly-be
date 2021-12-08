@@ -53,13 +53,7 @@ exports.seedChoir = [
       //  "https://twitter.com/LivCathedral?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor",
     },
     leader: "korus76",
-    members: [
-      "josephCode",
-      "genie",
-      "moonglade",
-      "cakevealbladerunner",
-      "korus76",
-    ],
+    members: ["josephCode", "genie", "moonglade", "korus76"],
     events: [], //Populate the events from the events data once this has been created
     files: [
       {

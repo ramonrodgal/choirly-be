@@ -13,7 +13,7 @@ exports.seedUser = [
       instagram: "https://www.instagram.com/jonathanjoseph76/",
     },
     voice: ["Alto"],
-    Groups: ["The altos"],
+    Groups: ["Liverpool 64"],
   },
   {
     email: "korus@email.com",
@@ -30,7 +30,7 @@ exports.seedUser = [
       instagram: "https://www.instagram.com/bgt/?hl=en",
     },
     voice: ["Bass"],
-    Groups: ["Choir Cloud"],
+    Groups: ["Chester Bach Singers"],
   },
   {
     email: "genie@email.com",
@@ -47,7 +47,7 @@ exports.seedUser = [
       instagram: "https://www.instagram.com/sopranopsy4/?hl=en",
     },
     voice: ["Soprano"], //Change
-    Groups: ["The Sopranos"],
+    Groups: ["African Children's Choir"],
   },
   {
     email: "moonglade@email.com",
@@ -64,7 +64,7 @@ exports.seedUser = [
       instagram: "https://www.instagram.com/the_idiots_of_tenor_bass_choir/",
     },
     voice: ["Tenor"], //Change
-    Groups: ["The Heritage Mass Choir"],
+    Groups: ["African Children's Choir"],
   },
   {
     email: "cakevealbladerunner@email.com",
@@ -80,7 +80,7 @@ exports.seedUser = [
       facebook: "https://www.facebook.com/bethmtaylormezzo/",
     },
     voice: ["Mezzo-Soprano"], //Change
-    Groups: ["The Mezzo Soprano Collective"],
+    Groups: ["Liverpool 64"],
   },
 ];
 

@@ -12,16 +12,16 @@ exports.seedNotification = [
   {
     username: "josephCode",
     type: "message",
-    choir: "African Children's Choir",
-    author: "cakevealbladerunner",
+    choir: "Chester Bach Singers",
+    author: "genie",
     read: true,
   },
   //A joining request
   {
     username: "cakevealbladerunner",
     type: "join",
-    choir: "African Children's Choir",
-    author: "josephCode",
+    choir: "Liverpool 64",
+    author: "korus76",
     read: false,
     accepted: false,
   },
