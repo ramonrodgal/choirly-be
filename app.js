@@ -7,8 +7,6 @@ const apiRouter = require("./routes/api.routes");
 const app = express();
 app.use(express.json());
 
-const port = 9000;
-
 mongoose
   .connect(process.env.DATABASE_URL)
   .then(() => {
@@ -20,6 +18,8 @@ mongoose
 
 app.use("/api", apiRouter);
 
-app.listen(port, () => {
-  console.log(`Listening in port ${port}`);
+app.all("*", (req, res) => {
+  res.status(404).send({ msg: "Invalid URL" });
 });
+
+module.exports = app;
