@@ -35,13 +35,21 @@ describe("/api/users", () => {
   });
 });
 
-describe.only("/api/users/:username", () => {
+describe("/api/users/:username", () => {
   test("status:200 responds with a user object", async () => {
     const username = "josephCode";
     const {
       body: { user },
     } = await request(app).get(`/api/users/${username}`).expect(200);
 
-    expect(user.username).toEqual(username);
+    expect(user.username).toBe(username);
+  });
+  test("status:404 responds with a message", async () => {
+    const username = "notAUser";
+    const {
+      body: { msg },
+    } = await request(app).get(`/api/users/${username}`).expect(404);
+
+    expect(msg).toBe("User not found");
   });
 });
