@@ -248,15 +248,13 @@ describe("/api/choirs/:choir_id", () => {
   });
 });
 
-describe("/api/users/:username/notifications", () => {
-  describe("GET", () => {
+describe("/api/notifications/:username/", () => {
+  describe.only("GET", () => {
     test("status:200 responds with an array of notifications", async () => {
       const username = "cakevealbladerunner";
       const {
         body: { notifications },
-      } = await request(app)
-        .get(`/api/users/${username}/notifications`)
-        .expect(200);
+      } = await request(app).get(`/api/notifications/${username}/`).expect(200);
 
       const notificationTest = {
         _id: expect.any(String),
@@ -279,9 +277,7 @@ describe("/api/users/:username/notifications", () => {
     const username = "not a user";
     const {
       body: { msg },
-    } = await request(app)
-      .get(`/api/users/${username}/notifications`)
-      .expect(404);
+    } = await request(app).get(`/api/notifications/${username}/`).expect(404);
 
     expect(msg).toBe("User not found");
   });
