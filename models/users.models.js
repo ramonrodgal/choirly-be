@@ -49,3 +49,11 @@ exports.insertUser = async (body) => {
   const user = new User(body);
   return await user.save();
 };
+
+exports.removeUserByUsername = async (username) => {
+  const user = await this.fetchUserByUsername(username);
+
+  await User.deleteOne({ username: username });
+
+  return user;
+};
