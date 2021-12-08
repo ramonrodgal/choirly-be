@@ -52,7 +52,7 @@ describe("/api/users", () => {
       expect(body.last_name).toBe(user.last_name);
       expect(body.phone_number).toBe(user.phone_number);
     });
-    test.only("status:400 responds with a message for invalid body fields", async () => {
+    test("status:400 responds with a message for invalid body fields", async () => {
       const body = {
         email: "ramon@email.com",
         username: "ramonrodgal",
