@@ -17,28 +17,27 @@ const seedDB = async () => {
   try {
     await mongoose.connect(process.env.DATABASE_URL);
     console.log("connected to db");
+
+    await User.deleteMany({});
+    await User.insertMany(seedUser);
+
+    await Choir.deleteMany({});
+    await Choir.insertMany(seedChoir);
+
+    await Event.deleteMany({});
+    await Event.insertMany(seedEvent);
+
+    await Notification.deleteMany({});
+    await Notification.insertMany(seedNotification);
+
+    await GroupMessage.deleteMany({});
+    await GroupMessage.insertMany(seedGroupMessage);
+
+    await mongoose.connection.close();
+    console.log("connection closed");
   } catch (err) {
     console.log(err);
-    return;
   }
-
-  await User.deleteMany({});
-  await User.insertMany(seedUser);
-
-  await Choir.deleteMany({});
-  await Choir.insertMany(seedChoir);
-
-  await Event.deleteMany({});
-  await Event.insertMany(seedEvent);
-
-  await Notification.deleteMany({});
-  await Notification.insertMany(seedNotification);
-
-  await GroupMessage.deleteMany({});
-  await GroupMessage.insertMany(seedGroupMessage);
-
-  await mongoose.connection.close();
-  console.log("connection closed");
 };
 
 seedDB();
