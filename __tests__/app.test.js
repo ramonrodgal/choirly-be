@@ -55,41 +55,65 @@ describe("/api/users/:username", () => {
 });
 
 describe("/api/choirs", () => {
-  test("status:200 responds with an array of choirs", async () => {
-    const {
-      body: { choirs },
-    } = await request(app).get("/api/choirs").expect(200);
-    expect(choirs.length).toBe(3);
+  describe("GET", () => {
+    test("status:200 responds with an array of choirs", async () => {
+      const {
+        body: { choirs },
+      } = await request(app).get("/api/choirs").expect(200);
+      expect(choirs.length).toBe(3);
 
-    const choirTest = {
-      _id: expect.any(String),
-      name: expect.any(String),
-      location: expect.any(String),
-      description: expect.any(String),
-      leaader: expect.any(String),
-    };
+      const choirTest = {
+        _id: expect.any(String),
+        name: expect.any(String),
+        location: expect.any(String),
+        description: expect.any(String),
+        leader: expect.any(String),
+      };
 
-    choirs.forEach((choir) => {
-      expect(choir).toMatchObject(choirTest);
+      choirs.forEach((choir) => {
+        expect(choir).toMatchObject(choirTest);
+      });
+    });
+    test("status:200 responds with and array of choirs filtered by location", async () => {
+      const location = "manchester";
+      const {
+        body: { choirs },
+      } = await request(app)
+        .get(`/api/choirs?location=${location}`)
+        .expect(200);
+
+      choirs.forEach((choir) => {
+        expect(choir.location).toBe(location);
+      });
+    });
+    test("status:404 responds with a message for invalid locations query", async () => {
+      const location = "not-valid-location";
+      const {
+        body: { msg },
+      } = await request(app)
+        .get(`/api/choirs?location=${location}`)
+        .expect(404);
+
+      expect(msg).toBe("Choirs not found, invalid location");
     });
   });
-  test("status:200 responds with and array of choirs filtered by location", async () => {
-    const location = "manchester";
-    const {
-      body: { choirs },
-    } = await request(app).get(`/api/choirs?location=${location}`).expect(200);
+  describe("POST", () => {
+    test.only("status:200 responds with the posted choir", async () => {
+      const body = {
+        name: "Test Choir",
+        location: "London",
+        description: "We are a choir testing our voices",
+        leader: "fake-user",
+      };
+      const {
+        body: { choir },
+      } = await request(app).post("/api/choirs").send(body).expect(200);
 
-    choirs.forEach((choir) => {
-      expect(choir.location).toBe(location);
+      expect(choir.name).toBe(body.name);
+      expect(choir.location).toBe(body.location);
+      expect(choir.description).toBe(body.description);
+      expect(choir.leader).toBe(body.leader);
     });
-  });
-  test("status:404 responds with a message for invalid locations query", async () => {
-    const location = "not-valid-location";
-    const {
-      body: { msg },
-    } = await request(app).get(`/api/choirs?location=${location}`).expect(404);
-
-    expect(msg).toBe("Choirs not found, invalid location");
   });
 });
 
