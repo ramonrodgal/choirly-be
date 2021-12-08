@@ -1,18 +1,28 @@
-const express = require('express');
-const mongoose = require('mongoose');
-require('dotenv').config();
+const express = require("express");
+const mongoose = require("mongoose");
+require("dotenv").config();
 
-app.use(express.json());
+const apiRouter = require("./routes/api.routes");
+const { handleCustomErrors } = require("./controllers/errors.controllers");
 
 const app = express();
-const port = 9000;
+app.use(express.json());
 
-mongoose.connect(process.env.DATABASE_URL).then(() =>{
-  console.log('connected to db')
-}).catch(err => { 
-  console.log(err);
+mongoose
+  .connect(process.env.DATABASE_URL)
+  .then(() => {
+    console.log("connected to db");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+app.use("/api", apiRouter);
+
+app.all("*", (req, res) => {
+  res.status(404).send({ msg: "Invalid URL" });
 });
 
-app.listen(port, () => {
-  console.log(`Listening in port ${port}`);
-});
+app.use(handleCustomErrors);
+
+module.exports = app;
