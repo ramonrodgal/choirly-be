@@ -11,7 +11,6 @@ exports.getEvents = async (req, res, next) => {
 
 exports.getEventsById = async (req, res, next) => {
   const { event_id } = req.params;
-  console.log("inside controller");
   try {
     const events = await fetchEventsById(event_id);
     res.status(200).send({ events });
