@@ -7,11 +7,11 @@ const Event = require("../../schemas/event");
 const Notification = require("../../schemas/notification");
 const GroupMessage = require("../../schemas/groupMessage");
 
-const { seedUser } = require("../data/development-data/users");
-const { seedEvent } = require("../data/development-data/events");
-const { seedChoir } = require("../data/development-data/choirs");
-const { seedNotification } = require("../data/development-data/notifications");
-const { seedGroupMessage } = require("../data/development-data/groupMessages");
+const { seedUser } = require("../data/users");
+const { seedEvent } = require("../data/events");
+const { seedChoir } = require("../data/choirs");
+const { seedNotification } = require("../data/notifications");
+const { seedGroupMessage } = require("../data/groupMessages");
 
 const seedDB = async () => {
   try {
