@@ -65,6 +65,19 @@ describe("/api/users", () => {
 
       expect(msg).toBe("Bad Request. Invalid Body");
     });
+    test.only("status:400 responds with a message for invalid data type", async () => {
+      const body = {
+        email: "ramon@email.com",
+        username: "ramonrodgal",
+        first_name: 42069,
+        phone_number: "not valid number",
+      };
+      const {
+        body: { msg },
+      } = await request(app).post("/api/users").send(body).expect(400);
+
+      expect(msg).toBe("Bad Request. Invalid Body");
+    });
   });
 });
 
