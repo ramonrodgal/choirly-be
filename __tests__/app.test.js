@@ -33,6 +33,26 @@ describe("/api/users", () => {
       });
     });
   });
+  describe("POST", () => {
+    test.only("status:201 responds with the posted user", async () => {
+      const body = {
+        email: "ramon@email.com",
+        username: "ramonrodgal",
+        first_name: "ramon",
+        last_name: "rodriguez",
+        phone_number: 8989898989,
+      };
+      const {
+        body: { user },
+      } = await request(app).post("/api/users").send(body).expect(201);
+
+      expect(body.email).toBe(user.email);
+      expect(body.username).toBe(user.username);
+      expect(body.first_name).toBe(user.first_name);
+      expect(body.last_name).toBe(user.last_name);
+      expect(body.phone_number).toBe(user.phone_number);
+    });
+  });
 });
 
 describe("/api/users/:username", () => {
@@ -170,7 +190,7 @@ describe("/api/choirs/:choir_id", () => {
 
       expect(msg).toBe("Choir removed");
     });
-    test.only("status:404 responds with a message for invalid id", async () => {
+    test("status:404 responds with a message for invalid id", async () => {
       const choir_id = "not-valid";
       const {
         body: { msg },
