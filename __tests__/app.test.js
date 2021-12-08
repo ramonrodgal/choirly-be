@@ -249,7 +249,7 @@ describe("/api/choirs/:choir_id", () => {
 });
 
 describe("/api/notifications/:username/", () => {
-  describe.only("GET", () => {
+  describe("GET", () => {
     test("status:200 responds with an array of notifications", async () => {
       const username = "cakevealbladerunner";
       const {
@@ -273,7 +273,7 @@ describe("/api/notifications/:username/", () => {
       });
     });
   });
-  test.only("status:404 responds with a message for invalid username", async () => {
+  test("status:404 responds with a message for invalid username", async () => {
     const username = "not a user";
     const {
       body: { msg },
@@ -285,7 +285,7 @@ describe("/api/notifications/:username/", () => {
 
 describe("/api/events", () => {
   describe("GET", () => {
-    test.only("status:200 responds with an array of events", async () => {
+    test("status:200 responds with an array of events", async () => {
       const {
         body: { events },
       } = await request(app).get("/api/events").expect(200);
@@ -303,6 +303,22 @@ describe("/api/events", () => {
 
       events.forEach((event) => {
         expect(event).toMatchObject(eventTest);
+      });
+    });
+  });
+});
+
+describe("/api/events/:event_id/", () => {
+  describe("GET", () => {
+    test.only("status:200 responds with an array of event from an specific choir", async () => {
+      const event_id = "61b0c4c065064fdfb889a156";
+      const {
+        body: { events },
+      } = await request(app).get(`/api/events/${event_id}`).expect(200);
+      expect(events.length).toBe(1);
+
+      events.forEach((event) => {
+        expect(event.choir).toBe("African Children's Choir");
       });
     });
   });
