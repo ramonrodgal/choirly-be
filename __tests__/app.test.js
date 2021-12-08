@@ -310,7 +310,7 @@ describe("/api/events", () => {
 
 describe("/api/events/:event_id/", () => {
   describe("GET", () => {
-    test.only("status:200 responds with an array of event from an specific choir", async () => {
+    test("status:200 responds a single event", async () => {
       const event_id = "61b0c4c065064fdfb889a156";
       const {
         body: { events },
@@ -322,4 +322,13 @@ describe("/api/events/:event_id/", () => {
       });
     });
   });
+  test.only("status:400 responds with a message for invalid event id", async () => {
+    const event_id = "notvalid";
+    const {
+      body: { msg },
+    } = await request(app).get(`/api/events/${event_id}`).expect(400);
+
+    expect(msg).toBe("Bad request. Invalid event id");
+  });
+  test.skip("status:404 responds with a message for events not found", async () => {});
 });
