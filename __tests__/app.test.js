@@ -637,3 +637,30 @@ describe("/api/events/choir/:choir_id", () => {
     });
   });
 });
+
+describe("/api/messages/choir/:choid_id", () => {
+  describe("GET", () => {
+    test.only("status:200 responds with an array of messages from a choir", async () => {
+      const choir_id = "61b0c4c065064fdfb889a148";
+      const {
+        body: { messages },
+      } = await request(app).get(`/api/messages/choir/${choir_id}`).expect(200);
+
+      expect(messages.length).toBe(1);
+
+      const messageTest = {
+        choir: expect.any(String),
+        title: expect.any(String),
+        author: expect.any(String),
+        created_at: expect.any(String),
+        body: expect.any(String),
+        likes: expect.any(Number),
+        comments: expect.any(Object),
+      };
+
+      messages.forEach((message) => {
+        expect(message).toMatchObject(messageTest);
+      });
+    });
+  });
+});
