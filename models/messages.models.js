@@ -7,7 +7,7 @@ exports.fetchMessagesByChoirId = async (choir_id) => {
   return await GroupMessage.find({ choir: choir.name });
 };
 
-exports.insertMessageByChoirId = async (body) => {
+exports.insertMessage = async (body) => {
   const requiredFields = ["choir", "author", "title", "body"];
   let allFields = true;
   let allFieldTypes = true;
