@@ -46,8 +46,16 @@ exports.insertUser = async (body) => {
     return Promise.reject({ status: 400, msg: "Bad Request. Invalid Body" });
   }
 
-  const user = new User(body);
-  return await user.save();
+  const user = await User.find({ username: body.username });
+  if (user.length > 0) {
+    return Promise.reject({
+      status: 400,
+      msg: "Bad Request. Username already exists",
+    });
+  }
+
+  const newUser = new User(body);
+  return await newUser.save();
 };
 
 exports.removeUserByUsername = async (username) => {
