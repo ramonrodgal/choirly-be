@@ -1,5 +1,10 @@
+const mongoose = require("mongoose");
+
 const request = require("supertest");
 const app = require("../app");
+
+//beforeEach(() => seedDB());
+afterAll(() => mongoose.connection.close());
 
 describe("not valid url", () => {
   test('status:404 responds with the message "Invalid URL"', async () => {
