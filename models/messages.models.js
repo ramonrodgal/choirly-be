@@ -44,6 +44,18 @@ exports.deleteMessageById = async (message_id) => {
 };
 
 exports.fetchMessageById = async (message_id) => {
+  if (!ObjectId.isValid(message_id)) {
+    return Promise.reject({
+      status: 400,
+      msg: "Bad request. Invalid message id",
+    });
+  }
+
   const message = await GroupMessage.find({ _id: message_id });
+
+  if (message.length === 0) {
+    return Promise.reject({ status: 404, msg: "Message not found" });
+  }
+
   return message[0];
 };
