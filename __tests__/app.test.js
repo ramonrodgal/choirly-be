@@ -687,4 +687,22 @@ describe("/api/messages/choirs/:choid_id", () => {
   });
 });
 
-describe("'/api/messages/choirs");
+describe("'/api/messages", () => {
+  describe("POST", () => {
+    test.only("status:201 responds with the posted message", async () => {
+      const body = {
+        choir: "African Children's Choir",
+        title: "Test message!",
+        author: "cakevealbladerunner",
+        body: "Test body",
+      };
+      const {
+        body: { message },
+      } = await await request(app).post("/api/messages").send(body).expect(201);
+
+      for (let key in body) {
+        expect(message[key]).toBe(body[key]);
+      }
+    });
+  });
+});
