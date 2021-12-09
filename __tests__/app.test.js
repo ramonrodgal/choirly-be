@@ -437,7 +437,7 @@ describe("/api/events/choir/:choir_id", () => {
     });
   });
   describe("POST", () => {
-    test.only("status:201 responds with the posted event", async () => {
+    test("status:201 responds with the posted event", async () => {
       const choir_id = "61b0c4c065064fdfb889a148";
       const body = {
         title: "Event Title",
@@ -456,6 +456,26 @@ describe("/api/events/choir/:choir_id", () => {
         .expect(201);
 
       expect(event.title).toBe(body.title);
+    });
+    test.only("status:400 responds with a message for invalid choid_id", async () => {
+      const choir_id = "61b0c4c";
+      const body = {
+        title: "Event Title",
+        choir: "Chester Bach Singers",
+        type: "rehersal",
+        location: "location",
+        date: Date.now(),
+        duration: 1,
+        details: "test details",
+      };
+      const {
+        body: { msg },
+      } = await request(app)
+        .post(`/api/events/choir/${choir_id}`)
+        .send(body)
+        .expect(400);
+
+      expect(msg).toBe("Bad request. Invalid choir id");
     });
   });
 });
