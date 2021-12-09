@@ -65,3 +65,16 @@ exports.removeUserByUsername = async (username) => {
 
   return user;
 };
+
+exports.updateUserByUsername = async (username, body) => {
+  const user = await User.find({ username: username });
+  const userId = user[0]._id.toString();
+
+  if (user.length === 0) {
+    return Promise.reject({ status: 404, msg: "User not found" });
+  }
+
+  await User.updateOne({ username: username }, body);
+  const newUser = await User.find({ _id: userId });
+  return newUser[0];
+};
