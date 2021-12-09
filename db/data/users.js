@@ -1,5 +1,8 @@
+const mongoose = require("mongoose");
+
 exports.seedUser = [
   {
+    _id: mongoose.Types.ObjectId("61b0c4c065064fdfb889a140"),
     email: "example@email.com",
     username: "josephCode",
     avatar_url: "https://maxcdn.icons8.com/Share/icon/Cinema/avatar1600.png",
@@ -16,6 +19,7 @@ exports.seedUser = [
     Groups: ["Liverpool 64"],
   },
   {
+    _id: mongoose.Types.ObjectId("61b0c4c065064fdfb889a141"),
     email: "korus@email.com",
     username: "korus76",
     avatar_url: "https://avatarfiles.alphacoders.com/462/46209.jpg",
@@ -33,6 +37,7 @@ exports.seedUser = [
     Groups: ["Chester Bach Singers"],
   },
   {
+    _id: mongoose.Types.ObjectId("61b0c4c065064fdfb889a142"),
     email: "genie@email.com",
     username: "genie",
     avatar_url:
@@ -50,6 +55,7 @@ exports.seedUser = [
     Groups: ["African Children's Choir"],
   },
   {
+    _id: mongoose.Types.ObjectId("61b0c4c065064fdfb889a143"),
     email: "moonglade@email.com",
     username: "moonglade",
     avatar_url: "https://pngimg.com/uploads/avatar/avatar_PNG37.png",
@@ -67,6 +73,7 @@ exports.seedUser = [
     Groups: ["African Children's Choir"],
   },
   {
+    _id: mongoose.Types.ObjectId("61b0c4c065064fdfb889a144"),
     email: "cakevealbladerunner@email.com",
     username: "cakevealbladerunner",
     avatar_url:

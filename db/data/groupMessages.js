@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 exports.seedGroupMessage = [
   {
+    _id: mongoose.Types.ObjectId("61b0c4c065064fdfb889a163"),
     choir: "African Children's Choir",
     title: "We have received an award!",
     author: "cakevealbladerunner",
@@ -18,6 +19,7 @@ exports.seedGroupMessage = [
     ],
   },
   {
+    _id: mongoose.Types.ObjectId("61b0c4c065064fdfb889a166"),
     choir: "Liverpool 64",
     title: "MemberShip Renewals",
     author: "korus76",
@@ -34,6 +36,7 @@ exports.seedGroupMessage = [
     ],
   },
   {
+    _id: mongoose.Types.ObjectId("61b0c4c065064fdfb889a169"),
     choir: "Chester Bach Singers",
     title: "Its a baby girl",
     author: "genie",

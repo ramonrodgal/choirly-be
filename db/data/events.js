@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 exports.seedEvent = [
   {
+    _id: mongoose.Types.ObjectId("61b0c4c065064fdfb889a156"),
     title: "African Childrens Choir in Concert",
     choir: "African Children's Choir",
     type: "Concert", //types are concert, and rehersal
@@ -20,6 +21,7 @@ exports.seedEvent = [
     not_going: ["korus76"],
   },
   {
+    _id: mongoose.Types.ObjectId("61b0c4c065064fdfb889a158"),
     title: "Liverpool Cathedrals Christmas Carol Concert",
     choir: "Liverpool 64",
     type: "Concert", //types are concert, and rehersal
@@ -38,6 +40,7 @@ exports.seedEvent = [
     not_going: ["josephCode"],
   },
   {
+    _id: mongoose.Types.ObjectId("61b0c4c065064fdfb889a15a"),
     title: "Chester Bach Singers Rehersal 2nd Feb 2022 ",
     choir: "Chester Bach Singers",
     type: "rehersal", //types are concert, and rehersal

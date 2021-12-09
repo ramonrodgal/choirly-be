@@ -1,6 +1,9 @@
+const mongoose = require("mongoose");
+
 exports.seedNotification = [
   //Accepted to a choir
   {
+    _id: mongoose.Types.ObjectId("61b0c4c065064fdfb889a15e"),
     username: "josephCode",
     type: "accept",
     choir: "African Children's Choir",
@@ -10,6 +13,7 @@ exports.seedNotification = [
   },
   //A new message
   {
+    _id: mongoose.Types.ObjectId("61b0c4c065064fdfb889a15f"),
     username: "josephCode",
     type: "message",
     choir: "Chester Bach Singers",
@@ -18,6 +22,7 @@ exports.seedNotification = [
   },
   //A joining request
   {
+    _id: mongoose.Types.ObjectId("61b0c4c065064fdfb889a160"),
     username: "cakevealbladerunner",
     type: "join",
     choir: "Liverpool 64",

@@ -1,5 +1,8 @@
+const mongoose = require("mongoose");
+
 exports.seedChoir = [
   {
+    _id: mongoose.Types.ObjectId("61b0c4c065064fdfb889a148"),
     name: "African Children's Choir",
     location: "Manchester",
     description: `The African Children's Choir is made up of some of the neediest and most vulnerable children in their countries. Many have lost one or both parents to poverty or disease. The African Children's Choir helps these children break away from the everyday cycle of poverty and hopelessness. Before being selected to join the Choir, children, generally aged between 7 and 11 attend Music for Life camps. These camps are fun and stimulating environments that provide a break from the daily hardships the young children face at home.
@@ -40,6 +43,7 @@ exports.seedChoir = [
     messages: [],
   },
   {
+    _id: mongoose.Types.ObjectId("61b0c4c065064fdfb889a14c"),
     name: "Liverpool 64",
     location: "Liverpool",
     description: `Liverpool64 was formed in 2018. It has grown quickly and as of May 2021 has over 100 members registered to sing across its soprano, alto, tenor and bass sections. The choir rehearses weekly on Monday evenings 6.30-8pm in the cathedral.`,
@@ -75,6 +79,7 @@ exports.seedChoir = [
     messages: [],
   },
   {
+    _id: mongoose.Types.ObjectId("61b0c4c065064fdfb889a150"),
     name: "Chester Bach Singers",
     location: "Chester",
     description: `Chester Bach Singers, conducted by Martin Bussey,  is one of the finest chamber choirs in the North West of England. With its associated baroque Orchestra, Chester Bach Singers presents a season of concerts in and around Chester and has appeared in concert series across the UK. Established in September 1976, the 2016/17 season marked our 40th Anniversary Season.
