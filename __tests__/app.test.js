@@ -322,7 +322,7 @@ describe("/api/events/:event_id/", () => {
       });
     });
   });
-  test.only("status:400 responds with a message for invalid event id", async () => {
+  test("status:400 responds with a message for invalid event id", async () => {
     const event_id = "notvalid";
     const {
       body: { msg },
@@ -331,4 +331,20 @@ describe("/api/events/:event_id/", () => {
     expect(msg).toBe("Bad request. Invalid event id");
   });
   test.skip("status:404 responds with a message for events not found", async () => {});
+});
+
+describe("/api/events/choir/:choir_id", () => {
+  describe("GET", () => {
+    test.only("status:200 responds with an arrat of events filtered by choir id", async () => {
+      const choir_id = "61b0c4c065064fdfb889a148";
+      const {
+        body: { events },
+      } = await request(app).get(`/api/events/choir/${choir_id}`);
+
+      expect(events.length).toBe(1);
+      events.forEach((event) => {
+        expect(event.choir).toBe("African Children's Choir");
+      });
+    });
+  });
 });
