@@ -13,11 +13,17 @@ const { seedChoir } = require("../data/choirs");
 const { seedNotification } = require("../data/notifications");
 const { seedGroupMessage } = require("../data/groupMessages");
 
+mongoose
+  .connect(process.env.DATABASE_URL)
+  .then(() => {
+    console.log("connected to db");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
 const seedDB = async () => {
   try {
-    await mongoose.connect(process.env.DATABASE_URL);
-    console.log("connected to db");
-
     await User.deleteMany({});
     await User.insertMany(seedUser);
 
@@ -32,12 +38,17 @@ const seedDB = async () => {
 
     await GroupMessage.deleteMany({});
     await GroupMessage.insertMany(seedGroupMessage);
-
-    await mongoose.connection.close();
-    console.log("connection closed");
   } catch (err) {
     console.log(err);
   }
 };
 
-seedDB();
+seedDB()
+  .then(() => {
+    return mongoose.connection.close();
+  })
+  .then(() => {
+    console.log("connection closed");
+  });
+
+module.exports = seedDB;
