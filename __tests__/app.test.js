@@ -376,6 +376,86 @@ describe("/api/notifications/user/:username/", () => {
   });
 });
 
+describe("/api/notifications/:notification_id", () => {
+  describe("PATCH", () => {
+    test("status:200 responds with the updated notification", async () => {
+      const notification_id = "61b0c4c065064fdfb889a160";
+      const body = {
+        accepted: true,
+        read: true,
+      };
+      const {
+        body: { notification },
+      } = await request(app)
+        .patch(`/api/notifications/${notification_id}`)
+        .send(body)
+        .expect(200);
+
+      expect(notification.accepted).toBe(body.accepted);
+      expect(notification.read).toBe(body.read);
+    });
+    test("status:400 responds with a message for invalid notification id", async () => {
+      const notification_id = "notValidId";
+      const body = {
+        accepted: true,
+        read: true,
+      };
+      const {
+        body: { msg },
+      } = await request(app)
+        .patch(`/api/notifications/${notification_id}`)
+        .send(body)
+        .expect(400);
+      expect(msg).toBe("Bad request. Invalid notification id");
+    });
+    test("status:404 responds with a message for notification not found", async () => {
+      const notification_id = "61b0c4c065064fdfb889a161";
+      const body = {
+        accepted: true,
+        read: true,
+      };
+      const {
+        body: { msg },
+      } = await request(app)
+        .patch(`/api/notifications/${notification_id}`)
+        .send(body)
+        .expect(404);
+      expect(msg).toBe("Notification not found");
+    });
+    test("status:400 responds with a message for invalid body fields", async () => {
+      const notification_id = "61b0c4c065064fdfb889a160";
+      const body = {
+        notvalid: true,
+        accepted: true,
+        read: true,
+      };
+      const {
+        body: { msg },
+      } = await request(app)
+        .patch(`/api/notifications/${notification_id}`)
+        .send(body)
+        .expect(400);
+
+      expect(msg).toBe("Bad Request. Invalid Body");
+    });
+    test("status:400 responds with a message for invalid body fields", async () => {
+      const notification_id = "61b0c4c065064fdfb889a160";
+      const body = {
+        accepted: 123,
+        read: true,
+      };
+      const {
+        body: { msg },
+      } = await request(app)
+        .patch(`/api/notifications/${notification_id}`)
+        .send(body)
+        .expect(400);
+
+      expect(msg).toBe("Bad Request. Invalid Body");
+    });
+  });
+});
+
 describe("/api/events", () => {
   describe("GET", () => {
     test("status:200 responds with an array of events", async () => {
