@@ -721,7 +721,7 @@ describe("/api/messages", () => {
 
       expect(msg).toBe("Bad Request. Invalid Body");
     });
-    test.only("status:400 responds with a message for invalid body data type", async () => {
+    test("status:400 responds with a message for invalid body data type", async () => {
       const body = {
         choir: "African Children's Choir",
         title: "Test message!",
@@ -737,9 +737,32 @@ describe("/api/messages", () => {
   });
 });
 
-describe("/api/messages/:messages_id", () => {
+describe("/api/messages/:message_id", () => {
+  describe("GET", () => {
+    test.only("status:200 respond with a message", async () => {
+      const message_id = "61b2536fec3b6b99b57a3357";
+      const {
+        body: { message },
+      } = await request(app).get(`/api/messages/${message_id}`).expect(200);
+
+      const messageTest = {
+        _id: expect.any(String),
+        choir: expect.any(String),
+        title: expect.any(String),
+        author: expect.any(String),
+        created_at: expect.any(String),
+        body: expect.any(String),
+        likes: expect.any(Number),
+        comments: expect.any(Object),
+      };
+
+      expect(message._id).toBe(message_id);
+
+      expect(message).toMatchObject(messageTest);
+    });
+  });
   describe("DELETE", () => {
-    test.only("status:200 respond with the deleted message", async () => {
+    test.skip("status:200 respond with the deleted message", async () => {
       const message_id = "61b253d59badabd3b3764b56";
 
       const { body } = await request(app)
