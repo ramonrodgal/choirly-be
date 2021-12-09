@@ -787,13 +787,21 @@ describe("/api/messages/:message_id", () => {
 
       expect(body.message).toBe("Message deleted");
     });
-    test.only("status:400 respond with a message for invalid message_id", async () => {
+    test("status:400 respond with a message for invalid message_id", async () => {
       const message_id = "61b2536";
       const {
         body: { msg },
       } = await request(app).delete(`/api/messages/${message_id}`).expect(400);
 
       expect(msg).toBe("Bad request. Invalid message id");
+    });
+    test.only("status:404 respond with a message for message not found", async () => {
+      const message_id = "61b2536fec3b6b99b57a3358";
+      const {
+        body: { msg },
+      } = await request(app).get(`/api/messages/${message_id}`).expect(404);
+
+      expect(msg).toBe("Message not found");
     });
   });
 });
