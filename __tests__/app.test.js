@@ -272,14 +272,87 @@ describe("/api/notifications/:username/", () => {
         expect(notification).toMatchObject(notificationTest);
       });
     });
-  });
-  test("status:404 responds with a message for invalid username", async () => {
-    const username = "not a user";
-    const {
-      body: { msg },
-    } = await request(app).get(`/api/notifications/${username}/`).expect(404);
+    test("status:404 responds with a message for invalid username", async () => {
+      const username = "not a user";
+      const {
+        body: { msg },
+      } = await request(app).get(`/api/notifications/${username}/`).expect(404);
 
-    expect(msg).toBe("User not found");
+      expect(msg).toBe("User not found");
+    });
+  });
+  describe("POST", () => {
+    test("status:201 responds with the posted notification", async () => {
+      const username = "cakevealbladerunner";
+      const body = {
+        username: "cakevealbladerunner",
+        type: "message",
+        choir: "Chester Bach Singers",
+        author: "genie",
+      };
+
+      const {
+        body: { notification },
+      } = await request(app)
+        .post(`/api/notifications/${username}`)
+        .send(body)
+        .expect(201);
+
+      const notificationTest = {
+        username: expect.any(String),
+        type: expect.any(String),
+        choir: expect.any(String),
+        author: expect.any(String),
+        date: expect.any(String),
+        read: expect.any(Boolean),
+      };
+
+      expect(notification.username).toBe(username);
+      expect(notification.read).toBe(false);
+      expect(notification).toMatchObject(notificationTest);
+    });
+    test("status:404 responds with a message for invalid username", async () => {
+      const username = "not-valid-username";
+      const body = {
+        username: "cakevealbladerunner",
+        type: "message",
+        choir: "Chester Bach Singers",
+        author: "genie",
+      };
+      const {
+        body: { msg },
+      } = await request(app).get(`/api/notifications/${username}`).expect(404);
+
+      expect(msg).toBe("User not found");
+    });
+    test("status:400 responds with a message for invalid body fields", async () => {
+      const username = "cakevealbladerunner";
+      const body = {
+        notvalid: "cakevealbladerunner",
+        type: "message",
+        choir: "Chester Bach Singers",
+        author: "genie",
+      };
+      const {
+        body: { msg },
+      } = await request(app).post("/api/notifications/${username}");
+
+      expect(msg).toBe("Bad Request. Invalid Body");
+    });
+    test.only("status:400 responds with a message for invalid data type in body", async () => {
+      const username = "cakevealbladerunner";
+      const body = {
+        username: 12345,
+        type: "message",
+        choir: "Chester Bach Singers",
+        author: "genie",
+      };
+      const {
+        body: { msg },
+      } = await request(app).post("/api/notifications/${username}");
+
+      expect(msg).toBe("Bad Request. Invalid Body");
+    });
   });
 });
 
@@ -346,7 +419,7 @@ describe("/api/events/choir/:choir_id", () => {
         expect(event.choir).toBe("African Children's Choir");
       });
     });
-    test.only("status:400 responds with a message for invalid choir id", async () => {
+    test("status:400 responds with a message for invalid choir id", async () => {
       const choir_id = "61b0c4c0";
       const {
         body: { msg },
