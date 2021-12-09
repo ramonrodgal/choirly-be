@@ -1,9 +1,7 @@
 const mongoose = require("mongoose");
-
 const request = require("supertest");
 const app = require("../app");
 
-//beforeEach(() => seedDB());
 afterAll(() => mongoose.connection.close());
 
 describe("not valid url", () => {
@@ -16,7 +14,7 @@ describe("not valid url", () => {
 });
 
 describe("/api/users", () => {
-  describe("GET", () => {
+  describe.only("GET", () => {
     test("status:200 responds with an array of users", async () => {
       const {
         body: { users },
@@ -139,7 +137,7 @@ describe("/api/users/:username", () => {
     });
   });
   describe("PATCH", () => {
-    test.only("status:200 responds with the update user", async () => {
+    test("status:200 responds with the update user", async () => {
       const username = "genie";
       const body = {
         username: "user",
