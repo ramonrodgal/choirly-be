@@ -1,4 +1,8 @@
-const { fetchEvents, fetchEventsById } = require("../models/events.models");
+const {
+  fetchEvents,
+  fetchEventsById,
+  fetchEventsByChoirId,
+} = require("../models/events.models");
 
 exports.getEvents = async (req, res, next) => {
   try {
@@ -13,6 +17,16 @@ exports.getEventsById = async (req, res, next) => {
   const { event_id } = req.params;
   try {
     const events = await fetchEventsById(event_id);
+    res.status(200).send({ events });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getEventsByChoirId = async (req, res, next) => {
+  const { choir_id } = req.params;
+  try {
+    const events = await fetchEventsByChoirId(choir_id);
     res.status(200).send({ events });
   } catch (err) {
     next(err);
