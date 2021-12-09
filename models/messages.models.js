@@ -1,5 +1,6 @@
 const GroupMessage = require("../schemas/groupMessage");
 const { fetchChoirById } = require("./choirs.models");
+const ObjectId = require("mongoose").Types.ObjectId;
 
 exports.fetchMessagesByChoirId = async (choir_id) => {
   const choir = await fetchChoirById(choir_id);
@@ -34,4 +35,10 @@ exports.insertMessage = async (body) => {
 
   const message = new GroupMessage(body);
   return await message.save();
+};
+
+exports.deleteMessageById = async (message_id) => {
+  const message = await GroupMessage.find({ _id: message_id });
+  await GroupMessage.deleteOne({ _id: message_id });
+  return message[0];
 };
