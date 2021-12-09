@@ -339,7 +339,7 @@ describe("/api/notifications/:username/", () => {
 
       expect(msg).toBe("Bad Request. Invalid Body");
     });
-    test.only("status:400 responds with a message for invalid data type in body", async () => {
+    test("status:400 responds with a message for invalid data type in body", async () => {
       const username = "cakevealbladerunner";
       const body = {
         username: 12345,
@@ -434,6 +434,28 @@ describe("/api/events/choir/:choir_id", () => {
       } = await request(app).get(`/api/events/choir/${choir_id}`);
 
       expect(msg).toBe("Bad request. Invalid event id");
+    });
+  });
+  describe("POST", () => {
+    test.only("status:201 responds with the posted event", async () => {
+      const choir_id = "61b0c4c065064fdfb889a148";
+      const body = {
+        title: "Event Title",
+        choir: "Chester Bach Singers",
+        type: "rehersal",
+        location: "location",
+        date: Date.now(),
+        duration: 1,
+        details: "test details",
+      };
+      const {
+        body: { event },
+      } = await request(app)
+        .post(`/api/events/choir/${choir_id}`)
+        .send(body)
+        .expect(201);
+
+      expect(event.title).toBe(body.title);
     });
   });
 });
