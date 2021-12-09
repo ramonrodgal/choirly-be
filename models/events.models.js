@@ -33,3 +33,10 @@ exports.fetchEventsByChoirId = async (choir_id) => {
 
   return events;
 };
+
+exports.insertEventByChoirId = async (choir_id, body) => {
+  await fetchChoirById(choir_id);
+
+  const event = new Event(body);
+  return await event.save();
+};
