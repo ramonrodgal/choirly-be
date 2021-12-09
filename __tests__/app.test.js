@@ -739,7 +739,7 @@ describe("/api/messages", () => {
 
 describe("/api/messages/:message_id", () => {
   describe("GET", () => {
-    test.only("status:200 respond with a message", async () => {
+    test("status:200 responds with a message", async () => {
       const message_id = "61b2536fec3b6b99b57a3357";
       const {
         body: { message },
@@ -759,6 +759,22 @@ describe("/api/messages/:message_id", () => {
       expect(message._id).toBe(message_id);
 
       expect(message).toMatchObject(messageTest);
+    });
+    test("status:400 responds with a message for invalid id", async () => {
+      const message_id = "61b2536";
+      const {
+        body: { msg },
+      } = await request(app).get(`/api/messages/${message_id}`).expect(400);
+
+      expect(msg).toBe("Bad request. Invalid message id");
+    });
+    test.only("status:404 responds with a message for message not found", async () => {
+      const message_id = "61b2536fec3b6b99b57a3358";
+      const {
+        body: { msg },
+      } = await request(app).get(`/api/messages/${message_id}`).expect(404);
+
+      expect(msg).toBe("Message not found");
     });
   });
   describe("DELETE", () => {
