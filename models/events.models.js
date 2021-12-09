@@ -37,6 +37,46 @@ exports.fetchEventsByChoirId = async (choir_id) => {
 exports.insertEventByChoirId = async (choir_id, body) => {
   await fetchChoirById(choir_id);
 
+  const requiredFields = [
+    "title",
+    "choir",
+    "type",
+    "location",
+    "duration",
+    "details",
+  ];
+  let allFields = true;
+  let allFieldTypes = true;
+
+  const fieldTypesReference = {
+    title: "string",
+    choir: "string",
+    type: "string",
+    location: "string",
+    duration: "number",
+    details: "string",
+  };
+
+  for (let requiredField of requiredFields) {
+    if (!body.hasOwnProperty(requiredField)) {
+      allFields = false;
+    }
+    if (fieldTypesReference[requiredField] !== typeof body[requiredField]) {
+      allFieldTypes = false;
+    }
+  }
+
+  if (!allFields || !allFieldTypes) {
+    return Promise.reject({ status: 400, msg: "Bad Request. Invalid Body" });
+  }
+
+  if (body.type !== "rehersal" && body.type !== "concert") {
+    return Promise.reject({
+      status: 400,
+      msg: "Bad Request. Invalid event type",
+    });
+  }
+
   const event = new Event(body);
   return await event.save();
 };
