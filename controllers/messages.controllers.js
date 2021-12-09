@@ -1,6 +1,6 @@
 const {
   fetchMessagesByChoirId,
-  insertMessageByChoirId,
+  insertMessage,
 } = require("../models/messages.models");
 
 exports.getMessagesByChoirId = async (req, res, next) => {
@@ -13,10 +13,10 @@ exports.getMessagesByChoirId = async (req, res, next) => {
   }
 };
 
-exports.postMessageByChoirId = async (req, res, next) => {
+exports.postMessage = async (req, res, next) => {
   const { body } = req;
   try {
-    const message = await insertMessageByChoirId(body);
+    const message = await insertMessage(body);
     res.status(201).send({ message });
   } catch (err) {
     next(err);
