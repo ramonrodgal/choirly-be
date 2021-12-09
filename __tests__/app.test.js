@@ -692,7 +692,7 @@ describe("/api/messages/choirs/:choid_id", () => {
   });
 });
 
-describe("'/api/messages", () => {
+describe("/api/messages", () => {
   describe("POST", () => {
     test("status:201 responds with the posted message", async () => {
       const body = {
@@ -733,6 +733,20 @@ describe("'/api/messages", () => {
       } = await await request(app).post("/api/messages").send(body).expect(400);
 
       expect(msg).toBe("Bad Request. Invalid Body");
+    });
+  });
+});
+
+describe("/api/messages/:messages_id", () => {
+  describe("DELETE", () => {
+    test.only("status:200 respond with the deleted message", async () => {
+      const message_id = "61b253d59badabd3b3764b56";
+
+      const { body } = await request(app)
+        .delete(`/api/messages/${message_id}`)
+        .expect(200);
+
+      expect(body.message).toBe("Message deleted");
     });
   });
 });
