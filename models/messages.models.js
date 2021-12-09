@@ -6,3 +6,8 @@ exports.fetchMessagesByChoirId = async (choir_id) => {
 
   return await GroupMessage.find({ choir: choir.name });
 };
+
+exports.insertMessageByChoirId = async (body) => {
+  const message = new GroupMessage(body);
+  return await message.save();
+};
