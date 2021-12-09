@@ -640,7 +640,7 @@ describe("/api/events/choir/:choir_id", () => {
 
 describe("/api/messages/choir/:choid_id", () => {
   describe("GET", () => {
-    test.only("status:200 responds with an array of messages from a choir", async () => {
+    test("status:200 responds with an array of messages from a choir", async () => {
       const choir_id = "61b0c4c065064fdfb889a148";
       const {
         body: { messages },
@@ -661,6 +661,22 @@ describe("/api/messages/choir/:choid_id", () => {
       messages.forEach((message) => {
         expect(message).toMatchObject(messageTest);
       });
+    });
+    test("status:400 responds with a message for invalid choir id", async () => {
+      const choir_id = "61b0c4c0";
+      const {
+        body: { msg },
+      } = await request(app).get(`/api/messages/choir/${choir_id}`).expect(400);
+
+      expect(msg).toBe("Bad request. Invalid choir id");
+    });
+    test.only("status:404 responds with a message for invalid choir not found", async () => {
+      const choir_id = "61b0c4c065064fdfb889a149";
+      const {
+        body: { msg },
+      } = await request(app).get(`/api/messages/choir/${choir_id}`).expect(404);
+
+      expect(msg).toBe("Choir not found");
     });
   });
 });
