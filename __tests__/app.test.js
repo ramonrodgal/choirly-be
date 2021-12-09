@@ -138,6 +138,29 @@ describe("/api/users/:username", () => {
       expect(body.msg).toBe("User not found");
     });
   });
+  describe("PATCH", () => {
+    test.only("status:200 responds with the update user", async () => {
+      const username = "genie";
+      const body = {
+        username: "user",
+        avatar_url: "http://url.com",
+        about_me: "This is all about me",
+        first_name: "name",
+        last_name: "surname",
+        phone_number: 42069,
+      };
+      const {
+        body: { user },
+      } = await request(app)
+        .patch(`/api/users/${username}`)
+        .send(body)
+        .expect(200);
+
+      for (let key in body) {
+        expect(user[key]).toBe(body[key]);
+      }
+    });
+  });
 });
 
 describe("/api/choirs", () => {
@@ -795,7 +818,7 @@ describe("/api/messages/:message_id", () => {
 
       expect(msg).toBe("Bad request. Invalid message id");
     });
-    test.only("status:404 respond with a message for message not found", async () => {
+    test("status:404 respond with a message for message not found", async () => {
       const message_id = "61b2536fec3b6b99b57a3358";
       const {
         body: { msg },
