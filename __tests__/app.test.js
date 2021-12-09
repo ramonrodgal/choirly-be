@@ -689,7 +689,7 @@ describe("/api/messages/choirs/:choid_id", () => {
 
 describe("'/api/messages", () => {
   describe("POST", () => {
-    test.only("status:201 responds with the posted message", async () => {
+    test("status:201 responds with the posted message", async () => {
       const body = {
         choir: "African Children's Choir",
         title: "Test message!",
@@ -703,6 +703,31 @@ describe("'/api/messages", () => {
       for (let key in body) {
         expect(message[key]).toBe(body[key]);
       }
+    });
+    test("status:400 responds with a message for invalid body fields", async () => {
+      const body = {
+        choir: "African Children's Choir",
+        author: "cakevealbladerunner",
+        body: "Test body",
+      };
+      const {
+        body: { msg },
+      } = await request(app).post("/api/messages").send(body).expect(400);
+
+      expect(msg).toBe("Bad Request. Invalid Body");
+    });
+    test.only("status:400 responds with a message for invalid body data type", async () => {
+      const body = {
+        choir: "African Children's Choir",
+        title: "Test message!",
+        author: 123456,
+        body: "Test body",
+      };
+      const {
+        body: { msg },
+      } = await await request(app).post("/api/messages").send(body).expect(400);
+
+      expect(msg).toBe("Bad Request. Invalid Body");
     });
   });
 });
