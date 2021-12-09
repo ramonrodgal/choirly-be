@@ -59,3 +59,14 @@ exports.fetchMessageById = async (message_id) => {
 
   return message[0];
 };
+
+exports.updateMessageById = async (message_id, body) => {
+  await this.fetchMessageById(message_id);
+
+  console.log(message_id, "message_id");
+  console.log(body, "body");
+
+  await GroupMessage.updateOne({ _id: notification_id }, { likes: body.likes });
+  const newNotification = await GroupMessage.find({ _id: notification_id });
+  return newNotification[0];
+};

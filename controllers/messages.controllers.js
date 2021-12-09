@@ -3,6 +3,7 @@ const {
   insertMessage,
   deleteMessageById,
   fetchMessageById,
+  updateMessageById,
 } = require("../models/messages.models");
 
 exports.getMessagesByChoirId = async (req, res, next) => {
@@ -40,6 +41,17 @@ exports.getMessageById = async (req, res, next) => {
   try {
     const message = await fetchMessageById(message_id);
     res.status(200).send({ message });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.patchMessageById = async (req, res, next) => {
+  const { message_id } = req.params;
+  const { body } = req;
+
+  try {
+    const message = await updateMessageById(message_id, body);
   } catch (err) {
     next(err);
   }
