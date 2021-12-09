@@ -248,13 +248,15 @@ describe("/api/choirs/:choir_id", () => {
   });
 });
 
-describe("/api/notifications/:username/", () => {
+describe("/api/notifications/user/:username/", () => {
   describe("GET", () => {
     test("status:200 responds with an array of notifications", async () => {
       const username = "cakevealbladerunner";
       const {
         body: { notifications },
-      } = await request(app).get(`/api/notifications/${username}/`).expect(200);
+      } = await request(app)
+        .get(`/api/notifications/user/${username}/`)
+        .expect(200);
 
       const notificationTest = {
         _id: expect.any(String),
@@ -276,12 +278,14 @@ describe("/api/notifications/:username/", () => {
       const username = "not a user";
       const {
         body: { msg },
-      } = await request(app).get(`/api/notifications/${username}/`).expect(404);
+      } = await request(app)
+        .get(`/api/notifications/user/${username}/`)
+        .expect(404);
 
       expect(msg).toBe("User not found");
     });
   });
-  describe("POST", () => {
+  describe.only("POST", () => {
     test("status:201 responds with the posted notification", async () => {
       const username = "cakevealbladerunner";
       const body = {
@@ -294,7 +298,7 @@ describe("/api/notifications/:username/", () => {
       const {
         body: { notification },
       } = await request(app)
-        .post(`/api/notifications/${username}`)
+        .post(`/api/notifications/user/${username}`)
         .send(body)
         .expect(201);
 
@@ -321,7 +325,9 @@ describe("/api/notifications/:username/", () => {
       };
       const {
         body: { msg },
-      } = await request(app).get(`/api/notifications/${username}`).expect(404);
+      } = await request(app)
+        .get(`/api/notifications/user/${username}`)
+        .expect(404);
 
       expect(msg).toBe("User not found");
     });
@@ -335,7 +341,7 @@ describe("/api/notifications/:username/", () => {
       };
       const {
         body: { msg },
-      } = await request(app).post("/api/notifications/${username}");
+      } = await request(app).post(`/api/notifications/user/${username}`);
 
       expect(msg).toBe("Bad Request. Invalid Body");
     });
@@ -349,7 +355,7 @@ describe("/api/notifications/:username/", () => {
       };
       const {
         body: { msg },
-      } = await request(app).post("/api/notifications/${username}");
+      } = await request(app).post(`/api/notifications/user/${username}`);
 
       expect(msg).toBe("Bad Request. Invalid Body");
     });

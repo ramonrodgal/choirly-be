@@ -2,10 +2,11 @@ const notificationsRouters = require("express").Router();
 const {
   getNotificationsByUsername,
   postNotificationByUsername,
+  patchNotificationById,
 } = require("../controllers/notifications.controllers");
 
 notificationsRouters
-  .route("/:username")
+  .route("/user/:username")
   .get(getNotificationsByUsername)
   .post(postNotificationByUsername);
 
