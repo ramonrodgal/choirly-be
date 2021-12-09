@@ -78,6 +78,20 @@ describe("/api/users", () => {
 
       expect(msg).toBe("Bad Request. Invalid Body");
     });
+    test("status:400 responds with a message for username that already exists in the database", async () => {
+      const body = {
+        email: "ramon@email.com",
+        username: "korus76",
+        first_name: "ramon",
+        last_name: "rodriguez",
+        phone_number: 8989898989,
+      };
+      const {
+        body: { msg },
+      } = await request(app).post("/api/users").send(body).expect(400);
+
+      expect(msg).toBe("Bad Request. Username already exists");
+    });
   });
 });
 
@@ -285,7 +299,7 @@ describe("/api/notifications/user/:username/", () => {
       expect(msg).toBe("User not found");
     });
   });
-  describe.only("POST", () => {
+  describe("POST", () => {
     test("status:201 responds with the posted notification", async () => {
       const username = "cakevealbladerunner";
       const body = {
