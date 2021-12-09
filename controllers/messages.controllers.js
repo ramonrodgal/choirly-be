@@ -2,6 +2,7 @@ const {
   fetchMessagesByChoirId,
   insertMessage,
   deleteMessageById,
+  fetchMessageById,
 } = require("../models/messages.models");
 
 exports.getMessagesByChoirId = async (req, res, next) => {
@@ -29,6 +30,16 @@ exports.deleteMessageById = async (req, res, next) => {
   try {
     const message = await deleteMessageById(message_id);
     res.status(200).send({ msg: "Message deleted", message: message });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getMessageById = async (req, res, next) => {
+  const { message_id } = req.params;
+  try {
+    const message = await fetchMessageById(message_id);
+    res.status(200).send({ message });
   } catch (err) {
     next(err);
   }
