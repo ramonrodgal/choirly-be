@@ -335,7 +335,7 @@ describe("/api/events/:event_id/", () => {
 
 describe("/api/events/choir/:choir_id", () => {
   describe("GET", () => {
-    test.only("status:200 responds with an arrat of events filtered by choir id", async () => {
+    test("status:200 responds with an array of events filtered by choir id", async () => {
       const choir_id = "61b0c4c065064fdfb889a148";
       const {
         body: { events },
@@ -345,6 +345,22 @@ describe("/api/events/choir/:choir_id", () => {
       events.forEach((event) => {
         expect(event.choir).toBe("African Children's Choir");
       });
+    });
+    test.only("status:400 responds with a message for invalid choir id", async () => {
+      const choir_id = "61b0c4c0";
+      const {
+        body: { msg },
+      } = await request(app).get(`/api/events/choir/${choir_id}`);
+
+      expect(msg).toBe("Bad request. Invalid choir id");
+    });
+    test.skip("status:404 responds with a message for invalid events not found", async () => {
+      const choir_id = "61b0c4c0";
+      const {
+        body: { msg },
+      } = await request(app).get(`/api/events/choir/${choir_id}`);
+
+      expect(msg).toBe("Bad request. Invalid event id");
     });
   });
 });

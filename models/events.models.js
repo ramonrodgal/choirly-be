@@ -24,13 +24,6 @@ exports.fetchEventsById = async (event_id) => {
 };
 
 exports.fetchEventsByChoirId = async (choir_id) => {
-  if (!ObjectId.isValid(choir_id)) {
-    return Promise.reject({
-      status: 400,
-      msg: "Bad request. Invalid event id",
-    });
-  }
-
   const choir = await fetchChoirById(choir_id);
   const events = await Event.find({ choir: choir.name });
 
