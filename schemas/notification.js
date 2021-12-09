@@ -21,13 +21,14 @@ const notificationSchema = new Schema({
   },
   author: {
     type: String,
+    required: true,
   },
   accepted: {
     type: Boolean,
   },
   read: {
     type: Boolean,
-    required: true,
+    default: false,
   },
 });
 
