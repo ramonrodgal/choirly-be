@@ -5,6 +5,7 @@ const {
   getMessageById,
   deleteMessageById,
   patchMessageById,
+  postComment,
 } = require("../controllers/messages.controllers");
 
 messageRouters.route("/choir/:choir_id").get(getMessagesByChoirId);
@@ -13,6 +14,8 @@ messageRouters
   .get(getMessageById)
   .patch(patchMessageById)
   .delete(deleteMessageById);
+
+messageRouters.route("/:message_id/comments").post(postComment);
 messageRouters.route("/").post(postMessage);
 
 module.exports = messageRouters;

@@ -70,3 +70,12 @@ exports.updateMessageById = async (message_id, body) => {
   const newNotification = await GroupMessage.find({ _id: notification_id });
   return newNotification[0];
 };
+
+exports.insertComment = async (message_id, body) => {
+  const message = await this.fetchMessageById(message_id);
+
+  message.comments.push(body);
+  message.save();
+
+  return message;
+};
