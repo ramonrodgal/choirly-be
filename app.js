@@ -8,6 +8,8 @@ const { handleCustomErrors } = require("./controllers/errors.controllers");
 const app = express();
 app.use(express.json());
 
+///THIS IS A COMMENT
+
 mongoose
   .connect(process.env.DATABASE_URL)
   .then(() => {
