@@ -80,6 +80,27 @@ exports.updateUserByUsername = async (username, body) => {
 };
 
 exports.updateUserGroups = async (username, body) => {
+  const requiredFields = ["choir"];
+  let allFields = true;
+  let allFieldTypes = true;
+
+  const fieldTypesReference = {
+    choir: "string",
+  };
+
+  for (let requiredField of requiredFields) {
+    if (!body.hasOwnProperty(requiredField)) {
+      allFields = false;
+    }
+    if (fieldTypesReference[requiredField] !== typeof body[requiredField]) {
+      allFieldTypes = false;
+    }
+  }
+
+  if (!allFields || !allFieldTypes) {
+    return Promise.reject({ status: 400, msg: "Bad Request. Invalid Body" });
+  }
+
   const user = await this.fetchUserByUsername(username);
 
   user.groups.push(body.choir);
