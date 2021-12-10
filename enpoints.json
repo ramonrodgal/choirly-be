@@ -350,6 +350,51 @@
       }
     }
   },
+  "PATCH /api/choirs/:choir_id/users": {
+    "description": "add a new member into a choir and return the updated choir",
+    "queries": [],
+    "exampleBody": {
+      "username": "newUser"
+    },
+    "exampleResponse": {
+      "choir": {
+        "social": {
+          "website": "https://www.liverpoolcathedral.org.uk/cathedral-music/our-choirs/liverpool-64/",
+          "facebook": "https://www.facebook.com/LiverpoolCathedral/"
+        },
+        "_id": "61b0c4c065064fdfb889a14c",
+        "name": "Liverpool 64",
+        "location": "Liverpool",
+        "description": "Liverpool64 was formed in 2018. It has grown quickly and as of May 2021 has over 100 members registered to sing across its soprano, alto, tenor and bass sections. The choir rehearses weekly on Monday evenings 6.30-8pm in the cathedral.",
+        "avatar_url": "https://logovtor.com/wp-content/uploads/2021/04/liverpool-cathedral-logo-vector.png",
+        "leader": "korus76",
+        "members": ["josephCode", "genie", "moonglade", "korus76", "newUser"],
+        "events": [],
+        "files": [
+          {
+            "filename": "majestic symphony1.mp3",
+            "type": "song",
+            "path": "http://google.com",
+            "_id": "61b2873e8587b682f1e96a61"
+          },
+          {
+            "filename": "piano music sheets symphony1.pdf",
+            "type": "document",
+            "path": "http://google.com",
+            "_id": "61b2873e8587b682f1e96a62"
+          },
+          {
+            "filename": "rehearsal13thFeb2022.jpeg",
+            "type": "image",
+            "path": "http://google.com",
+            "_id": "61b2873e8587b682f1e96a63"
+          }
+        ],
+        "messages": [],
+        "__v": 1
+      }
+    }
+  },
   "GET /api/notifications/user/:username": {
     "description": "serves an array of notifications by username",
     "queries": [],
