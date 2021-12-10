@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const choirSchema = new Schema({
@@ -39,7 +39,7 @@ const choirSchema = new Schema({
   events: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Event',
+      ref: "Event",
     },
   ],
   files: [
@@ -58,14 +58,8 @@ const choirSchema = new Schema({
       },
     },
   ],
-  messages: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Message',
-    },
-  ],
 });
 
-const Choir = mongoose.model('Choir', choirSchema); 
+const Choir = mongoose.model("Choir", choirSchema);
 
 module.exports = Choir;
