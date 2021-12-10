@@ -672,7 +672,7 @@ describe("/api/events/:event_id/", () => {
 
 describe("/api/events/:event_id/users", () => {
   describe("GET", () => {
-    test.only("status:200 responds with the event with the added user in going array", async () => {
+    test("status:200 responds with the event with the added user in going array", async () => {
       const choir_id = "61b0c4c065064fdfb889a156";
       let body = {
         username: "korus76",
@@ -687,7 +687,7 @@ describe("/api/events/:event_id/users", () => {
 
       expect(event.going[event.going.length - 1]).toBe(body.username);
     });
-    test.only("status:200 responds with the event with the added user in not going array", async () => {
+    test("status:200 responds with the event with the added user in not going array", async () => {
       const choir_id = "61b0c4c065064fdfb889a156";
       let body = {
         username: "korus76",
@@ -701,6 +701,66 @@ describe("/api/events/:event_id/users", () => {
         .expect(200);
 
       expect(event.not_going[event.not_going.length - 1]).toBe(body.username);
+    });
+    test("status:404 responds with a message for invalid username in body", async () => {
+      const choir_id = "61b0c4c065064fdfb889a156";
+      let body = {
+        username: "notAUser",
+        going: true,
+      };
+      let {
+        body: { msg },
+      } = await request(app)
+        .patch(`/api/events/${choir_id}/users`)
+        .send(body)
+        .expect(404);
+
+      expect(msg).toBe("User not found");
+    });
+    test("status:400 responds with a message for invalid body fields", async () => {
+      const choir_id = "61b0c4c065064fdfb889a156";
+      let body = {
+        notValid: "korus76",
+        going: true,
+      };
+      let {
+        body: { msg },
+      } = await request(app)
+        .patch(`/api/events/${choir_id}/users`)
+        .send(body)
+        .expect(400);
+
+      expect(msg).toBe("Bad Request. Invalid Body");
+    });
+    test("status:400 responds with a message for body data type", async () => {
+      const choir_id = "61b0c4c065064fdfb889a156";
+      let body = {
+        user: "korus76",
+        going: "true",
+      };
+      let {
+        body: { msg },
+      } = await request(app)
+        .patch(`/api/events/${choir_id}/users`)
+        .send(body)
+        .expect(400);
+
+      expect(msg).toBe("Bad Request. Invalid Body");
+    });
+    test("status:400 responds with a message for a user already inside the event", async () => {
+      const choir_id = "61b0c4c065064fdfb889a156";
+      let body = {
+        username: "korus76",
+        going: true,
+      };
+      let {
+        body: { msg },
+      } = await request(app)
+        .patch(`/api/events/${choir_id}/users`)
+        .send(body)
+        .expect(400);
+
+      expect(msg).toBe("Bad request. The user is already going to this event");
     });
   });
 });
