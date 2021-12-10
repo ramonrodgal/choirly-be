@@ -306,6 +306,34 @@ describe("/api/choirs/:choir_id/users", () => {
 
       expect(members[members.length - 1]).toBe(body.username);
     });
+    test("status:400 responds with a message for invalid choir_id", async () => {
+      const choir_id = "notvalid";
+      const body = {
+        username: "newUser",
+      };
+      const {
+        body: { msg },
+      } = await request(app)
+        .patch(`/api/choirs/${choir_id}/users`)
+        .send(body)
+        .expect(400);
+
+      expect(msg).toBe("Bad request. Invalid choir id");
+    });
+    test("status:404 responds with a message for choir not found", async () => {
+      const choir_id = "61b0c4c065064fdfb889a16c";
+      const body = {
+        username: "newUser",
+      };
+      const {
+        body: { msg },
+      } = await request(app)
+        .patch(`/api/choirs/${choir_id}/users`)
+        .send(body)
+        .expect(404);
+
+      expect(msg).toBe("Choir not found");
+    });
   });
 });
 
