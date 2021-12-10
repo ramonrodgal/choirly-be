@@ -78,3 +78,12 @@ exports.updateUserByUsername = async (username, body) => {
   const newUser = await User.find({ _id: userId });
   return newUser[0];
 };
+
+exports.updateUserGroups = async (username, body) => {
+  const user = await this.fetchUserByUsername(username);
+
+  user.groups.push(body.choir);
+  await user.save();
+
+  return user;
+};

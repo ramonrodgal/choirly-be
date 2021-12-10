@@ -4,6 +4,7 @@ const {
   insertUser,
   removeUserByUsername,
   updateUserByUsername,
+  updateUserGroups,
 } = require("../models/users.models");
 
 exports.getUsers = async (req, res, next) => {
@@ -51,6 +52,18 @@ exports.patchUserByUsername = async (req, res, next) => {
 
   try {
     const user = await updateUserByUsername(username, body);
+    res.status(200).send({ user });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.patchUserGroups = async (req, res, next) => {
+  const { username } = req.params;
+  const { body } = req;
+
+  try {
+    const user = await updateUserGroups(username, body);
     res.status(200).send({ user });
   } catch (err) {
     next(err);
