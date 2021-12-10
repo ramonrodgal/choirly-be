@@ -83,13 +83,53 @@ exports.insertEventByChoirId = async (choir_id, body) => {
 };
 
 exports.updateEventUsers = async (event_id, body) => {
+  const requiredFields = ["username", "going"];
+  let allFields = true;
+  let allFieldTypes = true;
+
+  const fieldTypesReference = {
+    username: "string",
+    going: "boolean",
+  };
+
+  for (let requiredField of requiredFields) {
+    if (!body.hasOwnProperty(requiredField)) {
+      allFields = false;
+    }
+    if (fieldTypesReference[requiredField] !== typeof body[requiredField]) {
+      allFieldTypes = false;
+    }
+  }
+
+  if (!allFields || !allFieldTypes) {
+    return Promise.reject({ status: 400, msg: "Bad Request. Invalid Body" });
+  }
+
   await fetchUserByUsername(body.username);
 
   const event = await this.fetchEventsById(event_id);
 
   if (body.going) {
+    if (event.going.includes(body.username)) {
+      return Promise.reject({
+        status: 400,
+        msg: "Bad request. The user is already going to this event",
+      });
+    }
+    if (event.not_going.includes(body.username)) {
+      event.not_going.splice(event.not_going.indexOf(body.username), 1);
+    }
     event.going.push(body.username);
   } else {
+    if (event.not_going.includes(body.username)) {
+      return Promise.reject({
+        status: 400,
+        msg: "Bad request. The user is already going to this event",
+      });
+    }
+    if (event.going.includes(body.username)) {
+      event.going.splice(event.going.indexOf(body.username), 1);
+    }
     event.not_going.push(body.username);
   }
 
