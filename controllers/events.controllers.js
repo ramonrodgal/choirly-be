@@ -3,6 +3,7 @@ const {
   fetchEventsById,
   fetchEventsByChoirId,
   insertEventByChoirId,
+  updateEventUsers,
 } = require("../models/events.models");
 
 exports.getEvents = async (req, res, next) => {
@@ -40,6 +41,18 @@ exports.postEventByChoirId = async (req, res, next) => {
   try {
     const event = await insertEventByChoirId(choir_id, body);
     res.status(201).send({ event });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.patchEventUsers = async (req, res, next) => {
+  const { event_id } = req.params;
+  const { body } = req;
+
+  try {
+    const event = await updateEventUsers(event_id, body);
+    res.status(200).send({ event });
   } catch (err) {
     next(err);
   }

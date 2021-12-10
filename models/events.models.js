@@ -1,6 +1,7 @@
 const Event = require("../schemas/event");
 const ObjectId = require("mongoose").Types.ObjectId;
 const { fetchChoirById } = require("../models/choirs.models");
+const { fetchUserByUsername } = require("../models/users.models");
 
 exports.fetchEvents = async () => {
   return await Event.find();
@@ -20,7 +21,7 @@ exports.fetchEventsById = async (event_id) => {
     return Promise.reject({ status: 404, msg: "Events not found" });
   }
 
-  return events;
+  return events[0];
 };
 
 exports.fetchEventsByChoirId = async (choir_id) => {
@@ -79,4 +80,21 @@ exports.insertEventByChoirId = async (choir_id, body) => {
 
   const event = new Event(body);
   return await event.save();
+};
+
+exports.updateEventUsers = async (event_id, body) => {
+  await fetchUserByUsername(body.username);
+
+  const event = await this.fetchEventsById(event_id);
+
+  console.log(event.going);
+
+  if (body.going) {
+    event.going.push(body.username);
+  } else {
+    event.not_going.push(body.username);
+  }
+
+  await event.save();
+  return event;
 };
