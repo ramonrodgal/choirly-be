@@ -143,6 +143,33 @@
       }
     }
   },
+  "PATCH /api/users/:username/choirs": {
+    "description": "Add a choir name to a user",
+    "queries": [],
+    "exampleBody": {
+      "choir": "newChoir"
+    },
+    "exampleResponse": {
+      "user": {
+        "social": {
+          "youtube": "https://www.youtube.com/channel/UCWUGSN8Bb_c2QwPUfYmHwNA",
+          "facebook": "https://www.facebook.com/jonathan.joseph.357/",
+          "instagram": "https://www.instagram.com/jonathanjoseph76/"
+        },
+        "_id": "61b0c478a1a352f4350523be",
+        "email": "example@email.com",
+        "username": "josephCode",
+        "avatar_url": "https://maxcdn.icons8.com/Share/icon/Cinema/avatar1600.png",
+        "about_me": "I love to sing",
+        "first_name": "Jonathan",
+        "last_name": "Ramon",
+        "phone_number": 7780862354,
+        "voice": ["Alto"],
+        "groups": ["newChoir"],
+        "__v": 1
+      }
+    }
+  },
   "GET /api/choirs": {
     "description": "serves an array of all choir",
     "queries": ["location"],
