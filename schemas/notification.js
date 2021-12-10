@@ -25,6 +25,7 @@ const notificationSchema = new Schema({
   },
   accepted: {
     type: Boolean,
+    default: false,
   },
   read: {
     type: Boolean,
