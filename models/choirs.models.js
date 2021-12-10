@@ -76,6 +76,27 @@ exports.removeChoirById = async (choir_id) => {
 };
 
 exports.updateChoirMember = async (choir_id, body) => {
+  const requiredFields = ["username"];
+  let allFields = true;
+  let allFieldTypes = true;
+
+  const fieldTypesReference = {
+    username: "string",
+  };
+
+  for (let requiredField of requiredFields) {
+    if (!body.hasOwnProperty(requiredField)) {
+      allFields = false;
+    }
+    if (fieldTypesReference[requiredField] !== typeof body[requiredField]) {
+      allFieldTypes = false;
+    }
+  }
+
+  if (!allFields || !allFieldTypes) {
+    return Promise.reject({ status: 400, msg: "Bad Request. Invalid Body" });
+  }
+
   const choir = await this.fetchChoirById(choir_id);
 
   choir.members.push(body.username);
