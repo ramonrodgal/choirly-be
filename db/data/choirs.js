@@ -40,7 +40,6 @@ exports.seedChoir = [
         path: "http://google.com",
       },
     ],
-    messages: [],
   },
   {
     _id: mongoose.Types.ObjectId("61b0c4c065064fdfb889a14c"),
@@ -76,7 +75,6 @@ exports.seedChoir = [
         path: "http://google.com",
       },
     ],
-    messages: [],
   },
   {
     _id: mongoose.Types.ObjectId("61b0c4c065064fdfb889a150"),
@@ -118,6 +116,5 @@ exports.seedChoir = [
         path: "http://google.com",
       },
     ],
-    messages: [],
   },
 ];
