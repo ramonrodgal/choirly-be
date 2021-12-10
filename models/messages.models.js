@@ -1,5 +1,6 @@
 const GroupMessage = require("../schemas/groupMessage");
 const { fetchChoirById } = require("./choirs.models");
+const { fetchUserByUsername } = require("./users.models");
 const ObjectId = require("mongoose").Types.ObjectId;
 
 exports.fetchMessagesByChoirId = async (choir_id) => {
@@ -72,6 +73,30 @@ exports.updateMessageById = async (message_id, body) => {
 };
 
 exports.insertComment = async (message_id, body) => {
+  const requiredFields = ["author", "body"];
+  let allFields = true;
+  let allFieldTypes = true;
+
+  const fieldTypesReference = {
+    author: "string",
+    body: "string",
+  };
+
+  for (let requiredField of requiredFields) {
+    if (!body.hasOwnProperty(requiredField)) {
+      allFields = false;
+    }
+    if (fieldTypesReference[requiredField] !== typeof body[requiredField]) {
+      allFieldTypes = false;
+    }
+  }
+
+  if (!allFields || !allFieldTypes) {
+    return Promise.reject({ status: 400, msg: "Bad Request. Invalid Body" });
+  }
+
+  await fetchUserByUsername(body.author);
+
   const message = await this.fetchMessageById(message_id);
 
   message.comments.push(body);
