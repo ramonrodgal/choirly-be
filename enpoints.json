@@ -573,6 +573,37 @@
       ]
     }
   },
+  "PATCH /api/events/:event_id/users": {
+    "description": "Add a user to going or not going by event id",
+    "queries": [],
+    "exampleBody": {
+      "username": "moonglade",
+      "going": false
+    },
+    "exampleResponse": {
+      "event": {
+        "_id": "61b0c4c065064fdfb889a15a",
+        "title": "Chester Bach Singers Rehersal 2nd Feb 2022 ",
+        "choir": "Chester Bach Singers",
+        "type": "rehersal",
+        "date": "2022-02-02T20:00:00.000Z",
+        "location": "Chester Community Hub",
+        "duration": 1,
+        "details": "Weekly rehersal",
+        "comments": [
+          {
+            "author": "moonglade",
+            "created_at": "2021-12-09T22:46:22.168Z",
+            "body": "Weekly rehersals see you",
+            "_id": "61b2873f8587b682f1e96a6f"
+          }
+        ],
+        "going": ["josephCode", "genie", "cakevealbladerunner", "korus76"],
+        "not_going": ["moonglade"],
+        "__v": 6
+      }
+    }
+  },
   "GET /api/events/choir/:choir_id": {
     "description": "serves an event by choir id",
     "queries": [],
