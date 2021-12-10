@@ -1,5 +1,647 @@
 {
   "GET /api": {
     "description": "serves up a json representation of all the available endpoints in the api"
+  },
+  "GET /api/users": {
+    "description": "serves an array of all users",
+    "queries": [],
+    "exampleResponse": {
+      "users": [
+        {
+          "social": {
+            "youtube": "https://www.youtube.com/channel/UCWUGSN8Bb_c2QwPUfYmHwNA",
+            "facebook": "https://www.facebook.com/jonathan.joseph.357/",
+            "instagram": "https://www.instagram.com/jonathanjoseph76/"
+          },
+          "_id": "61b0c478a1a352f4350523be",
+          "email": "example@email.com",
+          "username": "josephCode",
+          "avatar_url": "https://maxcdn.icons8.com/Share/icon/Cinema/avatar1600.png",
+          "about_me": "I love to sing",
+          "first_name": "Jonathan",
+          "last_name": "Ramon",
+          "phone_number": 7780862354,
+          "voice": ["Alto"],
+          "groups": [],
+          "__v": 0
+        },
+        {
+          "social": {
+            "youtube": "https://www.youtube.com/watch?v=SPITjuMAlqc",
+            "facebook": "https://www.facebook.com/BritainsGotTalent",
+            "instagram": "https://www.instagram.com/bgt/?hl=en"
+          },
+          "_id": "61b0c4c065064fdfb889a141",
+          "email": "korus@email.com",
+          "username": "korus76",
+          "avatar_url": "https://avatarfiles.alphacoders.com/462/46209.jpg",
+          "about_me": "I am passionate about my singing and I love to contribute within a choir",
+          "first_name": "Jenny",
+          "last_name": "Clarke",
+          "phone_number": 7380822314,
+          "voice": ["Bass"],
+          "groups": [],
+          "__v": 0
+        }
+      ]
+    }
+  },
+  "POST /api/users": {
+    "description": "post a user",
+    "queries": [],
+    "exampleBody": {
+      "email": "user@email.com",
+      "username": "mikeHarvey",
+      "first_name": "Mike",
+      "last_name": "Harvey",
+      "phone_number": 8989898989
+    },
+    "exampleResponse": {
+      "user": {
+        "email": "user@email.com",
+        "username": "mikeHarvey",
+        "first_name": "Mike",
+        "last_name": "Harvey",
+        "phone_number": 8989898989,
+        "voice": [],
+        "groups": [],
+        "_id": "61b345b885928941613345b8",
+        "__v": 0
+      }
+    }
+  },
+  "GET /api/users/:username": {
+    "description": "serves a user object",
+    "queries": [],
+    "exampleResponse": {
+      "user": {
+        "social": {
+          "youtube": "https://www.youtube.com/watch?v=SPITjuMAlqc",
+          "facebook": "https://www.facebook.com/BritainsGotTalent",
+          "instagram": "https://www.instagram.com/bgt/?hl=en"
+        },
+        "_id": "61b0c4c065064fdfb889a141",
+        "email": "korus@email.com",
+        "username": "korus76",
+        "avatar_url": "https://avatarfiles.alphacoders.com/462/46209.jpg",
+        "about_me": "I am passionate about my singing and I love to contribute within a choir",
+        "first_name": "Jenny",
+        "last_name": "Clarke",
+        "phone_number": 7380822314,
+        "voice": ["Bass"],
+        "groups": [],
+        "__v": 0
+      }
+    }
+  },
+  "PATCH /api/users/:username": {
+    "description": "updates the user's data by username",
+    "queries": [],
+    "exampleBody": {
+      "username": "user",
+      "avatar_url": "http://url.com",
+      "about_me": "This is all about me",
+      "first_name": "name",
+      "last_name": "surname",
+      "phone_number": 42069
+    },
+    "exampleResponse": {
+      "user": {
+        "social": {
+          "youtube": "https://www.youtube.com/watch?v=_nP7oiZIl1M",
+          "facebook": "https://www.facebook.com/bethmtaylormezzo/"
+        },
+        "_id": "61b0c4c065064fdfb889a144",
+        "email": "cakevealbladerunner@email.com",
+        "username": "user",
+        "avatar_url": "http://url.com",
+        "about_me": "This is all about me",
+        "first_name": "name",
+        "last_name": "surname",
+        "phone_number": 42069,
+        "voice": ["Mezzo-Soprano"],
+        "groups": [],
+        "__v": 0
+      }
+    }
+  },
+  "DELETE /api/users/:username": {
+    "description": "removes a user by username",
+    "queries": [],
+    "exampleResponse": {
+      "msg": "User removed",
+      "user": {
+        "_id": "61b345b885928941613345b8",
+        "email": "user@email.com",
+        "username": "mikeHarvey",
+        "first_name": "Mike",
+        "last_name": "Harvey",
+        "phone_number": 8989898989,
+        "voice": [],
+        "groups": [],
+        "__v": 0
+      }
+    }
+  },
+  "GET /api/choirs": {
+    "description": "serves an array of all choir",
+    "queries": ["location"],
+    "exampleResponse": {
+      "choirs": [
+        {
+          "social": {
+            "website": "https://www.singers.com/group/African-Childrens-Choir/",
+            "facebook": "https://www.facebook.com/africanchildrenschoir/"
+          },
+          "_id": "61b0c4c065064fdfb889a148",
+          "name": "African Children's Choir",
+          "location": "Manchester",
+          "description": "The African Children's Choir is made up of some of the neediest and most vulnerable children in their countries. Many have lost one or both parents to poverty or disease. The African Children's Choir helps these children break away from the everyday cycle of poverty and hopelessness. Before being selected to join the Choir, children, generally aged between 7 and 11 attend Music for Life camps. These camps are fun and stimulating environments that provide a break from the daily hardships the young children face at home.\n    \n    From the hundreds of children who attend the camps, approximately 50 will be chosen to audition for the Choir. Games, crafts, music and devotions are some of the activities the children look forward to at camp. Once the children are selected, Choir Teams will spend a few days visiting the children's homes to determine their needs and suitability for tour life. They then have the difficult task of selecting the group of children who will form the next African Children's Choir.",
+          "avatar_url": "https://www.singers.com/group/images/AfricanChildrensChoir.jpg",
+          "leader": "cakevealbladerunner",
+          "members": [
+            "josephCode",
+            "genie",
+            "moonglade",
+            "cakevealbladerunner",
+            "korus76"
+          ],
+          "events": [],
+          "files": [
+            {
+              "filename": "song.mp3",
+              "type": "song",
+              "path": "http://google.com",
+              "_id": "61b2873e8587b682f1e96a5d"
+            },
+            {
+              "filename": "songsheet.docx",
+              "type": "document",
+              "path": "http://google.com",
+              "_id": "61b2873e8587b682f1e96a5e"
+            },
+            {
+              "filename": "picture.jpeg",
+              "type": "image",
+              "path": "http://google.com",
+              "_id": "61b2873e8587b682f1e96a5f"
+            }
+          ],
+          "messages": [],
+          "__v": 0
+        },
+        {
+          "social": {
+            "website": "https://www.liverpoolcathedral.org.uk/cathedral-music/our-choirs/liverpool-64/",
+            "facebook": "https://www.facebook.com/LiverpoolCathedral/"
+          },
+          "_id": "61b0c4c065064fdfb889a14c",
+          "name": "Liverpool 64",
+          "location": "Liverpool",
+          "description": "Liverpool64 was formed in 2018. It has grown quickly and as of May 2021 has over 100 members registered to sing across its soprano, alto, tenor and bass sections. The choir rehearses weekly on Monday evenings 6.30-8pm in the cathedral.",
+          "avatar_url": "https://logovtor.com/wp-content/uploads/2021/04/liverpool-cathedral-logo-vector.png",
+          "leader": "korus76",
+          "members": ["josephCode", "genie", "moonglade", "korus76"],
+          "events": [],
+          "files": [
+            {
+              "filename": "majestic symphony1.mp3",
+              "type": "song",
+              "path": "http://google.com",
+              "_id": "61b2873e8587b682f1e96a61"
+            },
+            {
+              "filename": "piano music sheets symphony1.pdf",
+              "type": "document",
+              "path": "http://google.com",
+              "_id": "61b2873e8587b682f1e96a62"
+            },
+            {
+              "filename": "rehearsal13thFeb2022.jpeg",
+              "type": "image",
+              "path": "http://google.com",
+              "_id": "61b2873e8587b682f1e96a63"
+            }
+          ],
+          "messages": [],
+          "__v": 0
+        }
+      ]
+    }
+  },
+  "POST /api/choirs": {
+    "description": "post a choir",
+    "queries": [],
+    "exampleBody": {
+      "name": "Dream choir",
+      "location": "Heaven",
+      "description": "We are a choir testing our angelical voices",
+      "leader": "fake-user"
+    },
+    "exampleResponse": {
+      "choir": {
+        "name": "Dream choir",
+        "location": "Heaven",
+        "description": "We are a choir testing our angelical voices",
+        "leader": "fake-user",
+        "members": [],
+        "events": [],
+        "messages": [],
+        "_id": "61b34a8c85928941613345ca",
+        "files": [],
+        "__v": 0
+      }
+    }
+  },
+  "GET /api/choirs/:choir_id": {
+    "description": "serves a choir object by id",
+    "queries": [],
+    "exampleResponse": {
+      "choir": {
+        "social": {
+          "website": "https://www.singers.com/group/African-Childrens-Choir/",
+          "facebook": "https://www.facebook.com/africanchildrenschoir/"
+        },
+        "_id": "61b0c4c065064fdfb889a148",
+        "name": "African Children's Choir",
+        "location": "Manchester",
+        "description": "The African Children's Choir is made up of some of the neediest and most vulnerable children in their countries. Many have lost one or both parents to poverty or disease. The African Children's Choir helps these children break away from the everyday cycle of poverty and hopelessness. Before being selected to join the Choir, children, generally aged between 7 and 11 attend Music for Life camps. These camps are fun and stimulating environments that provide a break from the daily hardships the young children face at home.\n    \n    From the hundreds of children who attend the camps, approximately 50 will be chosen to audition for the Choir. Games, crafts, music and devotions are some of the activities the children look forward to at camp. Once the children are selected, Choir Teams will spend a few days visiting the children's homes to determine their needs and suitability for tour life. They then have the difficult task of selecting the group of children who will form the next African Children's Choir.",
+        "avatar_url": "https://www.singers.com/group/images/AfricanChildrensChoir.jpg",
+        "leader": "cakevealbladerunner",
+        "members": [
+          "josephCode",
+          "genie",
+          "moonglade",
+          "cakevealbladerunner",
+          "korus76"
+        ],
+        "events": [],
+        "files": [
+          {
+            "filename": "song.mp3",
+            "type": "song",
+            "path": "http://google.com",
+            "_id": "61b2873e8587b682f1e96a5d"
+          },
+          {
+            "filename": "songsheet.docx",
+            "type": "document",
+            "path": "http://google.com",
+            "_id": "61b2873e8587b682f1e96a5e"
+          },
+          {
+            "filename": "picture.jpeg",
+            "type": "image",
+            "path": "http://google.com",
+            "_id": "61b2873e8587b682f1e96a5f"
+          }
+        ],
+        "messages": [],
+        "__v": 0
+      }
+    }
+  },
+  "DELETE /api/choirs/:choir_id": {
+    "description": "removes a choir by id",
+    "queries": [],
+    "exampleResponse": {
+      "msg": "Choir removed",
+      "choir": {
+        "social": {
+          "website": "https://www.singers.com/group/African-Childrens-Choir/",
+          "facebook": "https://www.facebook.com/africanchildrenschoir/"
+        },
+        "_id": "61b0c4c065064fdfb889a148",
+        "name": "African Children's Choir",
+        "location": "Manchester",
+        "description": "The African Children's Choir is made up of some of the neediest and most vulnerable children in their countries. Many have lost one or both parents to poverty or disease. The African Children's Choir helps these children break away from the everyday cycle of poverty and hopelessness. Before being selected to join the Choir, children, generally aged between 7 and 11 attend Music for Life camps. These camps are fun and stimulating environments that provide a break from the daily hardships the young children face at home.\n    \n    From the hundreds of children who attend the camps, approximately 50 will be chosen to audition for the Choir. Games, crafts, music and devotions are some of the activities the children look forward to at camp. Once the children are selected, Choir Teams will spend a few days visiting the children's homes to determine their needs and suitability for tour life. They then have the difficult task of selecting the group of children who will form the next African Children's Choir.",
+        "avatar_url": "https://www.singers.com/group/images/AfricanChildrensChoir.jpg",
+        "leader": "cakevealbladerunner",
+        "members": [
+          "josephCode",
+          "genie",
+          "moonglade",
+          "cakevealbladerunner",
+          "korus76"
+        ],
+        "events": [],
+        "files": [
+          {
+            "filename": "song.mp3",
+            "type": "song",
+            "path": "http://google.com",
+            "_id": "61b2873e8587b682f1e96a5d"
+          },
+          {
+            "filename": "songsheet.docx",
+            "type": "document",
+            "path": "http://google.com",
+            "_id": "61b2873e8587b682f1e96a5e"
+          },
+          {
+            "filename": "picture.jpeg",
+            "type": "image",
+            "path": "http://google.com",
+            "_id": "61b2873e8587b682f1e96a5f"
+          }
+        ],
+        "messages": [],
+        "__v": 0
+      }
+    }
+  },
+  "GET /api/notifications/user/:username": {
+    "description": "serves an array of notifications by username",
+    "queries": [],
+    "exampleResponse": {
+      "notifications": [
+        {
+          "_id": "61b0c4c065064fdfb889a15e",
+          "username": "josephCode",
+          "type": "accept",
+          "date": "2021-12-09T22:46:22.170Z",
+          "choir": "African Children's Choir",
+          "author": "cakevealbladerunner",
+          "accepted": true,
+          "read": false,
+          "__v": 0
+        },
+        {
+          "_id": "61b0c4c065064fdfb889a15f",
+          "username": "josephCode",
+          "type": "message",
+          "date": "2021-12-09T22:46:22.170Z",
+          "choir": "Chester Bach Singers",
+          "author": "genie",
+          "read": true,
+          "__v": 0
+        }
+      ]
+    }
+  },
+  "POST /api/notifications/user/:username": {
+    "desccription": "posts a notification by username",
+    "queries": [],
+    "exampleBody": {
+      "username": "korus76",
+      "choir": "Chester Bach Singers",
+      "author": "genie",
+      "type": "message"
+    },
+    "exampleResponse": {
+      "notification": {
+        "username": "korus76",
+        "type": "message",
+        "date": "2021-12-10T12:40:56.256Z",
+        "choir": "Chester Bach Singers",
+        "author": "genie",
+        "read": false,
+        "_id": "61b34cc2ae2305c54e3768c6",
+        "__v": 0
+      }
+    }
+  },
+  "PATCH /api/notifications/:notification_id": {
+    "description": "updates the 'read' and 'accepted' values in a notification",
+    "queries": [],
+    "exampleBody": {
+      "read": true,
+      "accepted": true
+    },
+    "exampleResponse": {
+      "notification": {
+        "_id": "61b0c4c065064fdfb889a15e",
+        "username": "josephCode",
+        "type": "accept",
+        "date": "2021-12-09T22:46:22.170Z",
+        "choir": "African Children's Choir",
+        "author": "cakevealbladerunner",
+        "accepted": false,
+        "read": false,
+        "__v": 0
+      }
+    }
+  },
+  "GET /api/events": {
+    "description": "serves and array of all events",
+    "queries": [],
+    "exampleResponse": {
+      "events": [
+        {
+          "_id": "61b0c4c065064fdfb889a156",
+          "title": "African Childrens Choir in Concert",
+          "choir": "African Children's Choir",
+          "type": "Concert",
+          "date": "2022-01-20T18:00:00.000Z",
+          "location": "Manchester",
+          "duration": 1,
+          "details": "A wonderful rendition of African songs for children",
+          "comments": [
+            {
+              "author": "josephCode",
+              "created_at": "2021-12-09T22:46:22.168Z",
+              "body": "A wonderful show I highly recommend",
+              "_id": "61b2873f8587b682f1e96a6b"
+            }
+          ],
+          "going": ["josephCode", "genie", "moonglade", "cakevealbladerunner"],
+          "not_going": ["korus76"],
+          "__v": 0
+        },
+        {
+          "_id": "61b0c4c065064fdfb889a158",
+          "title": "Liverpool Cathedrals Christmas Carol Concert",
+          "choir": "Liverpool 64",
+          "type": "Concert",
+          "date": "2021-12-25T19:30:00.000Z",
+          "location": "Liverpool Cathederal",
+          "duration": 2,
+          "details": "Christmas Carols Service",
+          "comments": [
+            {
+              "author": "korus76",
+              "created_at": "2021-12-09T22:46:22.168Z",
+              "body": "Everybody welcome to join us in celebrating the spirit of Christmas",
+              "_id": "61b2873f8587b682f1e96a6d"
+            }
+          ],
+          "going": ["genie", "moonglade", "cakevealbladerunner", "korus76"],
+          "not_going": ["josephCode"],
+          "__v": 0
+        }
+      ]
+    }
+  },
+  "GET /api/events/:event_id": {
+    "description": "serves an event object by event id",
+    "queries": [],
+    "exampleResponse": {
+      "events": [
+        {
+          "_id": "61b0c4c065064fdfb889a156",
+          "title": "African Childrens Choir in Concert",
+          "choir": "African Children's Choir",
+          "type": "Concert",
+          "date": "2022-01-20T18:00:00.000Z",
+          "location": "Manchester",
+          "duration": 1,
+          "details": "A wonderful rendition of African songs for children",
+          "comments": [
+            {
+              "author": "josephCode",
+              "created_at": "2021-12-09T22:46:22.168Z",
+              "body": "A wonderful show I highly recommend",
+              "_id": "61b2873f8587b682f1e96a6b"
+            }
+          ],
+          "going": ["josephCode", "genie", "moonglade", "cakevealbladerunner"],
+          "not_going": ["korus76"],
+          "__v": 0
+        }
+      ]
+    }
+  },
+  "GET /api/events/choir/:choir_id": {
+    "description": "serves an event by choir id",
+    "queries": [],
+    "exampleResponse": {
+      "events": [
+        {
+          "_id": "61b0c4c065064fdfb889a158",
+          "title": "Liverpool Cathedrals Christmas Carol Concert",
+          "choir": "Liverpool 64",
+          "type": "Concert",
+          "date": "2021-12-25T19:30:00.000Z",
+          "location": "Liverpool Cathederal",
+          "duration": 2,
+          "details": "Christmas Carols Service",
+          "comments": [
+            {
+              "author": "korus76",
+              "created_at": "2021-12-09T22:46:22.168Z",
+              "body": "Everybody welcome to join us in celebrating the spirit of Christmas",
+              "_id": "61b2873f8587b682f1e96a6d"
+            }
+          ],
+          "going": ["genie", "moonglade", "cakevealbladerunner", "korus76"],
+          "not_going": ["josephCode"],
+          "__v": 0
+        }
+      ]
+    }
+  },
+  "POST /api/events/choir/:choir_id": {
+    "description": "post an event by choir id",
+    "queries": [],
+    "exampleBody": {
+      "title": "Event Title",
+      "choir": "Chester Bach Singers",
+      "type": "rehersal",
+      "date": "2021-12-25T19:30:00.000Z",
+      "location": "location",
+      "duration": 1,
+      "details": "Weekly rehersal"
+    },
+    "exampleRequest": {
+      "event": {
+        "title": "Event Title",
+        "choir": "Chester Bach Singers",
+        "type": "rehersal",
+        "date": "2021-12-25T19:30:00.000Z",
+        "location": "location",
+        "duration": 1,
+        "details": "Weekly rehersal",
+        "going": [],
+        "not_going": [],
+        "_id": "61b350da5968b88ed412083c",
+        "comments": [],
+        "__v": 0
+      }
+    }
+  },
+  "POST /api/messages": {
+    "description": "post a message",
+    "queries": [],
+    "exampleBody": {
+      "choir": "African Children's Choir",
+      "title": "Test message!",
+      "author": "cakevealbladerunner",
+      "body": "Test body"
+    },
+    "exampleResponse": {
+      "message": {
+        "choir": "African Children's Choir",
+        "title": "Test message!",
+        "author": "cakevealbladerunner",
+        "created_at": "2021-12-09T19:25:19.275Z",
+        "body": "Test body",
+        "likes": 0,
+        "_id": "61b25822c986c09dc5e5ce8f",
+        "comments": [],
+        "__v": 0
+      }
+    }
+  },
+  "GET /api/messages/choir/:choir_id": {
+    "description": "serves an array of messages by choir id",
+    "queries": [],
+    "exampleResponse": {
+      "messages": [
+        {
+          "_id": "61b0c4c065064fdfb889a166",
+          "choir": "Liverpool 64",
+          "title": "MemberShip Renewals",
+          "author": "korus76",
+          "created_at": "2021-12-09T22:46:22.173Z",
+          "body": "Just a gentle reminder to everyone that annual membership fees are due this week",
+          "likes": 0,
+          "comments": [
+            {
+              "author": "moonglade",
+              "created_at": "2021-12-09T22:46:22.173Z",
+              "body": "Thanks for the reminder I will BACS transfer my membership tonight",
+              "_id": "61b2873f8587b682f1e96a7b"
+            },
+            {
+              "author": "cakevealbladerunner",
+              "created_at": "2021-12-09T22:46:22.173Z",
+              "body": "I will call you Monday to sort out",
+              "_id": "61b2873f8587b682f1e96a7c"
+            }
+          ],
+          "__v": 0
+        }
+      ]
+    }
+  },
+  "GET /api/messages/:message_id": {
+    "description": "serves a message by message id",
+    "queries": [],
+    "exampleResponse": {
+      "message": {
+        "_id": "61b0c4c065064fdfb889a163",
+        "choir": "African Children's Choir",
+        "title": "We have received an award!",
+        "author": "cakevealbladerunner",
+        "created_at": "2021-12-09T22:46:22.173Z",
+        "body": "Our hard word supporting communities have been recognized by the London Music Institute",
+        "likes": 0,
+        "comments": [
+          {
+            "author": "josephCode",
+            "created_at": "2021-12-09T22:46:22.173Z",
+            "body": "Yay!",
+            "_id": "61b2873f8587b682f1e96a78"
+          },
+          {
+            "author": "genie",
+            "created_at": "2021-12-09T22:46:22.173Z",
+            "body": "I'm so proud",
+            "_id": "61b2873f8587b682f1e96a79"
+          }
+        ],
+        "__v": 0
+      }
+    }
   }
 }
