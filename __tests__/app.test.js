@@ -14,7 +14,7 @@ describe("not valid url", () => {
 });
 
 describe("/api/users", () => {
-  describe.only("GET", () => {
+  describe("GET", () => {
     test("status:200 responds with an array of users", async () => {
       const {
         body: { users },
@@ -288,6 +288,27 @@ describe("/api/choirs/:choir_id", () => {
   });
 });
 
+describe("/api/choirs/:choir_id/users", () => {
+  describe("PATCH", () => {
+    test("status:200 returns the choir with a user added to array of members", async () => {
+      const choir_id = "61b0c4c065064fdfb889a14c";
+      const body = {
+        username: "newUser",
+      };
+      const {
+        body: {
+          choir: { members },
+        },
+      } = await request(app)
+        .patch(`/api/choirs/${choir_id}/users`)
+        .send(body)
+        .expect(200);
+
+      expect(members[members.length - 1]).toBe(body.username);
+    });
+  });
+});
+
 describe("/api/notifications/user/:username/", () => {
   describe("GET", () => {
     test("status:200 responds with an array of notifications", async () => {
@@ -534,7 +555,7 @@ describe("/api/events/:event_id/", () => {
 
 describe("/api/events/choir/:choir_id", () => {
   describe("GET", () => {
-    test.only("status:200 responds with an array of events filtered by choir id", async () => {
+    test("status:200 responds with an array of events filtered by choir id", async () => {
       const choir_id = "61b0c4c065064fdfb889a148";
       const {
         body: { events },
