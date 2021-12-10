@@ -334,6 +334,34 @@ describe("/api/choirs/:choir_id/users", () => {
 
       expect(msg).toBe("Choir not found");
     });
+    test("status:400 responds with a message for invalid body fields", async () => {
+      const choir_id = "61b0c4c065064fdfb889a14c";
+      const body = {
+        notvalid: "newUser",
+      };
+      const {
+        body: { msg },
+      } = await request(app)
+        .patch(`/api/choirs/${choir_id}/users`)
+        .send(body)
+        .expect(400);
+
+      expect(msg).toBe("Bad Request. Invalid Body");
+    });
+    test("status:400 responds with a message for invalid body data type", async () => {
+      const choir_id = "61b0c4c065064fdfb889a14c";
+      const body = {
+        username: 12345,
+      };
+      const {
+        body: { msg },
+      } = await request(app)
+        .patch(`/api/choirs/${choir_id}/users`)
+        .send(body)
+        .expect(400);
+
+      expect(msg).toBe("Bad Request. Invalid Body");
+    });
   });
 });
 
