@@ -74,3 +74,12 @@ exports.removeChoirById = async (choir_id) => {
   await Choir.deleteOne({ _id: choir_id });
   return choir[0];
 };
+
+exports.updateChoirMember = async (choir_id, body) => {
+  const choir = await this.fetchChoirById(choir_id);
+
+  choir.members.push(body.username);
+  await choir.save();
+
+  return choir;
+};
