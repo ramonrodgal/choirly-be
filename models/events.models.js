@@ -87,8 +87,6 @@ exports.updateEventUsers = async (event_id, body) => {
 
   const event = await this.fetchEventsById(event_id);
 
-  console.log(event.going);
-
   if (body.going) {
     event.going.push(body.username);
   } else {
