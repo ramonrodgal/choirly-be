@@ -161,6 +161,25 @@ describe("/api/users/:username", () => {
   });
 });
 
+describe("/api/users/:username/choirs", () => {
+  test.only("status:200 returns the user with the choir added to the group array", async () => {
+    const username = "josephCode";
+    const body = {
+      choir: "testChoir",
+    };
+    const {
+      body: {
+        user: { groups },
+      },
+    } = await request(app)
+      .patch(`/api/users/${username}/choirs`)
+      .send(body)
+      .expect(200);
+
+    expect(groups[groups.length - 1]).toBe(body.choir);
+  });
+});
+
 describe("/api/choirs", () => {
   describe("GET", () => {
     test("status:200 responds with an array of choirs", async () => {
