@@ -1053,3 +1053,28 @@ describe("/api/messages/:message_id", () => {
     });
   });
 });
+
+describe("/api/messages/:message_id/comments", () => {
+  describe("POST", () => {
+    test.only("status:200 responds with the message with the added comment", async () => {
+      const message_id = "61b0c4c065064fdfb889a166";
+      const comment = {
+        author: "moonglade",
+        body: "Thanks for the reminder I will BACS transfer my membership tonight",
+      };
+
+      const {
+        body: {
+          message: { comments },
+        },
+      } = await request(app)
+        .post(`/api/messages/${message_id}/comments`)
+        .send(comment)
+        .expect(200);
+
+      console.log(comments[comments.length - 1].body);
+
+      expect(comments[comments.length - 1].body).toBe(comment.body);
+    });
+  });
+});
