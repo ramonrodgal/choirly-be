@@ -518,6 +518,20 @@ describe("/api/choirs/:choirs_id/files", () => {
       expect(msg).toBe("Bad Resquest. Invalid path URL");
     });
   });
+  describe("DELETE", () => {
+    test.only("status:200 responds with a choir with a file removed", async () => {
+      const choir_id = "61b0c4c065064fdfb889a148";
+      const file_id = "61b4e4a374b1b7ae06ba8520";
+
+      const {
+        body: { choir },
+      } = await request(app)
+        .delete(`/api/choirs/${choir_id}/files/${file_id}`)
+        .expect(200);
+
+      expect(choir.files.length).toBe(2);
+    });
+  });
 });
 
 describe("/api/notifications/user/:username/", () => {
