@@ -26,6 +26,11 @@ const groupMessageSchema = new Schema({
     type: Number,
     default: 0,
   },
+  likedBy: [
+    {
+      type: String,
+    },
+  ],
   comments: [
     {
       author: {
