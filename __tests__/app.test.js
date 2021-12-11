@@ -427,8 +427,8 @@ describe("/api/choirs/:choir_id/users", () => {
 });
 
 describe("/api/choirs/:choir_id/users/:username", () => {
-  describe("DELETE", () => {
-    test.only("status:200 responds with the choir with user deleted from member", async () => {
+  describe.only("DELETE", () => {
+    test("status:200 responds with the choir with user deleted from member", async () => {
       const choir_id = "61b0c4c065064fdfb889a148";
       const username = "genie";
 
@@ -439,6 +439,54 @@ describe("/api/choirs/:choir_id/users/:username", () => {
         .expect(200);
 
       expect(choir.members.includes(username)).toBe(false);
+    });
+    test("status:400 responds with a message for invalid choir id", async () => {
+      const choir_id = "notValid";
+      const username = "genie";
+
+      const {
+        body: { msg },
+      } = await request(app)
+        .delete(`/api/choirs/${choir_id}/users/${username}`)
+        .expect(400);
+
+      expect(msg).toBe("Bad request. Invalid choir id");
+    });
+    test("status:404 responds with a message for choir not found", async () => {
+      const choir_id = "61b0c4c065064fdfb889a248";
+      const username = "genie";
+
+      const {
+        body: { msg },
+      } = await request(app)
+        .delete(`/api/choirs/${choir_id}/users/${username}`)
+        .expect(404);
+
+      expect(msg).toBe("Choir not found");
+    });
+    test("status:404 responds with a message for user not found", async () => {
+      const choir_id = "61b0c4c065064fdfb889a148";
+      const username = "notAUser";
+
+      const {
+        body: { msg },
+      } = await request(app)
+        .delete(`/api/choirs/${choir_id}/users/${username}`)
+        .expect(404);
+
+      expect(msg).toBe("User not found");
+    });
+    test("status:400 responds with a message when the user is not a member", async () => {
+      const choir_id = "61b0c4c065064fdfb889a148";
+      const username = "genie";
+
+      const {
+        body: { msg },
+      } = await request(app)
+        .delete(`/api/choirs/${choir_id}/users/${username}`)
+        .expect(400);
+
+      expect(msg).toBe("Bad request. The user is not a member of this choir");
     });
   });
 });
