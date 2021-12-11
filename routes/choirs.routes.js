@@ -4,7 +4,6 @@ const {
   getChoirById,
   postChoir,
   deleteChoirById,
-  patchChoirMember,
   postFile,
   deleteFileById,
   deleteMemberByUsername,
@@ -13,7 +12,6 @@ const {
 
 choirsRouters.route("/").get(getChoirs).post(postChoir);
 choirsRouters.route("/:choir_id").get(getChoirById).delete(deleteChoirById);
-choirsRouters.route("/:choir_id/users").patch(patchChoirMember);
 choirsRouters
   .route("/:choir_id/users/:username")
   .delete(deleteMemberByUsername)

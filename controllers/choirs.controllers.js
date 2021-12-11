@@ -3,7 +3,6 @@ const {
   fetchChoirById,
   insertChoir,
   removeChoirById,
-  updateChoirMember,
   insertFile,
   removeFileById,
   deleteMemberByUsername,
@@ -47,18 +46,6 @@ exports.deleteChoirById = async (req, res, next) => {
   try {
     const choir = await removeChoirById(choir_id);
     res.status(200).send({ msg: "Choir removed", choir: choir });
-  } catch (err) {
-    next(err);
-  }
-};
-
-exports.patchChoirMember = async (req, res, next) => {
-  const { choir_id } = req.params;
-  const { body } = req;
-
-  try {
-    const choir = await updateChoirMember(choir_id, body);
-    res.status(200).send({ choir });
   } catch (err) {
     next(err);
   }
