@@ -41,11 +41,10 @@ const userSchema = new Schema({
       type: String,
     },
   },
-  voice: [
-    {
-      type: String,
-    },
-  ],
+  voice: {
+    type: String,
+  },
+
   groups: [{ type: mongoose.Types.ObjectId, ref: "Choir" }],
 });
 
