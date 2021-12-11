@@ -154,3 +154,14 @@ exports.insertFile = async (choir_id, body) => {
 
   return choir;
 };
+
+exports.removeFileById = async (file_id, choir_id) => {
+  await Choir.updateOne(
+    { _id: choir_id },
+    { $pull: { files: { _id: file_id } } }
+  );
+
+  const choir = await this.fetchChoirById(choir_id);
+
+  return choir;
+};

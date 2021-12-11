@@ -5,6 +5,7 @@ const {
   removeChoirById,
   updateChoirMember,
   insertFile,
+  removeFileById,
 } = require("../models/choirs.models");
 
 exports.getChoirs = async (req, res, next) => {
@@ -67,6 +68,18 @@ exports.postFile = async (req, res, next) => {
 
   try {
     const choir = await insertFile(choir_id, body);
+    res.status(200).send({ choir });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.deleteFileById = async (req, res, next) => {
+  const { file_id } = req.params;
+  const { choir_id } = req.params;
+
+  try {
+    const choir = await removeFileById(file_id, choir_id);
     res.status(200).send({ choir });
   } catch (err) {
     next(err);
