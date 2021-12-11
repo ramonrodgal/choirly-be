@@ -203,6 +203,13 @@ exports.updateMembersByUsername = async (choir_id, username) => {
   const choir = await this.fetchChoirById(choir_id);
   const user = await fetchUserByUsername(username);
 
+  if (choir.members.includes(username) || user.groups.includes(choir._id)) {
+    return Promise.reject({
+      status: 400,
+      msg: "This user is already a member",
+    });
+  }
+
   choir.members.push(username);
   choir.save();
 
