@@ -538,6 +538,18 @@ describe("/api/choirs/:choir_id/users/:username", () => {
 
       expect(msg).toBe("Bad request. Invalid choir id");
     });
+    test.only("status:400 responds with a message when the user is already a member", async () => {
+      const choir_id = "61b0c4c065064fdfb889a148";
+      const username = "genie";
+
+      const {
+        body: { msg },
+      } = await request(app)
+        .patch(`/api/choirs/${choir_id}/users/${username}`)
+        .expect(400);
+
+      expect(msg).toBe("This user is already a member");
+    });
   });
 });
 
