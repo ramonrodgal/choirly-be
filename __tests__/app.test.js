@@ -426,6 +426,23 @@ describe("/api/choirs/:choir_id/users", () => {
   });
 });
 
+describe("/api/choirs/:choir_id/users/:username", () => {
+  describe("DELETE", () => {
+    test.only("status:200 responds with the choir with user deleted from member", async () => {
+      const choir_id = "61b0c4c065064fdfb889a148";
+      const username = "genie";
+
+      const {
+        body: { choir },
+      } = await request(app)
+        .delete(`/api/choirs/${choir_id}/users/${username}`)
+        .expect(200);
+
+      expect(choir.members.includes(username)).toBe(false);
+    });
+  });
+});
+
 describe("/api/choirs/:choirs_id/files", () => {
   describe("POST", () => {
     test("status:200 responds with a choir with an added file", async () => {
