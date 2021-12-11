@@ -1095,7 +1095,7 @@ describe("/api/messages/:message_id/comments", () => {
 
 describe("/api/messages/:message_id/likes", () => {
   describe("PATCH", () => {
-    test.only("status:200 respond with the message with the likes updates", async () => {
+    test("status:200 respond with the message with the likes updates", async () => {
       const message_id = "61b0c4c065064fdfb889a166";
       const body = {
         username: "korus76",
@@ -1108,6 +1108,62 @@ describe("/api/messages/:message_id/likes", () => {
         .expect(200);
 
       expect(message.likedBy[message.likedBy.length - 1]).toBe(body.username);
+    });
+    test("status:404 respond with a message for username not found", async () => {
+      const message_id = "61b0c4c065064fdfb889a166";
+      const body = {
+        username: "notAUser",
+      };
+      const {
+        body: { msg },
+      } = await await request(app)
+        .patch(`/api/messages/${message_id}/likes`)
+        .send(body)
+        .expect(404);
+
+      expect(msg).toBe("User not found");
+    });
+    test("status:400 respond with a message for invalid fields in body", async () => {
+      const message_id = "61b0c4c065064fdfb889a166";
+      const body = {
+        user: "korus76",
+      };
+      const {
+        body: { msg },
+      } = await await request(app)
+        .patch(`/api/messages/${message_id}/likes`)
+        .send(body)
+        .expect(400);
+
+      expect(msg).toBe("Bad Request. Invalid Body");
+    });
+    test("status:400 respond with a message for invalid dta type in body", async () => {
+      const message_id = "61b0c4c065064fdfb889a166";
+      const body = {
+        username: 76,
+      };
+      const {
+        body: { msg },
+      } = await await request(app)
+        .patch(`/api/messages/${message_id}/likes`)
+        .send(body)
+        .expect(400);
+
+      expect(msg).toBe("Bad Request. Invalid Body");
+    });
+    test.only("status:400 respond with a message when the username already liked the message", async () => {
+      const message_id = "61b0c4c065064fdfb889a166";
+      const body = {
+        username: "korus76",
+      };
+      const {
+        body: { msg },
+      } = await await request(app)
+        .patch(`/api/messages/${message_id}/likes`)
+        .send(body)
+        .expect(400);
+
+      expect(msg).toBe("Bad Request. The user already liked this message");
     });
   });
 });
