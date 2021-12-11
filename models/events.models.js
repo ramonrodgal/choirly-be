@@ -2,6 +2,7 @@ const Event = require("../schemas/event");
 const ObjectId = require("mongoose").Types.ObjectId;
 const { fetchChoirById } = require("../models/choirs.models");
 const { fetchUserByUsername } = require("../models/users.models");
+const { checkFieldsAndType } = require("../utils/utils");
 
 exports.fetchEvents = async () => {
   return await Event.find();
@@ -38,18 +39,7 @@ exports.fetchEventsByChoirId = async (choir_id) => {
 exports.insertEventByChoirId = async (choir_id, body) => {
   await fetchChoirById(choir_id);
 
-  const requiredFields = [
-    "title",
-    "choir",
-    "type",
-    "location",
-    "duration",
-    "details",
-  ];
-  let allFields = true;
-  let allFieldTypes = true;
-
-  const fieldTypesReference = {
+  const refObj = {
     title: "string",
     choir: "string",
     type: "string",
@@ -58,16 +48,7 @@ exports.insertEventByChoirId = async (choir_id, body) => {
     details: "string",
   };
 
-  for (let requiredField of requiredFields) {
-    if (!body.hasOwnProperty(requiredField)) {
-      allFields = false;
-    }
-    if (fieldTypesReference[requiredField] !== typeof body[requiredField]) {
-      allFieldTypes = false;
-    }
-  }
-
-  if (!allFields || !allFieldTypes) {
+  if (!checkFieldsAndType(body, refObj)) {
     return Promise.reject({ status: 400, msg: "Bad Request. Invalid Body" });
   }
 
@@ -83,25 +64,12 @@ exports.insertEventByChoirId = async (choir_id, body) => {
 };
 
 exports.updateEventUsers = async (event_id, body) => {
-  const requiredFields = ["username", "going"];
-  let allFields = true;
-  let allFieldTypes = true;
-
-  const fieldTypesReference = {
+  const refObj = {
     username: "string",
     going: "boolean",
   };
 
-  for (let requiredField of requiredFields) {
-    if (!body.hasOwnProperty(requiredField)) {
-      allFields = false;
-    }
-    if (fieldTypesReference[requiredField] !== typeof body[requiredField]) {
-      allFieldTypes = false;
-    }
-  }
-
-  if (!allFields || !allFieldTypes) {
+  if (!checkFieldsAndType(body, refObj)) {
     return Promise.reject({ status: 400, msg: "Bad Request. Invalid Body" });
   }
 
@@ -124,7 +92,7 @@ exports.updateEventUsers = async (event_id, body) => {
     if (event.not_going.includes(body.username)) {
       return Promise.reject({
         status: 400,
-        msg: "Bad request. The user is already going to this event",
+        msg: "Bad request. The user is already not going to this event",
       });
     }
     if (event.going.includes(body.username)) {
