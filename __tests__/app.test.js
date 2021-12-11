@@ -161,67 +161,6 @@ describe("/api/users/:username", () => {
   });
 });
 
-describe("/api/users/:username/choirs", () => {
-  test("status:200 returns the user with the choir added to the group array", async () => {
-    const username = "josephCode";
-    const body = {
-      choir: "testChoir",
-    };
-    const {
-      body: {
-        user: { groups },
-      },
-    } = await request(app)
-      .patch(`/api/users/${username}/choirs`)
-      .send(body)
-      .expect(200);
-
-    expect(groups[groups.length - 1]).toBe(body.choir);
-  });
-  test("status:404 responds with a message for user not found", async () => {
-    const username = "notAUSer";
-    const body = {
-      choir: "testChoir",
-    };
-    const {
-      body: { msg },
-    } = await request(app)
-      .patch(`/api/users/${username}/choirs`)
-      .send(body)
-      .expect(404);
-
-    expect(msg).toBe("User not found");
-  });
-  test("status:400 responds with a message for invalid body fields", async () => {
-    const username = "josephCode";
-    const body = {
-      notValid: "testChoir",
-    };
-    const {
-      body: { msg },
-    } = await request(app)
-      .patch(`/api/users/${username}/choirs`)
-      .send(body)
-      .expect(400);
-
-    expect(msg).toBe("Bad Request. Invalid Body");
-  });
-  test("status:400 responds with a message for invalid body data type", async () => {
-    const username = "josephCode";
-    const body = {
-      choir: 12345,
-    };
-    const {
-      body: { msg },
-    } = await request(app)
-      .patch(`/api/users/${username}/choirs`)
-      .send(body)
-      .expect(400);
-
-    expect(msg).toBe("Bad Request. Invalid Body");
-  });
-});
-
 describe("/api/choirs", () => {
   describe("GET", () => {
     test("status:200 responds with an array of choirs", async () => {
