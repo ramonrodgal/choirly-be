@@ -422,6 +422,58 @@
       }
     }
   },
+  "POST /api/choirs/:choir_id/files": {
+    "description": "post a file by choir id",
+    "queries": [],
+    "exampleBody": {
+      "filename": "song.mp3",
+      "type": "song",
+      "path": "http://google.com"
+    },
+    "exampleResponse": {
+      "choir": {
+        "social": {
+          "website": "https://www.liverpoolcathedral.org.uk/cathedral-music/our-choirs/liverpool-64/",
+          "facebook": "https://www.facebook.com/LiverpoolCathedral/"
+        },
+        "_id": "61b0c4c065064fdfb889a14c",
+        "name": "Liverpool 64",
+        "location": "Liverpool",
+        "description": "Liverpool64 was formed in 2018. It has grown quickly and as of May 2021 has over 100 members registered to sing across its soprano, alto, tenor and bass sections. The choir rehearses weekly on Monday evenings 6.30-8pm in the cathedral.",
+        "avatar_url": "https://logovtor.com/wp-content/uploads/2021/04/liverpool-cathedral-logo-vector.png",
+        "leader": "korus76",
+        "members": ["josephCode", "genie", "moonglade", "korus76"],
+        "events": [],
+        "files": [
+          {
+            "filename": "majestic symphony1.mp3",
+            "type": "song",
+            "path": "http://google.com",
+            "_id": "61b4c9e465c56643cf844698"
+          },
+          {
+            "filename": "piano music sheets symphony1.pdf",
+            "type": "document",
+            "path": "http://google.com",
+            "_id": "61b4c9e465c56643cf844699"
+          },
+          {
+            "filename": "rehearsal13thFeb2022.jpeg",
+            "type": "image",
+            "path": "http://google.com",
+            "_id": "61b4c9e465c56643cf84469a"
+          },
+          {
+            "filename": "song.mp3",
+            "type": "song",
+            "path": "http://google.com",
+            "_id": "61b4d191abe9f8b621300696"
+          }
+        ],
+        "__v": 1
+      }
+    }
+  },
   "GET /api/notifications/user/:username": {
     "description": "serves an array of notifications by username",
     "queries": [],
