@@ -427,7 +427,7 @@ describe("/api/choirs/:choir_id/users", () => {
 });
 
 describe("/api/choirs/:choir_id/users/:username", () => {
-  describe.only("DELETE", () => {
+  describe("DELETE", () => {
     test("status:200 responds with the choir with user deleted from member", async () => {
       const choir_id = "61b0c4c065064fdfb889a148";
       const username = "genie";
@@ -487,6 +487,20 @@ describe("/api/choirs/:choir_id/users/:username", () => {
         .expect(400);
 
       expect(msg).toBe("Bad request. The user is not a member of this choir");
+    });
+  });
+  describe("PATCH", () => {
+    test.only("status:200 responds with the choir with a member added", async () => {
+      const choir_id = "61b0c4c065064fdfb889a148";
+      const username = "genie";
+
+      const {
+        body: { choir },
+      } = await request(app)
+        .patch(`/api/choirs/${choir_id}/users/${username}`)
+        .expect(200);
+
+      expect(choir.members.includes(username)).toBe(true);
     });
   });
 });
