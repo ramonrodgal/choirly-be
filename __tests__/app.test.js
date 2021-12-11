@@ -428,7 +428,7 @@ describe("/api/choirs/:choir_id/users", () => {
 
 describe("/api/choirs/:choirs_id/files", () => {
   describe("POST", () => {
-    test.only("status:200 responds with a choir with an added file", async () => {
+    test("status:200 responds with a choir with an added file", async () => {
       const choir_id = "61b0c4c065064fdfb889a148";
       const body = {
         filename: "song.mp3",
@@ -448,6 +448,74 @@ describe("/api/choirs/:choirs_id/files", () => {
       expect(lastFile.filename).toBe(body.filename);
       expect(lastFile.type).toBe(body.type);
       expect(lastFile.path).toBe(body.path);
+    });
+    test("status:400 responds with a message for invalid choir id", async () => {
+      const choir_id = "61b0c4c0650";
+      const body = {
+        filename: "song.mp3",
+        type: "song",
+        path: "http://google.com",
+      };
+
+      const {
+        body: { msg },
+      } = await await request(app)
+        .post(`/api/choirs/${choir_id}/files`)
+        .send(body)
+        .expect(400);
+
+      expect(msg).toBe("Bad request. Invalid choir id");
+    });
+    test("status:400 responds with a message for invalid fields in body", async () => {
+      const choir_id = "61b0c4c065064fdfb889a148";
+      const body = {
+        filename: "song.mp3",
+        notValid: "song",
+        path: "http://google.com",
+      };
+
+      const {
+        body: { msg },
+      } = await await request(app)
+        .post(`/api/choirs/${choir_id}/files`)
+        .send(body)
+        .expect(400);
+
+      expect(msg).toBe("Bad Request. Invalid Body");
+    });
+    test("status:400 responds with a message for invalid fields in body", async () => {
+      const choir_id = "61b0c4c065064fdfb889a148";
+      const body = {
+        filename: "song.mp3",
+        type: 12345,
+        path: "http://google.com",
+      };
+
+      const {
+        body: { msg },
+      } = await await request(app)
+        .post(`/api/choirs/${choir_id}/files`)
+        .send(body)
+        .expect(400);
+
+      expect(msg).toBe("Bad Request. Invalid Body");
+    });
+    test("status:400 responds with a message for invalid url in body", async () => {
+      const choir_id = "61b0c4c065064fdfb889a148";
+      const body = {
+        filename: "song.mp3",
+        type: "song",
+        path: "not valid url",
+      };
+
+      const {
+        body: { msg },
+      } = await await request(app)
+        .post(`/api/choirs/${choir_id}/files`)
+        .send(body)
+        .expect(400);
+
+      expect(msg).toBe("Bad Resquest. Invalid path URL");
     });
   });
 });
