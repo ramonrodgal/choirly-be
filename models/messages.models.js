@@ -2,6 +2,7 @@ const GroupMessage = require("../schemas/groupMessage");
 const { fetchChoirById } = require("./choirs.models");
 const { fetchUserByUsername } = require("./users.models");
 const ObjectId = require("mongoose").Types.ObjectId;
+const { checkFieldsAndType } = require("../utils/utils");
 
 exports.fetchMessagesByChoirId = async (choir_id) => {
   const choir = await fetchChoirById(choir_id);
@@ -10,27 +11,14 @@ exports.fetchMessagesByChoirId = async (choir_id) => {
 };
 
 exports.insertMessage = async (body) => {
-  const requiredFields = ["choir", "author", "title", "body"];
-  let allFields = true;
-  let allFieldTypes = true;
-
-  const fieldTypesReference = {
+  const refObj = {
     choir: "string",
     author: "string",
     title: "string",
     body: "string",
   };
 
-  for (let requiredField of requiredFields) {
-    if (!body.hasOwnProperty(requiredField)) {
-      allFields = false;
-    }
-    if (fieldTypesReference[requiredField] !== typeof body[requiredField]) {
-      allFieldTypes = false;
-    }
-  }
-
-  if (!allFields || !allFieldTypes) {
+  if (!checkFieldsAndType(body, refObj)) {
     return Promise.reject({ status: 400, msg: "Bad Request. Invalid Body" });
   }
 
@@ -64,34 +52,18 @@ exports.fetchMessageById = async (message_id) => {
 exports.updateMessageById = async (message_id, body) => {
   await this.fetchMessageById(message_id);
 
-  console.log(message_id, "message_id");
-  console.log(body, "body");
-
   await GroupMessage.updateOne({ _id: notification_id }, { likes: body.likes });
   const newNotification = await GroupMessage.find({ _id: notification_id });
   return newNotification[0];
 };
 
 exports.insertComment = async (message_id, body) => {
-  const requiredFields = ["author", "body"];
-  let allFields = true;
-  let allFieldTypes = true;
-
-  const fieldTypesReference = {
+  const refObj = {
     author: "string",
     body: "string",
   };
 
-  for (let requiredField of requiredFields) {
-    if (!body.hasOwnProperty(requiredField)) {
-      allFields = false;
-    }
-    if (fieldTypesReference[requiredField] !== typeof body[requiredField]) {
-      allFieldTypes = false;
-    }
-  }
-
-  if (!allFields || !allFieldTypes) {
+  if (!checkFieldsAndType(body, refObj)) {
     return Promise.reject({ status: 400, msg: "Bad Request. Invalid Body" });
   }
 
@@ -106,24 +78,11 @@ exports.insertComment = async (message_id, body) => {
 };
 
 exports.updateLikes = async (message_id, body) => {
-  const requiredFields = ["username"];
-  let allFields = true;
-  let allFieldTypes = true;
-
-  const fieldTypesReference = {
+  const refObj = {
     username: "string",
   };
 
-  for (let requiredField of requiredFields) {
-    if (!body.hasOwnProperty(requiredField)) {
-      allFields = false;
-    }
-    if (fieldTypesReference[requiredField] !== typeof body[requiredField]) {
-      allFieldTypes = false;
-    }
-  }
-
-  if (!allFields || !allFieldTypes) {
+  if (!checkFieldsAndType(body, refObj)) {
     return Promise.reject({ status: 400, msg: "Bad Request. Invalid Body" });
   }
 
