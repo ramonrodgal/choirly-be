@@ -25,16 +25,19 @@ exports.seedChoir = [
     events: [], //Populate the events from the events data once this has been created
     files: [
       {
+        _id: mongoose.Types.ObjectId("61b4e4a374b1b7ae06ba851e"),
         filename: "song.mp3",
         type: "song",
         path: "http://google.com",
       },
       {
+        _id: mongoose.Types.ObjectId("61b4e4a374b1b7ae06ba851f"),
         filename: "songsheet.docx",
         type: "document",
         path: "http://google.com",
       },
       {
+        _id: mongoose.Types.ObjectId("61b4e4a374b1b7ae06ba8520"),
         filename: "picture.jpeg",
         type: "image",
         path: "http://google.com",

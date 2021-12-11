@@ -426,6 +426,162 @@ describe("/api/choirs/:choir_id/users", () => {
   });
 });
 
+describe("/api/choirs/:choirs_id/files", () => {
+  describe("POST", () => {
+    test("status:200 responds with a choir with an added file", async () => {
+      const choir_id = "61b0c4c065064fdfb889a148";
+      const body = {
+        filename: "song.mp3",
+        type: "song",
+        path: "http://google.com",
+      };
+
+      const {
+        body: { choir },
+      } = await await request(app)
+        .post(`/api/choirs/${choir_id}/files`)
+        .send(body)
+        .expect(200);
+
+      const lastFile = choir.files[choir.files.length - 1];
+
+      expect(lastFile.filename).toBe(body.filename);
+      expect(lastFile.type).toBe(body.type);
+      expect(lastFile.path).toBe(body.path);
+    });
+    test("status:400 responds with a message for invalid choir id", async () => {
+      const choir_id = "61b0c4c0650";
+      const body = {
+        filename: "song.mp3",
+        type: "song",
+        path: "http://google.com",
+      };
+
+      const {
+        body: { msg },
+      } = await await request(app)
+        .post(`/api/choirs/${choir_id}/files`)
+        .send(body)
+        .expect(400);
+
+      expect(msg).toBe("Bad request. Invalid choir id");
+    });
+    test("status:400 responds with a message for invalid fields in body", async () => {
+      const choir_id = "61b0c4c065064fdfb889a148";
+      const body = {
+        filename: "song.mp3",
+        notValid: "song",
+        path: "http://google.com",
+      };
+
+      const {
+        body: { msg },
+      } = await await request(app)
+        .post(`/api/choirs/${choir_id}/files`)
+        .send(body)
+        .expect(400);
+
+      expect(msg).toBe("Bad Request. Invalid Body");
+    });
+    test("status:400 responds with a message for invalid fields in body", async () => {
+      const choir_id = "61b0c4c065064fdfb889a148";
+      const body = {
+        filename: "song.mp3",
+        type: 12345,
+        path: "http://google.com",
+      };
+
+      const {
+        body: { msg },
+      } = await await request(app)
+        .post(`/api/choirs/${choir_id}/files`)
+        .send(body)
+        .expect(400);
+
+      expect(msg).toBe("Bad Request. Invalid Body");
+    });
+    test("status:400 responds with a message for invalid url in body", async () => {
+      const choir_id = "61b0c4c065064fdfb889a148";
+      const body = {
+        filename: "song.mp3",
+        type: "song",
+        path: "not valid url",
+      };
+
+      const {
+        body: { msg },
+      } = await await request(app)
+        .post(`/api/choirs/${choir_id}/files`)
+        .send(body)
+        .expect(400);
+
+      expect(msg).toBe("Bad Resquest. Invalid path URL");
+    });
+  });
+  describe.skip("DELETE", () => {
+    test("status:200 responds with a choir with a file removed", async () => {
+      const choir_id = "61b0c4c065064fdfb889a148";
+      const file_id = "61b4e4a374b1b7ae06ba8520";
+
+      const {
+        body: { choir },
+      } = await request(app)
+        .delete(`/api/choirs/${choir_id}/files/${file_id}`)
+        .expect(200);
+
+      expect(choir.files.length).toBe(2);
+    });
+    test("status:404 responds with a message for file not found", async () => {
+      const choir_id = "61b0c4c065064fdfb889a148";
+      const file_id = "61b4e4a374b1b7ae06ba8520";
+
+      const {
+        body: { msg },
+      } = await request(app)
+        .delete(`/api/choirs/${choir_id}/files/${file_id}`)
+        .expect(404);
+
+      expect(msg).toBe("File not found");
+    });
+    test("status:400 responds with a message for invalid file id", async () => {
+      const choir_id = "61b0c4c065064fdfb889a148";
+      const file_id = "61b4e4a374b1b";
+
+      const {
+        body: { msg },
+      } = await request(app)
+        .delete(`/api/choirs/${choir_id}/files/${file_id}`)
+        .expect(400);
+
+      expect(msg).toBe("Bad request. Invalid file id");
+    });
+    test("status:400 responds with a message for invalid choir id", async () => {
+      const choir_id = "61b0c4c065064";
+      const file_id = "61b4e4a374b1b7ae06ba8520";
+
+      const {
+        body: { msg },
+      } = await request(app)
+        .delete(`/api/choirs/${choir_id}/files/${file_id}`)
+        .expect(400);
+
+      expect(msg).toBe("Bad request. Invalid choir id");
+    });
+    test("status:404 responds with a message for choir not found", async () => {
+      const choir_id = "61b0c4c065064fdfb889a248";
+      const file_id = "61b4e4a374b1b7ae06ba8520";
+
+      const {
+        body: { msg },
+      } = await request(app)
+        .delete(`/api/choirs/${choir_id}/files/${file_id}`)
+        .expect(404);
+
+      expect(msg).toBe("Choir not found");
+    });
+  });
+});
+
 describe("/api/notifications/user/:username/", () => {
   describe("GET", () => {
     test("status:200 responds with an array of notifications", async () => {
@@ -1089,6 +1245,81 @@ describe("/api/messages/:message_id/comments", () => {
         .expect(404);
 
       expect(msg).toBe("User not found");
+    });
+  });
+});
+
+describe("/api/messages/:message_id/likes", () => {
+  describe("PATCH", () => {
+    test("status:200 respond with the message with the likes updates", async () => {
+      const message_id = "61b0c4c065064fdfb889a166";
+      const body = {
+        username: "korus76",
+      };
+      const {
+        body: { message },
+      } = await await request(app)
+        .patch(`/api/messages/${message_id}/likes`)
+        .send(body)
+        .expect(200);
+
+      expect(message.likedBy[message.likedBy.length - 1]).toBe(body.username);
+    });
+    test("status:404 respond with a message for username not found", async () => {
+      const message_id = "61b0c4c065064fdfb889a166";
+      const body = {
+        username: "notAUser",
+      };
+      const {
+        body: { msg },
+      } = await await request(app)
+        .patch(`/api/messages/${message_id}/likes`)
+        .send(body)
+        .expect(404);
+
+      expect(msg).toBe("User not found");
+    });
+    test("status:400 respond with a message for invalid fields in body", async () => {
+      const message_id = "61b0c4c065064fdfb889a166";
+      const body = {
+        user: "korus76",
+      };
+      const {
+        body: { msg },
+      } = await await request(app)
+        .patch(`/api/messages/${message_id}/likes`)
+        .send(body)
+        .expect(400);
+
+      expect(msg).toBe("Bad Request. Invalid Body");
+    });
+    test("status:400 respond with a message for invalid dta type in body", async () => {
+      const message_id = "61b0c4c065064fdfb889a166";
+      const body = {
+        username: 76,
+      };
+      const {
+        body: { msg },
+      } = await await request(app)
+        .patch(`/api/messages/${message_id}/likes`)
+        .send(body)
+        .expect(400);
+
+      expect(msg).toBe("Bad Request. Invalid Body");
+    });
+    test("status:400 respond with a message when the username already liked the message", async () => {
+      const message_id = "61b0c4c065064fdfb889a166";
+      const body = {
+        username: "korus76",
+      };
+      const {
+        body: { msg },
+      } = await await request(app)
+        .patch(`/api/messages/${message_id}/likes`)
+        .send(body)
+        .expect(400);
+
+      expect(msg).toBe("Bad Request. The user already liked this message");
     });
   });
 });

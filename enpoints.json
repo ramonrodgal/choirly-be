@@ -422,6 +422,99 @@
       }
     }
   },
+  "POST /api/choirs/:choir_id/files": {
+    "description": "post a file by choir id",
+    "queries": [],
+    "exampleBody": {
+      "filename": "song.mp3",
+      "type": "song",
+      "path": "http://google.com"
+    },
+    "exampleResponse": {
+      "choir": {
+        "social": {
+          "website": "https://www.liverpoolcathedral.org.uk/cathedral-music/our-choirs/liverpool-64/",
+          "facebook": "https://www.facebook.com/LiverpoolCathedral/"
+        },
+        "_id": "61b0c4c065064fdfb889a14c",
+        "name": "Liverpool 64",
+        "location": "Liverpool",
+        "description": "Liverpool64 was formed in 2018. It has grown quickly and as of May 2021 has over 100 members registered to sing across its soprano, alto, tenor and bass sections. The choir rehearses weekly on Monday evenings 6.30-8pm in the cathedral.",
+        "avatar_url": "https://logovtor.com/wp-content/uploads/2021/04/liverpool-cathedral-logo-vector.png",
+        "leader": "korus76",
+        "members": ["josephCode", "genie", "moonglade", "korus76"],
+        "events": [],
+        "files": [
+          {
+            "filename": "majestic symphony1.mp3",
+            "type": "song",
+            "path": "http://google.com",
+            "_id": "61b4c9e465c56643cf844698"
+          },
+          {
+            "filename": "piano music sheets symphony1.pdf",
+            "type": "document",
+            "path": "http://google.com",
+            "_id": "61b4c9e465c56643cf844699"
+          },
+          {
+            "filename": "rehearsal13thFeb2022.jpeg",
+            "type": "image",
+            "path": "http://google.com",
+            "_id": "61b4c9e465c56643cf84469a"
+          },
+          {
+            "filename": "song.mp3",
+            "type": "song",
+            "path": "http://google.com",
+            "_id": "61b4d191abe9f8b621300696"
+          }
+        ],
+        "__v": 1
+      }
+    }
+  },
+  "DELETE /api/choirs/:choir_id/files/:file_id": {
+    "description": "removes a files from a choir",
+    "queries": [],
+    "exampleResponse": {
+      "choir": {
+        "social": {
+          "website": "https://www.singers.com/group/African-Childrens-Choir/",
+          "facebook": "https://www.facebook.com/africanchildrenschoir/"
+        },
+        "_id": "61b0c4c065064fdfb889a148",
+        "name": "African Children's Choir",
+        "location": "Manchester",
+        "description": "The African Children's Choir is made up of some of the neediest and most vulnerable children in their countries. Many have lost one or both parents to poverty or disease. The African Children's Choir helps these children break away from the everyday cycle of poverty and hopelessness. Before being selected to join the Choir, children, generally aged between 7 and 11 attend Music for Life camps. These camps are fun and stimulating environments that provide a break from the daily hardships the young children face at home.\n    \n    From the hundreds of children who attend the camps, approximately 50 will be chosen to audition for the Choir. Games, crafts, music and devotions are some of the activities the children look forward to at camp. Once the children are selected, Choir Teams will spend a few days visiting the children's homes to determine their needs and suitability for tour life. They then have the difficult task of selecting the group of children who will form the next African Children's Choir.",
+        "avatar_url": "https://www.singers.com/group/images/AfricanChildrensChoir.jpg",
+        "leader": "cakevealbladerunner",
+        "members": [
+          "josephCode",
+          "genie",
+          "moonglade",
+          "cakevealbladerunner",
+          "korus76"
+        ],
+        "events": [],
+        "files": [
+          {
+            "filename": "songsheet.docx",
+            "type": "document",
+            "path": "http://google.com",
+            "_id": "61b4e4a374b1b7ae06ba851f"
+          },
+          {
+            "filename": "picture.jpeg",
+            "type": "image",
+            "path": "http://google.com",
+            "_id": "61b4e4a374b1b7ae06ba8520"
+          }
+        ],
+        "__v": 0
+      }
+    }
+  },
   "GET /api/notifications/user/:username": {
     "description": "serves an array of notifications by username",
     "queries": [],
@@ -781,6 +874,40 @@
             "created_at": "2021-12-10T22:26:36.857Z",
             "body": "This is a comment!",
             "_id": "61b3d4246c204152a44783e5"
+          }
+        ],
+        "__v": 0
+      }
+    }
+  },
+  "PATCH /api/messages/:message_id/likes": {
+    "description": "increases likes and and username to likedBy in a message",
+    "queries": [],
+    "exampleBody": {
+      "username": "korus76"
+    },
+    "exampleResponse": {
+      "message": {
+        "_id": "61b0c4c065064fdfb889a166",
+        "choir": "Liverpool 64",
+        "title": "MemberShip Renewals",
+        "author": "korus76",
+        "created_at": "2021-12-11T15:55:15.706Z",
+        "body": "Just a gentle reminder to everyone that annual membership fees are due this week",
+        "likes": 1,
+        "likedBy": ["korus76"],
+        "comments": [
+          {
+            "author": "moonglade",
+            "created_at": "2021-12-11T15:55:15.706Z",
+            "body": "Thanks for the reminder I will BACS transfer my membership tonight",
+            "_id": "61b4c9e465c56643cf8446b2"
+          },
+          {
+            "author": "cakevealbladerunner",
+            "created_at": "2021-12-11T15:55:15.706Z",
+            "body": "I will call you Monday to sort out",
+            "_id": "61b4c9e465c56643cf8446b3"
           }
         ],
         "__v": 0

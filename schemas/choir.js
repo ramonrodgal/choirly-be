@@ -36,12 +36,6 @@ const choirSchema = new Schema({
       type: String,
     },
   ],
-  events: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Event",
-    },
-  ],
   files: [
     {
       filename: {

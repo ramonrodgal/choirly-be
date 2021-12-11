@@ -5,6 +5,7 @@ const {
   fetchMessageById,
   updateMessageById,
   insertComment,
+  updateLikes,
 } = require("../models/messages.models");
 
 exports.getMessagesByChoirId = async (req, res, next) => {
@@ -64,6 +65,18 @@ exports.postComment = async (req, res, next) => {
 
   try {
     const message = await insertComment(message_id, body);
+    res.status(200).send({ message });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.patchLikes = async (req, res, next) => {
+  const { message_id } = req.params;
+  const { body } = req;
+
+  try {
+    const message = await updateLikes(message_id, body);
     res.status(200).send({ message });
   } catch (err) {
     next(err);
