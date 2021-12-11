@@ -518,8 +518,8 @@ describe("/api/choirs/:choirs_id/files", () => {
       expect(msg).toBe("Bad Resquest. Invalid path URL");
     });
   });
-  describe("DELETE", () => {
-    test.only("status:200 responds with a choir with a file removed", async () => {
+  describe.skip("DELETE", () => {
+    test("status:200 responds with a choir with a file removed", async () => {
       const choir_id = "61b0c4c065064fdfb889a148";
       const file_id = "61b4e4a374b1b7ae06ba8520";
 
@@ -530,6 +530,54 @@ describe("/api/choirs/:choirs_id/files", () => {
         .expect(200);
 
       expect(choir.files.length).toBe(2);
+    });
+    test("status:404 responds with a message for file not found", async () => {
+      const choir_id = "61b0c4c065064fdfb889a148";
+      const file_id = "61b4e4a374b1b7ae06ba8520";
+
+      const {
+        body: { msg },
+      } = await request(app)
+        .delete(`/api/choirs/${choir_id}/files/${file_id}`)
+        .expect(404);
+
+      expect(msg).toBe("File not found");
+    });
+    test("status:400 responds with a message for invalid file id", async () => {
+      const choir_id = "61b0c4c065064fdfb889a148";
+      const file_id = "61b4e4a374b1b";
+
+      const {
+        body: { msg },
+      } = await request(app)
+        .delete(`/api/choirs/${choir_id}/files/${file_id}`)
+        .expect(400);
+
+      expect(msg).toBe("Bad request. Invalid file id");
+    });
+    test("status:400 responds with a message for invalid choir id", async () => {
+      const choir_id = "61b0c4c065064";
+      const file_id = "61b4e4a374b1b7ae06ba8520";
+
+      const {
+        body: { msg },
+      } = await request(app)
+        .delete(`/api/choirs/${choir_id}/files/${file_id}`)
+        .expect(400);
+
+      expect(msg).toBe("Bad request. Invalid choir id");
+    });
+    test("status:404 responds with a message for choir not found", async () => {
+      const choir_id = "61b0c4c065064fdfb889a248";
+      const file_id = "61b4e4a374b1b7ae06ba8520";
+
+      const {
+        body: { msg },
+      } = await request(app)
+        .delete(`/api/choirs/${choir_id}/files/${file_id}`)
+        .expect(404);
+
+      expect(msg).toBe("Choir not found");
     });
   });
 });
