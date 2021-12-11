@@ -1092,3 +1092,22 @@ describe("/api/messages/:message_id/comments", () => {
     });
   });
 });
+
+describe("/api/messages/:message_id/likes", () => {
+  describe("PATCH", () => {
+    test.only("status:200 respond with the message with the likes updates", async () => {
+      const message_id = "61b0c4c065064fdfb889a166";
+      const body = {
+        username: "korus76",
+      };
+      const {
+        body: { message },
+      } = await await request(app)
+        .patch(`/api/messages/${message_id}/likes`)
+        .send(body)
+        .expect(200);
+
+      expect(message.likedBy[message.likedBy.length - 1]).toBe(body.username);
+    });
+  });
+});
