@@ -6,7 +6,7 @@ const {
   updateChoirMember,
   insertFile,
   removeFileById,
-  deleteUserByUsername,
+  deleteMemberByUsername,
 } = require("../models/choirs.models");
 
 exports.getChoirs = async (req, res, next) => {
@@ -87,12 +87,11 @@ exports.deleteFileById = async (req, res, next) => {
   }
 };
 
-exports.deleteUserByUsername = async (req, res, next) => {
+exports.deleteMemberByUsername = async (req, res, next) => {
   const { choir_id, username } = req.params;
 
-  console.log("inside controller");
   try {
-    const choir = await deleteUserByUsername(choir_id, username);
+    const choir = await deleteMemberByUsername(choir_id, username);
     res.status(200).send({ choir });
   } catch (err) {
     next(err);

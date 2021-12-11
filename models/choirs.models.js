@@ -179,7 +179,7 @@ exports.removeFileById = async (file_id, choir_id) => {
   return choir;
 };
 
-exports.deleteUserByUsername = async (choir_id, username) => {
+exports.deleteMemberByUsername = async (choir_id, username) => {
   const choir = await this.fetchChoirById(choir_id);
   const user = await fetchUserByUsername(username);
 
