@@ -1,6 +1,6 @@
 const ObjectId = require("mongoose").Types.ObjectId;
-
 const Choir = require("../schemas/choir");
+const { fetchUserByUsername } = require("./users.models");
 
 exports.fetchChoirs = async (location) => {
   if (location) {
@@ -175,6 +175,16 @@ exports.removeFileById = async (file_id, choir_id) => {
   }
 
   const choir = await this.fetchChoirById(choir_id);
+
+  return choir;
+};
+
+exports.deleteUserByUsername = async (choir_id, username) => {
+  await fetchUserByUsername(username);
+  const choir = await this.fetchChoirById(choir_id);
+
+  choir.members.splice(choir.members.indexOf(username), 1);
+  choir.save();
 
   return choir;
 };

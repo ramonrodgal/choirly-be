@@ -7,11 +7,13 @@ const {
   patchChoirMember,
   postFile,
   deleteFileById,
+  deleteUserByUsername,
 } = require("../controllers/choirs.controllers");
 
 choirsRouters.route("/").get(getChoirs).post(postChoir);
 choirsRouters.route("/:choir_id").get(getChoirById).delete(deleteChoirById);
 choirsRouters.route("/:choir_id/users").patch(patchChoirMember);
+choirsRouters.route("/:choir_id/users/:username").delete(deleteUserByUsername);
 choirsRouters.route("/:choir_id/files").post(postFile);
 choirsRouters.route("/:choir_id/files/:file_id").delete(deleteFileById);
 
