@@ -46,11 +46,7 @@ const userSchema = new Schema({
       type: String,
     },
   ],
-  groups: [
-    {
-      type: String,
-    },
-  ],
+  groups: [{ type: mongoose.Types.ObjectId, ref: "Choir" }],
 });
 
 const User = mongoose.model("User", userSchema);
