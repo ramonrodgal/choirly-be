@@ -426,6 +426,32 @@ describe("/api/choirs/:choir_id/users", () => {
   });
 });
 
+describe("/api/choirs/:choirs_id/files", () => {
+  describe("POST", () => {
+    test.only("status:200 responds with a choir with an added file", async () => {
+      const choir_id = "61b0c4c065064fdfb889a148";
+      const body = {
+        filename: "song.mp3",
+        type: "song",
+        path: "http://google.com",
+      };
+
+      const {
+        body: { choir },
+      } = await await request(app)
+        .post(`/api/choirs/${choir_id}/files`)
+        .send(body)
+        .expect(200);
+
+      const lastFile = choir.files[choir.files.length - 1];
+
+      expect(lastFile.filename).toBe(body.filename);
+      expect(lastFile.type).toBe(body.type);
+      expect(lastFile.path).toBe(body.path);
+    });
+  });
+});
+
 describe("/api/notifications/user/:username/", () => {
   describe("GET", () => {
     test("status:200 responds with an array of notifications", async () => {
@@ -1151,7 +1177,7 @@ describe("/api/messages/:message_id/likes", () => {
 
       expect(msg).toBe("Bad Request. Invalid Body");
     });
-    test.only("status:400 respond with a message when the username already liked the message", async () => {
+    test("status:400 respond with a message when the username already liked the message", async () => {
       const message_id = "61b0c4c065064fdfb889a166";
       const body = {
         username: "korus76",
