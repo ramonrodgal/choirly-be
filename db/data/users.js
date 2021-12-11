@@ -16,7 +16,11 @@ exports.seedUser = [
       instagram: "https://www.instagram.com/jonathanjoseph76/",
     },
     voice: ["Alto"],
-    Groups: ["Liverpool 64"],
+    groups: [
+      "61b0c4c065064fdfb889a148",
+      "61b0c4c065064fdfb889a14c",
+      "61b0c4c065064fdfb889a150",
+    ],
   },
   {
     _id: mongoose.Types.ObjectId("61b0c4c065064fdfb889a141"),
@@ -34,7 +38,11 @@ exports.seedUser = [
       instagram: "https://www.instagram.com/bgt/?hl=en",
     },
     voice: ["Bass"],
-    Groups: ["Chester Bach Singers"],
+    groups: [
+      "61b0c4c065064fdfb889a148",
+      "61b0c4c065064fdfb889a14c",
+      "61b0c4c065064fdfb889a150",
+    ],
   },
   {
     _id: mongoose.Types.ObjectId("61b0c4c065064fdfb889a142"),
@@ -52,7 +60,11 @@ exports.seedUser = [
       instagram: "https://www.instagram.com/sopranopsy4/?hl=en",
     },
     voice: ["Soprano"], //Change
-    Groups: ["African Children's Choir"],
+    groups: [
+      "61b0c4c065064fdfb889a148",
+      "61b0c4c065064fdfb889a14c",
+      "61b0c4c065064fdfb889a150",
+    ],
   },
   {
     _id: mongoose.Types.ObjectId("61b0c4c065064fdfb889a143"),
@@ -70,7 +82,11 @@ exports.seedUser = [
       instagram: "https://www.instagram.com/the_idiots_of_tenor_bass_choir/",
     },
     voice: ["Tenor"], //Change
-    Groups: ["African Children's Choir"],
+    groups: [
+      "61b0c4c065064fdfb889a148",
+      "61b0c4c065064fdfb889a14c",
+      "61b0c4c065064fdfb889a150",
+    ],
   },
   {
     _id: mongoose.Types.ObjectId("61b0c4c065064fdfb889a144"),
@@ -87,7 +103,7 @@ exports.seedUser = [
       facebook: "https://www.facebook.com/bethmtaylormezzo/",
     },
     voice: ["Mezzo-Soprano"], //Change
-    Groups: ["Liverpool 64"],
+    groups: ["61b0c4c065064fdfb889a148", "61b0c4c065064fdfb889a150"],
   },
 ];
 
