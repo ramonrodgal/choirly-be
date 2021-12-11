@@ -104,3 +104,12 @@ exports.updateChoirMember = async (choir_id, body) => {
 
   return choir;
 };
+
+exports.insertFile = async (choir_id, body) => {
+  const choir = await this.fetchChoirById(choir_id);
+
+  choir.files.push(body);
+  choir.save();
+
+  return choir;
+};
