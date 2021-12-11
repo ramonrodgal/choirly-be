@@ -180,11 +180,21 @@ exports.removeFileById = async (file_id, choir_id) => {
 };
 
 exports.deleteUserByUsername = async (choir_id, username) => {
-  await fetchUserByUsername(username);
   const choir = await this.fetchChoirById(choir_id);
+  const user = await fetchUserByUsername(username);
+
+  if (!choir.members.includes(username)) {
+    return Promise.reject({
+      status: 400,
+      msg: "Bad request. The user is not a member of this choir",
+    });
+  }
 
   choir.members.splice(choir.members.indexOf(username), 1);
   choir.save();
+
+  user.groups.splice(user.groups.indexOf(choir._id), 1);
+  user.save();
 
   return choir;
 };
