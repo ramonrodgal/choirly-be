@@ -15,7 +15,7 @@ exports.seedUser = [
       facebook: "https://www.facebook.com/jonathan.joseph.357/",
       instagram: "https://www.instagram.com/jonathanjoseph76/",
     },
-    voice: ["Alto"],
+    voice: "Alto",
     groups: [
       "61b0c4c065064fdfb889a148",
       "61b0c4c065064fdfb889a14c",
@@ -37,7 +37,7 @@ exports.seedUser = [
       facebook: "https://www.facebook.com/BritainsGotTalent",
       instagram: "https://www.instagram.com/bgt/?hl=en",
     },
-    voice: ["Bass"],
+    voice: "Bass",
     groups: [
       "61b0c4c065064fdfb889a148",
       "61b0c4c065064fdfb889a14c",
@@ -59,7 +59,7 @@ exports.seedUser = [
       facebook: "https://www.facebook.com/sopranofficiel",
       instagram: "https://www.instagram.com/sopranopsy4/?hl=en",
     },
-    voice: ["Soprano"], //Change
+    voice: "Soprano",
     groups: [
       "61b0c4c065064fdfb889a148",
       "61b0c4c065064fdfb889a14c",
@@ -81,7 +81,7 @@ exports.seedUser = [
         "https://www.facebook.com/pages/Heritage-Mass-Choir-Tenor/161095587247322",
       instagram: "https://www.instagram.com/the_idiots_of_tenor_bass_choir/",
     },
-    voice: ["Tenor"], //Change
+    voice: "Tenor",
     groups: [
       "61b0c4c065064fdfb889a148",
       "61b0c4c065064fdfb889a14c",
@@ -102,10 +102,7 @@ exports.seedUser = [
       youtube: "https://www.youtube.com/watch?v=_nP7oiZIl1M",
       facebook: "https://www.facebook.com/bethmtaylormezzo/",
     },
-    voice: ["Mezzo-Soprano"], //Change
+    voice: "Mezzo-Soprano",
     groups: ["61b0c4c065064fdfb889a148", "61b0c4c065064fdfb889a150"],
   },
 ];
-
-//moonglade, genie, cakevealbladerunner, groundhogdaylyrics, beeteaglepieapplepie
-//Bass, Baritone, Tenor, Alto, Mezzo-Soprano, Soprano
