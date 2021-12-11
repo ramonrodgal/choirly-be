@@ -352,7 +352,7 @@ describe("/api/choirs/:choir_id/users/:username", () => {
     });
   });
   describe("PATCH", () => {
-    test.only("status:200 responds with the choir with a member added", async () => {
+    test("status:200 responds with the choir with a member added", async () => {
       const choir_id = "61b0c4c065064fdfb889a148";
       const username = "genie";
 
@@ -364,7 +364,7 @@ describe("/api/choirs/:choir_id/users/:username", () => {
 
       expect(choir.members.includes(username)).toBe(true);
     });
-    test.only("status:404 responds with a message for user not found", async () => {
+    test("status:404 responds with a message for user not found", async () => {
       const choir_id = "61b0c4c065064fdfb889a148";
       const username = "notAUser";
 
@@ -376,7 +376,7 @@ describe("/api/choirs/:choir_id/users/:username", () => {
 
       expect(msg).toBe("User not found");
     });
-    test.only("status:404 responds with a message for choir not found", async () => {
+    test("status:404 responds with a message for choir not found", async () => {
       const choir_id = "61b0c4c065064fdfb889a248";
       const username = "genie";
 
@@ -388,7 +388,7 @@ describe("/api/choirs/:choir_id/users/:username", () => {
 
       expect(msg).toBe("Choir not found");
     });
-    test.only("status:400 responds with a message for invalid choir id", async () => {
+    test("status:400 responds with a message for invalid choir id", async () => {
       const choir_id = "invalid";
       const username = "genie";
 
@@ -400,7 +400,7 @@ describe("/api/choirs/:choir_id/users/:username", () => {
 
       expect(msg).toBe("Bad request. Invalid choir id");
     });
-    test.only("status:400 responds with a message when the user is already a member", async () => {
+    test("status:400 responds with a message when the user is already a member", async () => {
       const choir_id = "61b0c4c065064fdfb889a148";
       const username = "genie";
 
@@ -816,7 +816,7 @@ describe("/api/events/:event_id/", () => {
 });
 
 describe("/api/events/:event_id/users", () => {
-  describe("GET", () => {
+  describe("PATCH", () => {
     test("status:200 responds with the event with the added user in going array", async () => {
       const choir_id = "61b0c4c065064fdfb889a156";
       let body = {
@@ -1234,6 +1234,38 @@ describe("/api/messages/:message_id/comments", () => {
         .expect(404);
 
       expect(msg).toBe("User not found");
+    });
+    test("status:400 responds with the message for invalid data fields in body", async () => {
+      const message_id = "61b0c4c065064fdfb889a166";
+      const comment = {
+        notvalid: "notAUser",
+        body: "Thanks for the reminder I will BACS transfer my membership tonight",
+      };
+
+      const {
+        body: { msg },
+      } = await request(app)
+        .post(`/api/messages/${message_id}/comments`)
+        .send(comment)
+        .expect(400);
+
+      expect(msg).toBe("Bad Request. Invalid Body");
+    });
+    test("status:400 responds with the message for invalid data type in body", async () => {
+      const message_id = "61b0c4c065064fdfb889a166";
+      const comment = {
+        notvalid: 12345,
+        body: "Thanks for the reminder I will BACS transfer my membership tonight",
+      };
+
+      const {
+        body: { msg },
+      } = await request(app)
+        .post(`/api/messages/${message_id}/comments`)
+        .send(comment)
+        .expect(400);
+
+      expect(msg).toBe("Bad Request. Invalid Body");
     });
   });
 });
