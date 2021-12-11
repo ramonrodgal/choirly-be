@@ -1,6 +1,7 @@
 const ObjectId = require("mongoose").Types.ObjectId;
 const Choir = require("../schemas/choir");
 const { fetchUserByUsername } = require("./users.models");
+const { checkFieldsAndType } = require("../utils/utils");
 
 exports.fetchChoirs = async (location) => {
   if (location) {
@@ -30,27 +31,14 @@ exports.fetchChoirById = async (choir_id) => {
 };
 
 exports.insertChoir = async (body) => {
-  const requiredFields = ["name", "location", "description", "leader"];
-  let allFields = true;
-  let allFieldTypes = true;
-
-  const fieldTypesReference = {
+  const refObj = {
     name: "string",
     location: "string",
     description: "string",
     leader: "string",
   };
 
-  for (let requiredField of requiredFields) {
-    if (!body.hasOwnProperty(requiredField)) {
-      allFields = false;
-    }
-    if (fieldTypesReference[requiredField] !== typeof body[requiredField]) {
-      allFieldTypes = false;
-    }
-  }
-
-  if (!allFields || !allFieldTypes) {
+  if (!checkFieldsAndType(body, refObj)) {
     return Promise.reject({ status: 400, msg: "Bad Request. Invalid Body" });
   }
 
@@ -76,26 +64,13 @@ exports.removeChoirById = async (choir_id) => {
 };
 
 exports.insertFile = async (choir_id, body) => {
-  const requiredFields = ["filename", "type", "path"];
-  let allFields = true;
-  let allFieldTypes = true;
-
-  const fieldTypesReference = {
+  const refObj = {
     filename: "string",
     type: "string",
     path: "string",
   };
 
-  for (let requiredField of requiredFields) {
-    if (!body.hasOwnProperty(requiredField)) {
-      allFields = false;
-    }
-    if (fieldTypesReference[requiredField] !== typeof body[requiredField]) {
-      allFieldTypes = false;
-    }
-  }
-
-  if (!allFields || !allFieldTypes) {
+  if (!checkFieldsAndType(body, refObj)) {
     return Promise.reject({ status: 400, msg: "Bad Request. Invalid Body" });
   }
 
