@@ -156,10 +156,23 @@ exports.insertFile = async (choir_id, body) => {
 };
 
 exports.removeFileById = async (file_id, choir_id) => {
-  await Choir.updateOne(
+  await this.fetchChoirById(choir_id);
+
+  if (!ObjectId.isValid(file_id)) {
+    return Promise.reject({
+      status: 400,
+      msg: "Bad request. Invalid file id",
+    });
+  }
+
+  const updateChoir = await Choir.updateOne(
     { _id: choir_id },
     { $pull: { files: { _id: file_id } } }
   );
+
+  if (updateChoir.modifiedCount === 0) {
+    return Promise.reject({ status: 404, msg: "File not found" });
+  }
 
   const choir = await this.fetchChoirById(choir_id);
 
