@@ -104,3 +104,15 @@ exports.insertComment = async (message_id, body) => {
 
   return message;
 };
+
+exports.updateLikes = async (message_id, body) => {
+  await fetchUserByUsername(body.username);
+
+  const message = await this.fetchMessageById(message_id);
+
+  message.likes++;
+  message.likedBy.push(body.username);
+  message.save();
+
+  return message;
+};
