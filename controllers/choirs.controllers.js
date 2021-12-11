@@ -7,6 +7,7 @@ const {
   insertFile,
   removeFileById,
   deleteMemberByUsername,
+  updateMembersByUsername,
 } = require("../models/choirs.models");
 
 exports.getChoirs = async (req, res, next) => {
@@ -92,6 +93,17 @@ exports.deleteMemberByUsername = async (req, res, next) => {
 
   try {
     const choir = await deleteMemberByUsername(choir_id, username);
+    res.status(200).send({ choir });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.patchMembersByUsername = async (req, res, next) => {
+  const { choir_id, username } = req.params;
+
+  try {
+    const choir = await updateMembersByUsername(choir_id, username);
     res.status(200).send({ choir });
   } catch (err) {
     next(err);

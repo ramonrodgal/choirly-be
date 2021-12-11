@@ -198,3 +198,16 @@ exports.deleteMemberByUsername = async (choir_id, username) => {
 
   return choir;
 };
+
+exports.updateMembersByUsername = async (choir_id, username) => {
+  const choir = await this.fetchChoirById(choir_id);
+  const user = await fetchUserByUsername(username);
+
+  choir.members.push(username);
+  choir.save();
+
+  user.groups.push(choir._id);
+  user.save();
+
+  return choir;
+};
