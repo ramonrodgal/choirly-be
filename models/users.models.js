@@ -1,4 +1,5 @@
 const User = require("../schemas/user");
+const { checkFieldsAndType } = require("../utils/utils");
 
 exports.fetchUsers = async () => {
   return await User.find();
@@ -15,17 +16,7 @@ exports.fetchUserByUsername = async (username) => {
 };
 
 exports.insertUser = async (body) => {
-  const requiredFields = [
-    "email",
-    "username",
-    "last_name",
-    "first_name",
-    "phone_number",
-  ];
-  let allFields = true;
-  let allFieldTypes = true;
-
-  const fieldTypesReference = {
+  const refObj = {
     email: "string",
     username: "string",
     last_name: "string",
@@ -33,16 +24,7 @@ exports.insertUser = async (body) => {
     phone_number: "number",
   };
 
-  for (let requiredField of requiredFields) {
-    if (!body.hasOwnProperty(requiredField)) {
-      allFields = false;
-    }
-    if (fieldTypesReference[requiredField] !== typeof body[requiredField]) {
-      allFieldTypes = false;
-    }
-  }
-
-  if (!allFields || !allFieldTypes) {
+  if (!checkFieldsAndType(body, refObj)) {
     return Promise.reject({ status: 400, msg: "Bad Request. Invalid Body" });
   }
 
