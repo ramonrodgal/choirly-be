@@ -49,11 +49,9 @@ describe("/api/users", () => {
         body: { user },
       } = await request(app).post("/api/users").send(body).expect(201);
 
-      expect(body.email).toBe(user.email);
-      expect(body.username).toBe(user.username);
-      expect(body.first_name).toBe(user.first_name);
-      expect(body.last_name).toBe(user.last_name);
-      expect(body.phone_number).toBe(user.phone_number);
+      for (let key in body) {
+        expect(user[key]).toBe(body[key]);
+      }
     });
     test("status:400 responds with a message for invalid body fields", async () => {
       const body = {
@@ -119,7 +117,7 @@ describe("/api/users/:username", () => {
   });
   describe("DELETE", () => {
     test("status:204 responds with the deleted user and a message", async () => {
-      const username = "moonglade";
+      const username = "ramonrodgal";
       const { body } = await request(app)
         .delete(`/api/users/${username}`)
         .expect(200);
@@ -128,7 +126,7 @@ describe("/api/users/:username", () => {
       expect(body.msg).toBe("User removed");
     });
     test("status:404 responds with a message for invalid username", async () => {
-      const username = "invalid-username";
+      const username = "ramonrodgal";
       const { body } = await request(app)
         .delete(`/api/users/${username}`)
         .expect(404);
@@ -138,7 +136,7 @@ describe("/api/users/:username", () => {
   });
   describe("PATCH", () => {
     test("status:200 responds with the update user", async () => {
-      const username = "genie";
+      const username = "josephCode";
       const body = {
         username: "user",
         avatar_url: "http://url.com",
@@ -182,7 +180,7 @@ describe("/api/choirs", () => {
       });
     });
     test("status:200 responds with and array of choirs filtered by location", async () => {
-      const location = "manchester";
+      const location = "Manchester";
       const {
         body: { choirs },
       } = await request(app)
@@ -216,10 +214,13 @@ describe("/api/choirs", () => {
         body: { choir },
       } = await request(app).post("/api/choirs").send(body).expect(200);
 
-      expect(choir.name).toBe(body.name);
-      expect(choir.location).toBe(body.location);
-      expect(choir.description).toBe(body.description);
-      expect(choir.leader).toBe(body.leader);
+      for (let key in body) {
+        expect(choir[key]).toBe(body[key]);
+      }
+      // expect(choir.name).toBe(body.name);
+      // expect(choir.location).toBe(body.location);
+      // expect(choir.description).toBe(body.description);
+      // expect(choir.leader).toBe(body.leader);
     });
     test("status:400 responds with a message for invalid body fields", async () => {
       const body = {
@@ -252,7 +253,7 @@ describe("/api/choirs", () => {
 describe("/api/choirs/:choir_id", () => {
   describe("GET", () => {
     test("status:200 responds with an single choir", async () => {
-      const choir_id = "61b0c478a1a352f4350523c6";
+      const choir_id = "61b0c4c065064fdfb889a148";
       const {
         body: { choir },
       } = await request(app).get(`/api/choirs/${choir_id}`).expect(200);
@@ -269,8 +270,8 @@ describe("/api/choirs/:choir_id", () => {
     });
   });
   describe("DELETE", () => {
-    test.skip("status:200 responds with a message", async () => {
-      const choir_id = "61b0efa3447feff5f7b3d183";
+    test("status:200 responds with a message", async () => {
+      const choir_id = "61b0c4c065064fdfb889a150";
       const {
         body: { msg },
       } = await request(app).delete(`/api/choirs/${choir_id}`).expect(200);
@@ -278,7 +279,7 @@ describe("/api/choirs/:choir_id", () => {
       expect(msg).toBe("Choir removed");
     });
     test("status:404 responds with a message for invalid id", async () => {
-      const choir_id = "not-valid";
+      const choir_id = "notvalid";
       const {
         body: { msg },
       } = await request(app).delete(`/api/choirs/${choir_id}`).expect(400);
@@ -434,9 +435,9 @@ describe("/api/choirs/:choirs_id/files", () => {
 
       const lastFile = choir.files[choir.files.length - 1];
 
-      expect(lastFile.filename).toBe(body.filename);
-      expect(lastFile.type).toBe(body.type);
-      expect(lastFile.path).toBe(body.path);
+      for (let key in body) {
+        expect(lastFile[key]).toBe(body[key]);
+      }
     });
     test("status:400 responds with a message for invalid choir id", async () => {
       const choir_id = "61b0c4c0650";
@@ -507,7 +508,7 @@ describe("/api/choirs/:choirs_id/files", () => {
       expect(msg).toBe("Bad Resquest. Invalid path URL");
     });
   });
-  describe.skip("DELETE", () => {
+  describe("DELETE", () => {
     test("status:200 responds with a choir with a file removed", async () => {
       const choir_id = "61b0c4c065064fdfb889a148";
       const file_id = "61b4e4a374b1b7ae06ba8520";
@@ -518,7 +519,7 @@ describe("/api/choirs/:choirs_id/files", () => {
         .delete(`/api/choirs/${choir_id}/files/${file_id}`)
         .expect(200);
 
-      expect(choir.files.length).toBe(2);
+      expect(choir.files.length).toBe(3);
     });
     test("status:404 responds with a message for file not found", async () => {
       const choir_id = "61b0c4c065064fdfb889a148";
@@ -634,7 +635,10 @@ describe("/api/notifications/user/:username/", () => {
         read: expect.any(Boolean),
       };
 
-      expect(notification.username).toBe(username);
+      for (let key in body) {
+        expect(notification[key]).toBe(body[key]);
+      }
+
       expect(notification.read).toBe(false);
       expect(notification).toMatchObject(notificationTest);
     });
@@ -700,8 +704,9 @@ describe("/api/notifications/:notification_id", () => {
         .send(body)
         .expect(200);
 
-      expect(notification.accepted).toBe(body.accepted);
-      expect(notification.read).toBe(body.read);
+      for (let key in body) {
+        expect(notification[key]).toBe(body[key]);
+      }
     });
     test("status:400 responds with a message for invalid notification id", async () => {
       const notification_id = "notValidId";
@@ -735,7 +740,6 @@ describe("/api/notifications/:notification_id", () => {
       const notification_id = "61b0c4c065064fdfb889a160";
       const body = {
         notvalid: true,
-        accepted: true,
         read: true,
       };
       const {
@@ -747,7 +751,7 @@ describe("/api/notifications/:notification_id", () => {
 
       expect(msg).toBe("Bad Request. Invalid Body");
     });
-    test("status:400 responds with a message for invalid body fields", async () => {
+    test("status:400 responds with a message for invalid body data type", async () => {
       const notification_id = "61b0c4c065064fdfb889a160";
       const body = {
         accepted: 123,
@@ -795,24 +799,28 @@ describe("/api/events/:event_id/", () => {
     test("status:200 responds a single event", async () => {
       const event_id = "61b0c4c065064fdfb889a156";
       const {
-        body: { events },
+        body: { event },
       } = await request(app).get(`/api/events/${event_id}`).expect(200);
-      expect(events.length).toBe(1);
 
-      events.forEach((event) => {
-        expect(event.choir).toBe("African Children's Choir");
-      });
+      expect(event._id).toBe(event_id);
+    });
+    test("status:400 responds with a message for invalid event id", async () => {
+      const event_id = "notvalid";
+      const {
+        body: { msg },
+      } = await request(app).get(`/api/events/${event_id}`).expect(400);
+
+      expect(msg).toBe("Bad request. Invalid event id");
+    });
+    test("status:404 responds with a message for events not found", async () => {
+      const event_id = "61b0c4c065064fdfb889a256";
+      const {
+        body: { msg },
+      } = await request(app).get(`/api/events/${event_id}`).expect(404);
+
+      expect(msg).toBe("Event not found");
     });
   });
-  test("status:400 responds with a message for invalid event id", async () => {
-    const event_id = "notvalid";
-    const {
-      body: { msg },
-    } = await request(app).get(`/api/events/${event_id}`).expect(400);
-
-    expect(msg).toBe("Bad request. Invalid event id");
-  });
-  test.skip("status:404 responds with a message for events not found", async () => {});
 });
 
 describe("/api/events/:event_id/users", () => {
@@ -895,7 +903,7 @@ describe("/api/events/:event_id/users", () => {
     test("status:400 responds with a message for a user already inside the event", async () => {
       const choir_id = "61b0c4c065064fdfb889a156";
       let body = {
-        username: "korus76",
+        username: "genie",
         going: true,
       };
       let {
@@ -931,13 +939,13 @@ describe("/api/events/choir/:choir_id", () => {
 
       expect(msg).toBe("Bad request. Invalid choir id");
     });
-    test.skip("status:404 responds with a message for invalid events not found", async () => {
-      const choir_id = "61b0c4c0";
+    test("status:404 responds with a message for choir not found", async () => {
+      const choir_id = "61b0c4c065064fdfb889a248";
       const {
         body: { msg },
       } = await request(app).get(`/api/events/choir/${choir_id}`);
 
-      expect(msg).toBe("Bad request. Invalid event id");
+      expect(msg).toBe("Choir not found");
     });
   });
   describe("POST", () => {
@@ -1133,7 +1141,7 @@ describe("/api/messages", () => {
 describe("/api/messages/:message_id", () => {
   describe("GET", () => {
     test("status:200 responds with a message", async () => {
-      const message_id = "61b2536fec3b6b99b57a3357";
+      const message_id = "61b0c4c065064fdfb889a166";
       const {
         body: { message },
       } = await request(app).get(`/api/messages/${message_id}`).expect(200);
@@ -1171,14 +1179,14 @@ describe("/api/messages/:message_id", () => {
     });
   });
   describe("DELETE", () => {
-    test.skip("status:200 respond with the deleted message", async () => {
-      const message_id = "61b253d59badabd3b3764b56";
+    test("status:200 respond with the deleted message", async () => {
+      const message_id = "61b0c4c065064fdfb889a163";
 
       const { body } = await request(app)
         .delete(`/api/messages/${message_id}`)
         .expect(200);
 
-      expect(body.message).toBe("Message deleted");
+      expect(body.msg).toBe("Message deleted");
     });
     test("status:400 respond with a message for invalid message_id", async () => {
       const message_id = "61b2536";
