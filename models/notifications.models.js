@@ -1,6 +1,7 @@
 const { fetchUserByUsername } = require("./users.models");
 const Notification = require("../schemas/notification");
 const ObjectId = require("mongoose").Types.ObjectId;
+const { checkFieldsAndType } = require("../utils/utils");
 
 exports.fetchNotificationsByUsername = async (username) => {
   await fetchUserByUsername(username);
@@ -11,27 +12,14 @@ exports.fetchNotificationsByUsername = async (username) => {
 };
 
 exports.insertNotificationByUsername = async (username, body) => {
-  const requiredFields = ["username", "type", "choir", "author"];
-  let allFields = true;
-  let allFieldTypes = true;
-
-  const fieldTypesReference = {
+  const refObj = {
     username: "string",
     type: "string",
     choir: "string",
     author: "string",
   };
 
-  for (let requiredField of requiredFields) {
-    if (!body.hasOwnProperty(requiredField)) {
-      allFields = false;
-    }
-    if (fieldTypesReference[requiredField] !== typeof body[requiredField]) {
-      allFieldTypes = false;
-    }
-  }
-
-  if (!allFields || !allFieldTypes) {
+  if (!checkFieldsAndType(body, refObj)) {
     return Promise.reject({ status: 400, msg: "Bad Request. Invalid Body" });
   }
 
@@ -53,26 +41,12 @@ exports.updateNotificationById = async (notification_id, body) => {
   if (notification.length === 0) {
     return Promise.reject({ status: 404, msg: "Notification not found" });
   }
-
-  const requiredFields = ["accepted", "read"];
-  let allFields = true;
-  let allFieldTypes = true;
-
-  const fieldTypesReference = {
+  const refObj = {
     accepted: "boolean",
     read: "boolean",
   };
 
-  for (const property in body) {
-    if (!requiredFields.includes(property)) {
-      allFields = false;
-    }
-    if (fieldTypesReference[property] !== typeof body[property]) {
-      allFieldTypes = false;
-    }
-  }
-
-  if (!allFields || !allFieldTypes) {
+  if (!checkFieldsAndType(body, refObj)) {
     return Promise.reject({ status: 400, msg: "Bad Request. Invalid Body" });
   }
 
