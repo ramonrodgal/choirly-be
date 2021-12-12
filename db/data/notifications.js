@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
 exports.seedNotification = [
-  //Accepted to a choir
   {
     _id: mongoose.Types.ObjectId("61b0c4c065064fdfb889a15e"),
     username: "josephCode",
@@ -11,7 +10,6 @@ exports.seedNotification = [
     accepted: true,
     read: false,
   },
-  //A new message
   {
     _id: mongoose.Types.ObjectId("61b0c4c065064fdfb889a15f"),
     username: "josephCode",
@@ -20,7 +18,6 @@ exports.seedNotification = [
     author: "genie",
     read: true,
   },
-  //A joining request
   {
     _id: mongoose.Types.ObjectId("61b0c4c065064fdfb889a160"),
     username: "cakevealbladerunner",

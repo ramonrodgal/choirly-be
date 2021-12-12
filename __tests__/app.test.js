@@ -217,10 +217,6 @@ describe("/api/choirs", () => {
       for (let key in body) {
         expect(choir[key]).toBe(body[key]);
       }
-      // expect(choir.name).toBe(body.name);
-      // expect(choir.location).toBe(body.location);
-      // expect(choir.description).toBe(body.description);
-      // expect(choir.leader).toBe(body.leader);
     });
     test("status:400 responds with a message for invalid body fields", async () => {
       const body = {
