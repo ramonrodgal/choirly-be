@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watch",
+    "test": "npm run seed && jest",
     "start": "node listen.js",
-    "seed": "node ./db/seeds/run-seed.js"
+    "seed": "node ./db/seeds/run-seed.js",
+    "server": "nodemon listen.js"
   },
   "keywords": [],
   "author": "",
