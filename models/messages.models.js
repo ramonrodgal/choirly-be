@@ -27,9 +27,10 @@ exports.insertMessage = async (body) => {
 };
 
 exports.deleteMessageById = async (message_id) => {
-  await this.fetchMessageById(message_id);
+  const message = await this.fetchMessageById(message_id);
   await GroupMessage.deleteOne({ _id: message_id });
-  return message[0];
+
+  return message;
 };
 
 exports.fetchMessageById = async (message_id) => {
