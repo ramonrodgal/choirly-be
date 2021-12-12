@@ -4,6 +4,7 @@ const { fetchUserByUsername } = require("./users.models");
 const { checkFieldsAndType } = require("../utils/utils");
 
 exports.fetchChoirs = async (location) => {
+  console.log(location);
   if (location) {
     const choirs = await Choir.find({ location: location });
     if (choirs.length === 0) {
@@ -12,6 +13,7 @@ exports.fetchChoirs = async (location) => {
         msg: "Choirs not found, invalid location",
       });
     }
+    return choirs;
   }
   return await Choir.find();
 };
