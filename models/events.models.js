@@ -19,7 +19,7 @@ exports.fetchEventsById = async (event_id) => {
   const events = await Event.find({ _id: event_id });
 
   if (events.length === 0) {
-    return Promise.reject({ status: 404, msg: "Events not found" });
+    return Promise.reject({ status: 404, msg: "Event not found" });
   }
 
   return events[0];

@@ -18,8 +18,8 @@ exports.getEvents = async (req, res, next) => {
 exports.getEventsById = async (req, res, next) => {
   const { event_id } = req.params;
   try {
-    const events = await fetchEventsById(event_id);
-    res.status(200).send({ events });
+    const event = await fetchEventsById(event_id);
+    res.status(200).send({ event });
   } catch (err) {
     next(err);
   }
