@@ -3,7 +3,10 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const apiRouter = require("./routes/api.routes");
-const { handleCustomErrors } = require("./controllers/errors.controllers");
+const {
+  handleCustomErrors,
+  handle500Errors,
+} = require("./controllers/errors.controllers");
 
 const app = express();
 app.use(express.json());
@@ -24,5 +27,6 @@ app.all("*", (req, res) => {
 });
 
 app.use(handleCustomErrors);
+app.use(handle500Errors);
 
 module.exports = app;
