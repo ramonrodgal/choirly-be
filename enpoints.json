@@ -559,7 +559,8 @@
       "username": "korus76",
       "choir": "Chester Bach Singers",
       "author": "genie",
-      "type": "message"
+      "type": "join",
+      "message": "This is a message!"
     },
     "exampleResponse": {
       "notification": {

@@ -23,7 +23,15 @@ const notificationSchema = new Schema({
     type: String,
     required: true,
   },
+  message: {
+    type: String,
+    default: "",
+  },
   accepted: {
+    type: Boolean,
+    default: false,
+  },
+  rejected: {
     type: Boolean,
     default: false,
   },
