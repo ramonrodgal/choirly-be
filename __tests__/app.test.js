@@ -732,36 +732,6 @@ describe("/api/notifications/:notification_id", () => {
         .expect(404);
       expect(msg).toBe("Notification not found");
     });
-    test("status:400 responds with a message for invalid body fields", async () => {
-      const notification_id = "61b0c4c065064fdfb889a160";
-      const body = {
-        notvalid: true,
-        read: true,
-      };
-      const {
-        body: { msg },
-      } = await request(app)
-        .patch(`/api/notifications/${notification_id}`)
-        .send(body)
-        .expect(400);
-
-      expect(msg).toBe("Bad Request. Invalid Body");
-    });
-    test("status:400 responds with a message for invalid body data type", async () => {
-      const notification_id = "61b0c4c065064fdfb889a160";
-      const body = {
-        accepted: 123,
-        read: true,
-      };
-      const {
-        body: { msg },
-      } = await request(app)
-        .patch(`/api/notifications/${notification_id}`)
-        .send(body)
-        .expect(400);
-
-      expect(msg).toBe("Bad Request. Invalid Body");
-    });
   });
 });
 
@@ -822,7 +792,7 @@ describe("/api/events/:event_id/", () => {
 describe("/api/events/:event_id/users", () => {
   describe("PATCH", () => {
     test("status:200 responds with the event with the added user in going array", async () => {
-      const choir_id = "61b0c4c065064fdfb889a156";
+      const event_id = "61b0c4c065064fdfb889a156";
       let body = {
         username: "korus76",
         going: true,
@@ -830,7 +800,7 @@ describe("/api/events/:event_id/users", () => {
       let {
         body: { event },
       } = await request(app)
-        .patch(`/api/events/${choir_id}/users`)
+        .patch(`/api/events/${event_id}/users`)
         .send(body)
         .expect(200);
 

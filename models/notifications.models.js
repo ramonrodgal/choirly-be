@@ -41,14 +41,6 @@ exports.updateNotificationById = async (notification_id, body) => {
   if (notification.length === 0) {
     return Promise.reject({ status: 404, msg: "Notification not found" });
   }
-  const refObj = {
-    accepted: "boolean",
-    read: "boolean",
-  };
-
-  if (!checkFieldsAndType(body, refObj)) {
-    return Promise.reject({ status: 400, msg: "Bad Request. Invalid Body" });
-  }
 
   await Notification.updateOne({ _id: notification_id }, body);
   const newNotification = await Notification.find({ _id: notification_id });
