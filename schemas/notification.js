@@ -19,6 +19,9 @@ const notificationSchema = new Schema({
     type: String,
     required: true,
   },
+  choir_id: {
+    type: String,
+  },
   author: {
     type: String,
     required: true,
