@@ -923,7 +923,7 @@ describe("/api/events/choir/:choir_id", () => {
         type: "rehersal",
         location: "location",
         date: Date.now(),
-        duration: 1,
+        duration: "1",
         details: "test details",
       };
       const {
@@ -943,7 +943,7 @@ describe("/api/events/choir/:choir_id", () => {
         type: "rehersal",
         location: "location",
         date: Date.now(),
-        duration: 1,
+        duration: "1",
         details: "test details",
       };
       const {
@@ -962,7 +962,7 @@ describe("/api/events/choir/:choir_id", () => {
         choir: "Chester Bach Singers",
         location: "location",
         date: Date.now(),
-        duration: 1,
+        duration: "1",
         details: "test details",
       };
       const {
@@ -981,7 +981,7 @@ describe("/api/events/choir/:choir_id", () => {
         choir: "Chester Bach Singers",
         location: "location",
         date: Date.now(),
-        duration: "2 hours",
+        duration: 1,
         details: "test details",
       };
       const {
@@ -1001,7 +1001,7 @@ describe("/api/events/choir/:choir_id", () => {
         type: "no valid",
         location: "location",
         date: "2021-12-25T19:30:00.000Z",
-        duration: 1,
+        duration: "1",
         details: "test details",
       };
       const {

@@ -21,7 +21,7 @@ exports.insertUser = async (body) => {
     username: "string",
     last_name: "string",
     first_name: "string",
-    phone_number: "number",
+    phone_number: "string",
   };
 
   if (!checkFieldsAndType(body, refObj)) {

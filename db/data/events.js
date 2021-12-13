@@ -8,7 +8,7 @@ exports.seedEvent = [
     type: "Concert", //types are concert, and rehersal
     date: new Date("2022-01-20 18:00:00"),
     location: "Manchester",
-    duration: 1,
+    duration: "2",
     details: "A wonderful rendition of African songs for children",
     comments: [
       {
@@ -27,7 +27,7 @@ exports.seedEvent = [
     type: "Concert", //types are concert, and rehersal
     date: new Date("2021-12-25 19:30:00"), //Date.now(), //Ass Christmas as a date
     location: "Liverpool Cathederal", //Check
-    duration: 2,
+    duration: "2",
     details: "Christmas Carols Service",
     comments: [
       {
@@ -46,7 +46,7 @@ exports.seedEvent = [
     type: "rehersal", //types are concert, and rehersal
     date: new Date("2022-02-02 20:00:00"), //Date.now(), //Ass Christmas as a date
     location: "Chester Community Hub", //Check
-    duration: 1,
+    duration: "2",
     details: "Weekly rehersal",
     comments: [
       {
