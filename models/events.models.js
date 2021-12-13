@@ -44,7 +44,7 @@ exports.insertEventByChoirId = async (choir_id, body) => {
     choir: "string",
     type: "string",
     location: "string",
-    duration: "number",
+    duration: "string",
     details: "string",
   };
 
