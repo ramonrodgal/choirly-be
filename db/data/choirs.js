@@ -22,7 +22,6 @@ exports.seedChoir = [
       "cakevealbladerunner",
       "korus76",
     ],
-    events: [], //Populate the events from the events data once this has been created
     files: [
       {
         _id: mongoose.Types.ObjectId("61b4e4a374b1b7ae06ba851e"),
@@ -55,12 +54,9 @@ exports.seedChoir = [
       website:
         "https://www.liverpoolcathedral.org.uk/cathedral-music/our-choirs/liverpool-64/",
       facebook: "https://www.facebook.com/LiverpoolCathedral/",
-      //  twitter:
-      //  "https://twitter.com/LivCathedral?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor",
     },
     leader: "korus76",
     members: ["josephCode", "genie", "moonglade", "korus76"],
-    events: [], //Populate the events from the events data once this has been created
     files: [
       {
         filename: "majestic symphony1.mp3",
@@ -91,7 +87,6 @@ exports.seedChoir = [
     social: {
       website: "https://www.chesterbachsingers.org.uk/",
       facebook: "https://www.facebook.com/ChesterBachSingers/",
-      //instagram: "https://www.instagram.com/thebachchoir/?hl=en",
     },
     leader: "genie",
     members: [
@@ -101,7 +96,6 @@ exports.seedChoir = [
       "cakevealbladerunner",
       "korus76",
     ],
-    events: [], //Populate the events from the events data once this has been created
     files: [
       {
         filename: "Bach.mp3",
