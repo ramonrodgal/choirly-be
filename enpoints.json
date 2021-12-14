@@ -103,7 +103,8 @@
       "about_me": "This is all about me",
       "first_name": "name",
       "last_name": "surname",
-      "phone_number": 42069
+      "phone_number": "42069",
+      "voice": "Alto"
     },
     "exampleResponse": {
       "user": {
@@ -118,7 +119,7 @@
         "about_me": "This is all about me",
         "first_name": "name",
         "last_name": "surname",
-        "phone_number": 42069,
+        "phone_number": "42069",
         "voice": "Mezzo-Soprano",
         "groups": [],
         "__v": 0
