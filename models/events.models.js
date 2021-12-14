@@ -52,7 +52,11 @@ exports.insertEventByChoirId = async (choir_id, body) => {
     return Promise.reject({ status: 400, msg: "Bad Request. Invalid Body" });
   }
 
-  if (body.type !== "rehearsal" && body.type !== "performance" body.type !== "other") {
+  if (
+    body.type !== "rehearsal" &&
+    body.type !== "performance" &&
+    body.type !== "other"
+  ) {
     return Promise.reject({
       status: 400,
       msg: "Bad Request. Invalid event type",
