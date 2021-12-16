@@ -44,6 +44,9 @@ exports.insertChoir = async (body) => {
   }
 
   const choir = new Choir(body);
+  const user = await fetchUserByUsername(body.leader);
+  user.groups.push(choir._id);
+  await user.save();
   return await choir.save();
 };
 
