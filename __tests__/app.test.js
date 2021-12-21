@@ -28,7 +28,7 @@ describe("/api/users", () => {
         username: expect.any(String),
         first_name: expect.any(String),
         last_name: expect.any(String),
-        phone_number: expect.any(Number),
+        phone_number: expect.any(String),
       };
 
       users.forEach((user) => {
@@ -43,7 +43,7 @@ describe("/api/users", () => {
         username: "ramonrodgal",
         first_name: "ramon",
         last_name: "rodriguez",
-        phone_number: 8989898989,
+        phone_number: "8989898989",
       };
       const {
         body: { user },
@@ -85,7 +85,7 @@ describe("/api/users", () => {
         username: "korus76",
         first_name: "ramon",
         last_name: "rodriguez",
-        phone_number: 8989898989,
+        phone_number: "8989898989",
       };
       const {
         body: { msg },
@@ -143,7 +143,7 @@ describe("/api/users/:username", () => {
         about_me: "This is all about me",
         first_name: "name",
         last_name: "surname",
-        phone_number: 42069,
+        phone_number: "42069",
       };
       const {
         body: { user },
@@ -208,7 +208,7 @@ describe("/api/choirs", () => {
         name: "Test Choir",
         location: "London",
         description: "We are a choir testing our voices",
-        leader: "fake-user",
+        leader: "moonglade",
       };
       const {
         body: { choir },
@@ -217,12 +217,14 @@ describe("/api/choirs", () => {
       for (let key in body) {
         expect(choir[key]).toBe(body[key]);
       }
+
+      expect(choir.members[0]).toBe(choir.leader);
     });
     test("status:400 responds with a message for invalid body fields", async () => {
       const body = {
         name: "Test Choir",
         description: "We are a choir testing our voices",
-        leader: "fake-user",
+        leader: "moonglade",
       };
       const {
         body: { msg },
@@ -749,7 +751,7 @@ describe("/api/events", () => {
         type: expect.any(String),
         date: expect.any(String),
         location: expect.any(String),
-        duration: expect.any(Number),
+        duration: expect.any(String),
         details: expect.any(String),
       };
 
@@ -920,7 +922,7 @@ describe("/api/events/choir/:choir_id", () => {
       const body = {
         title: "Event Title",
         choir: "Chester Bach Singers",
-        type: "rehersal",
+        type: "rehearsal",
         location: "location",
         date: Date.now(),
         duration: "1",
